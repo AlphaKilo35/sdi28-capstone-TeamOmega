@@ -1,0 +1,48 @@
+#Assumes Node.js React Frontend, Express.js API server, & PostgreSQL Database
+
+services:
+  frontend:
+  # GUI
+    build: frontend/
+    container_name: 'frontend'
+    depends_on:
+        - database
+    env_file:
+      - .env
+    environment:
+      - VITE_PORT=${VITE_PORT}
+    ports:
+      - '5173:5173'
+      # 5173 is the default Node.js server, change if ports have been changed to something like 8080
+  backend:
+    # Backend Express Server
+    build: backend/
+    container_name: 'backend'
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - EXPRESS_PORT=${EXPRESS_PORT}
+    ports:
+      - '3000:3000'
+      # 3000 is default Express.js port, again - change if application has something different
+  database:
+    image: postgres
+    container_name: database
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB_NAME}
+      #- PGUSER=postgres #For Health Check
+      # Any environment variables from within the .env file (this file is in the .gitignore, must be made locally with variables matching)
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USERNAME} -d ${POSTGRES_DB_NAME}'" ]
+      interval: 1s
+      timeout: 3s
+      retries: 3
