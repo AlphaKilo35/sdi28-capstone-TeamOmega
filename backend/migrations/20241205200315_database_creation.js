@@ -30,6 +30,26 @@ exports.up = function(knex) {
       table.integer('number_passes');
   })
 
+  .createTable('users_tbl', table => {
+    table.increments('id');
+    table.string('username');
+    table.string('password');
+    table.string('name');
+    table.string('email');
+    table.string('role');
+    table.boolean('jm');
+  })
+
+  .createTable('manifest_table', table => {
+    table.increments('id');
+    table.integer('user_id');
+    table.foreign('user_id').references('users_tbl.id');
+    table.integer('flight_id');
+    table.foreign('flight_id').references('flight_tbl.id');
+    table.string('status');
+    table.integer('lift');
+  })
+
 };
 
 /**
@@ -41,14 +61,19 @@ exports.down = function(knex) {
     .alterTable('flight_tbl', table => {
       table.dropForeign('departure_id')
       table.dropForeign('drop_zone_id')
+    })
 
+    .alterTable('manifest_table', table => {
+      table.dropForeign('user_id');
+      table.dropForeign('flight_id');
     })
 
     .then( function () {
       return knex.schema
+      .dropTableIfExists('manifest_tbl')
       .dropTableIfExists('flight_tbl')
       .dropTableIfExists('drop_zone_tbl')
       .dropTableIfExists('departure_tbl')
-      .dropTableIfExists('users')
+      .dropTableIfExists('users_tbl')
     })
 };
