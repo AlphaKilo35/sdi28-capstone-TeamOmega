@@ -12,6 +12,6 @@ RUN npm install
 EXPOSE 5173
   #Default node server port
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--host"]
   #Break up command in package.json
   # [ "npm", "run", "dev"] / ["npm", "start"] / ["npm", "run"]
