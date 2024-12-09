@@ -23,7 +23,7 @@ exports.up = function(knex) {
       table.string('type_load');
       table.integer('departure_id');
       table.foreign('departure_id').references('departure_tbl.id');
-      table.string('drop_zone_id');
+      table.integer('drop_zone_id');
       table.foreign('drop_zone_id').references('drop_zone_tbl.id');
       table.timestamp('date_time');
       table.integer('number_pax');
