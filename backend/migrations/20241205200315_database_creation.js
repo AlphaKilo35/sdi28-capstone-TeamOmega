@@ -49,6 +49,6 @@ exports.down = function(knex) {
       .dropTableIfExists('flight_tbl')
       .dropTableIfExists('drop_zone_tbl')
       .dropTableIfExists('departure_tbl')
-
+      .dropTableIfExists('users')
     })
 };
