@@ -10,6 +10,7 @@ import Root_Layout from './pages/root_layout/root_layout.jsx'
 import ErrorPage from './pages/error_page/error_page.jsx'
 import Home from './pages/home/Home.jsx'
 import Individual_Training from './pages/IndividualTraining/IndividualTrainingDashboard.jsx'
+import Flights from './pages/flights/Flights.jsx'
 
 /** Router **/
 const router = createBrowserRouter([
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         element: <Individual_Training />
       },
       //add additional pages here
+      {
+        path: '/flights',
+        element: <Flights />
+      }
     ]
   }
 ]);
