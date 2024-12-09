@@ -40,7 +40,7 @@ exports.up = function(knex) {
     table.boolean('jm');
   })
 
-  .createTable('manifest_table', table => {
+  .createTable('manifest_tbl', table => {
     table.increments('id');
     table.integer('user_id');
     table.foreign('user_id').references('users_tbl.id');
@@ -63,7 +63,7 @@ exports.down = function(knex) {
       table.dropForeign('drop_zone_id')
     })
 
-    .alterTable('manifest_table', table => {
+    .alterTable('manifest_tbl', table => {
       table.dropForeign('user_id');
       table.dropForeign('flight_id');
     })
