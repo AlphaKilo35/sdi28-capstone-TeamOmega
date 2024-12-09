@@ -4,14 +4,12 @@
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  await knex('ability_tbl').del()
-  await knex('type_tbl').del()
-  await knex('pkmn_stats_tbl').del()
-  await knex('pkmn_type_ref_tbl').del()
-  await knex('pkmn_ability_ref_tbl').del()
-  await knex('pokemon_data_tbl').del()
+  await knex('departure_tbl').del()
+  await knex('drop_zone_tbl').del()
+  await knex('flight_tbl').del()
 
-  await knex('ability_tbl').insert([
+
+  await knex('departure_tbl').insert([
     {ability_name: 'overgrow'},
     {ability_name: 'chlorophyll'},
   ]);
