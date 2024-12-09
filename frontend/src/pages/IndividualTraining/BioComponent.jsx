@@ -26,3 +26,36 @@ const BioComponent = () => {
                   });
                 }, 500); 
               };
+    
+    fetchUserData();
+    }, []);
+
+    return (
+        <div className="bio-component">
+          <h2>Personal Information</h2>
+          <div className="bio-field">
+            <strong>Name:</strong> {userData.name}
+          </div>
+          <div className="bio-field">
+            <strong>Rank:</strong> {userData.rank}
+          </div>
+          <div className="bio-field">
+            <strong>Branch:</strong> {userData.branch}
+          </div>
+          <div className="bio-field">
+            <strong>MOS/Specialty:</strong> {userData.specialty}
+          </div>
+          <div className="bio-field">
+            <strong>Unit:</strong> {userData.unit}
+          </div>
+          <div className="bio-field">
+            <strong>Duty Position:</strong> {userData.dutyPosition}
+          </div>
+          <div className="bio-field">
+            <strong>Unit Address:</strong> {userData.unitAddress}
+          </div>
+        </div>
+      );
+    };
+    
+    export default BioComponent;
