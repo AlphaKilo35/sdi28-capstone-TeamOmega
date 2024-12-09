@@ -15,7 +15,10 @@ export default defineConfig({
       usePolling: true
     },
     host: true
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './jest.setup.js',
   }
-
-  
 })
