@@ -1,17 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function Manifest({ totalSeats = 10 }) {
+export default function Manifest({ totalSeats = 10, flightId = 2 }) {
   const [search, setSearch] = useState("");
   const [manifestJumpers, setManifestJumpers] = useState([]);
   const [manifestStatus, setManifestStatus] = useState("incomplete");
+  const [availableJumpers, setAvailableJumpers] = useState([]);
 
-  const [availableJumpers, setAvailableJumpers] = useState([
-    { id: 1, name: "John Doe", unit: "1 SFC", jm: true },
-    { id: 2, name: "Jane Smith", unit: "1 SFC", jm: false },
-    { id: 3, name: "Mike Johnson", unit: "1 SFC", jm: false },
-    { id: 4, name: "Sarah Wilson", unit: "1 SFC", jm: false },
-    { id: 5, name: "Tom Brown", unit: "1 SFC", jm: false },
-  ]);
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/manifest/flight/${flightId}/users`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch manifested users');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setManifestJumpers(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, [flightId]);
+console.log("manifested jumpers:", manifestJumpers);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/users')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch users');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setAvailableJumpers(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, []);
+
+  console.log("available jumpers:" ,availableJumpers)
+
+
 
   const filteredJumpers = availableJumpers.filter((jumper) =>
     jumper.name.toLowerCase().includes(search.toLowerCase())

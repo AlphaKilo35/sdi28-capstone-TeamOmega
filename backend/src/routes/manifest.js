@@ -46,7 +46,7 @@ router.get("/manifest/flight/:flight_id/users", async (req, res) => {
   }
 });
 
-//will update manifest status to complete column based on flight id
+//will update manifest status column based on flight id
 router.patch("/update-manifest/:flight_id", async (req, res) => {
   try {
     const { flight_id } = req.params;
@@ -70,7 +70,7 @@ router.patch("/update-manifest/:flight_id", async (req, res) => {
 });
 
 //same as above, but will now update based on lift # and flight id
-router.patch("/update-manifest/:flight_id/:lift", async (req, res) => {
+router.patch("/update-manifest/flight/:flight_id/lift/:lift", async (req, res) => {
   try {
     const { flight_id, lift } = req.params;
     const { status } = req.body;
