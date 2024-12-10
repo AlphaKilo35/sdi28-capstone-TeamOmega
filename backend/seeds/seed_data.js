@@ -1,6 +1,8 @@
 /**
  * @param { import("knex").Knex } knex
- * @returns { Promise<void> } 
+
+ * @returns { Promise<void> }
+
  */
 const { faker, fakerEN_US } = require('@faker-js/faker')
 
@@ -8,7 +10,8 @@ function createDeparture() {
   let departures = [];
   for (var d = 0; d < 5; d++) {
     departures.push({
-      name: faker.location.city()
+      departure_name: faker.location.city()
+
     })
   }
   return departures;
@@ -18,7 +21,8 @@ function createDropzone() {
   let dropZones = [];
   for (var z = 0; z < 10; z++) {
     dropZones.push({
-      name: faker.location.city()
+      dropzone_name: faker.location.city()
+
     })
   }
   return dropZones;
@@ -48,9 +52,9 @@ function createUsers() {
 function createFlights() {
   const flights = [];
   let airframes = [
-    {name: "C-130", pax: 60, passes: 3}, 
-    {name: "C-27", pax: 34, passes: 2}, 
-    {name: "Cassa", pax: 8, passes: 1}, 
+    {name: "C-130", pax: 60, passes: 3},
+    {name: "C-27", pax: 34, passes: 2},
+    {name: "Cassa", pax: 8, passes: 1},
     {name: "UH-60", pax: 8, passes: 1},
     {name: "CH-47", pax: 44, passes: 2}
   ];
