@@ -50,3 +50,21 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Failed to create departure'})
   }
 });
+
+// /Delete
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await knex('departure_tbl').where({ id }).del();
+    if (deleted) {
+      res.status(200).json({ message: 'Departure deleted' });
+    } else {
+      res.status(404).json({ error: 'Departure not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete departure' });
+  }
+});
+
+module.exports = router;

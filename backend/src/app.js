@@ -12,6 +12,12 @@ app.use(express.Router());
 app.use(cookieParser());
 
 //Routes
+const departures = require('./routes/departures');
+const dropZones = require('./routes/drop_zones');
+
+// Register Routes
+app.use('/departures', departures);
+app.use('/drop_zones', dropZones);
 
 
 
