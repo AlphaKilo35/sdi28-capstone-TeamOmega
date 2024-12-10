@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const BioComponent = () => {
-   
+
     const [userData, setUserData] = useState({
       id: "",
       username: "",
@@ -17,16 +17,14 @@ const BioComponent = () => {
             setTimeout(() => {
                 setUserData({
                     id: "",
-                    username: "",
-                    password: "",
                     name: "",
                     email: "",
                     role: "",
                     jm: "",
                   });
-                }, 500); 
+                }, 500);
               };
-    
+
     fetchUserData();
     }, []);
 
@@ -57,5 +55,5 @@ const BioComponent = () => {
         </div>
       );
     };
-    
+
     export default BioComponent;

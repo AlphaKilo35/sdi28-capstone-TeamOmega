@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react';
 
-import soldier_bio from './BioComponent.jsx';
-import training_status from './CurrentStatusComponent.jsx';
-import pay_tracker from './PayLoss.jsx';
+import BioComponent from './BioComponent.jsx';
+import Training_Status from './CurrentStatusComponent.jsx';
+import Pay_Tracker from './PayLoss.jsx';
 
 //get current User's ID -> Save into state variable
 //pass this state variable (User ID) through a fetch to the API endpoint
@@ -13,13 +13,13 @@ return (
   <div className="individual_training_dashboard">
       <h4>Individual Training Dashboard</h4>
       <div className="soldier_bio_panel">
-        <soldier_bio />
+        <BioComponent />
       </div>
       <div className="training_table">
-        <training_status />
+        <Training_Status />
       </div>
       <div className="pay_tracker">
-        <pay_tracker />
+        <Pay_Tracker />
       </div>
   </div>
 

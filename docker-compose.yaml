@@ -6,7 +6,8 @@ services:
     build: frontend/
     container_name: 'frontend'
     depends_on:
-        - database
+      - backend
+      - database
     env_file:
       - .env
     environment:
@@ -14,6 +15,10 @@ services:
     ports:
       - '5173:5173'
       # 5173 is the default Node.js server, change if ports have been changed to something like 8080
+    volumes:
+      - .:/app
+    networks:
+      - appnetwork
   backend:
     # Backend Express Server
     build: backend/
@@ -28,6 +33,10 @@ services:
     ports:
       - '3000:3000'
       # 3000 is default Express.js port, again - change if application has something different
+    volumes:
+      - .:/app
+    networks:
+      - appnetwork
   database:
     image: postgres
     container_name: database
@@ -41,8 +50,15 @@ services:
       # Any environment variables from within the .env file (this file is in the .gitignore, must be made locally with variables matching)
     ports:
       - 5432:5432
+    volumes:
+      - .:/app
     healthcheck:
       test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USERNAME} -d ${POSTGRES_DB_NAME}'" ]
       interval: 1s
       timeout: 3s
       retries: 3
+    networks:
+      - appnetwork
+networks:
+  appnetwork:
+    driver: bridge

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 const PayLoss = () => {
-  const [isCurrent, setIsCurrent] = useState(false); 
+  const [isCurrent, setIsCurrent] = useState(false);
   const [jumpsNeeded, setJumpsNeeded] = useState(3); // Replace with real data
   const [daysUntilPayLoss, setDaysUntilPayLoss] = useState(5); // Replace with real data
 
   return (
     <div>
       <h1>Pay Loss Tracker</h1>
-      
+
       {/* Current Jump Status */}
       <div
         style={{

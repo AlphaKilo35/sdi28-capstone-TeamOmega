@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-//const route = require('./routes/routes.js)
+const userRouter = require('./routes/user_training')
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(express.Router());
 app.use(cookieParser());
 
 //Routes
-
+app.use('/api/Individual-Training-Record', userRouter)
 
 
 //General | Root Route
