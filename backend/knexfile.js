@@ -3,12 +3,12 @@ require('dotenv').config({path: '../.env'});
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-console.log(process.env.DB_CONNECTION_STRING)
+
 module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgresql://postgres:docker@database:5432/postgres',
+    connection: process.env.DB_CONNECTION_STRING,
     pool: {
       min:0,
       max:10
