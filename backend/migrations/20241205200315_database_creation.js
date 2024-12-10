@@ -12,7 +12,7 @@ exports.up = function(knex) {
 
   .createTable('drop_zone_tbl', function (table) {
     table.increments('id');
-    table.string('dropZone_name');
+    table.string('dropzone_name');
 
   })
 
