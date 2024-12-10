@@ -6,13 +6,13 @@ exports.up = function(knex) {
   return knex.schema
   .createTable('departure_tbl', function (table) {
     table.increments('id');
-    table.string('name');
+    table.string('departure_name');
 
   })
 
   .createTable('drop_zone_tbl', function (table) {
     table.increments('id');
-    table.string('name');
+    table.string('dropzone_name');
 
   })
 
