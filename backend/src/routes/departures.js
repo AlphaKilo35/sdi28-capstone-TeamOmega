@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const knex = require('../knex');
+const knex = require('../../knex');
 
 // Fetch departures
 
@@ -50,3 +50,5 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Failed to create departure'})
   }
 });
+
+module.exports = router;
