@@ -8,8 +8,8 @@ const knex = require('knex')(require('../../knexfile')[process.env.NODE_ENV || '
 router.get('/', async (req, res) => {
   try {
     const flights = await knex('flight_tbl as f')
-    .join('departure_tbl as d', 'f.departure_id', 'd.id')
-    .join('drop_zone_tbl as z', 'f.drop_zone_id', 'z.id')
+    .join('departure_tbl as d', 'f.departure_id', '=', 'd.id')
+    .join('drop_zone_tbl as z', 'f.drop_zone_id', '=', 'z.id')
     .select(
       'f.id as flight_id',
       'f.airframe',
@@ -18,8 +18,8 @@ router.get('/', async (req, res) => {
       'f.date_time',
       'f.number_pax',
       'f.number_passes',
-      'd.departure_name as departure_name',
-      'z.dropZone_name as drop_zone_name'
+      'd.departure_name AS departure_name',
+      'z.dropzone_name AS drop_zone_name'
 
     );
     res.status(200).json(flights);

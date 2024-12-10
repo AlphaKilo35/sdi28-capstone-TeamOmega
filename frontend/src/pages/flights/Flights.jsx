@@ -51,8 +51,8 @@ const Flights = () =>{
                   <tr className="border-b border-gold-400 hover:bg-gray-800">
                   <td className="py-4 px-6">{flight.airframe}</td>
                   <td className="py-4 px-6">{flight.number_pax}</td>
-                  <td className="py-4 px-6">{flight.drop_zone_id}</td>
-                  <td className="py-4 px-6">{flight.departure_id}</td>
+                  <td className="py-4 px-6">{flight.drop_zone_name}</td>
+                  <td className="py-4 px-6">{flight.departure_name}</td>
                   <td className="py-4 px-6">{flight.date_time.slice(0, 10)}</td>
                   <td className="py-4 px-6">{flight.date_time.slice(11, 16).replace(/:/g,'')}</td>
                 </tr>
