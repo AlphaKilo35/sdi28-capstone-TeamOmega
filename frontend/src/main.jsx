@@ -9,6 +9,7 @@ import './pages/styles/root.css'
 import Root_Layout from './pages/root_layout/root_layout.jsx'
 import ErrorPage from './pages/error_page/error_page.jsx'
 import Home from './pages/home/Home.jsx'
+import Signup from './pages/sign_up/sign_up.jsx'
 
 /** Router **/
 const router = createBrowserRouter([
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: "/",
-        element: <Home />
+        element: <Signup />
       },
       //add additional pages here
     ]
