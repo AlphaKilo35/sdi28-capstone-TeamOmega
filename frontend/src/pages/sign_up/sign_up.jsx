@@ -3,12 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [username, setUsername] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [signupSuccess, setSignupSuccess] = useState(false)
-  const [passwordMatch, setPasswordMatch] = useState(true)
+  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(true);
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
@@ -36,6 +36,12 @@ const SignUp = () => {
       setError(error.message);
     }
   };
+
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:3000/oauth2/login/google'
+  }
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900 bg-cover">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 ">
@@ -91,11 +97,16 @@ const SignUp = () => {
                 </div>
               )}
               <div className="space-y-4">
-                <button
-                  className="w-full py-2 border rounded-md bg-[url('/login-graphic.jpg')] bg-cover text-white hover:opacity-90"
-                >
+                <button className="w-full py-2 border rounded-md bg-black bg-cover text-white hover:opacity-90">
                   SIGN UP
                 </button>
+              </div>
+              <div className="flex justify-center">
+                <div className="mt-2 border-2 rounded-full w-24 text-center bg-[url('/googlepng.png')] h-10 bg-cover ">
+                  <button onClick={handleGoogleLogin}className="h-full w-full">
+                    <p className="text-2xl"></p>
+                  </button>
+                </div>
               </div>
               <div className="relative flex justify-center">
                 <p className="text-gray-600 mt-6">Already have an account?</p>
@@ -103,7 +114,7 @@ const SignUp = () => {
             </div>
             <div className="relative flex justify-center">
               <p className="font-medium text-gray-500 hover:text-purple-600">
-                <Link to="/login">Login</Link>
+                <Link to="/">Login</Link>
               </p>
             </div>
           </>

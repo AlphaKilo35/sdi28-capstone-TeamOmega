@@ -12,6 +12,8 @@ import Home from './pages/home/Home.jsx'
 import Individual_Training from './pages/IndividualTraining/IndividualTrainingDashboard.jsx'
 import Flights from './pages/flights/Flights.jsx'
 import Signup from './pages/sign_up/sign_up.jsx'
+import Login from './pages/login/login.jsx'
+
 
 /** Router **/
 const router = createBrowserRouter([
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: '/flights',
         element: <Flights />
+      },
+      {
+        path: '/',
+        element: <Login />
       }
     ]
   }
