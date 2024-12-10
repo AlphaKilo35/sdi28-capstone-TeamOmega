@@ -20,7 +20,6 @@ const Flights = () =>{
     )
   }
   if(flightList != undefined){
-    console.log(typeof flightList[0].date_time)
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200">
       {/* Header */}
