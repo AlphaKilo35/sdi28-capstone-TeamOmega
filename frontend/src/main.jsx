@@ -31,7 +31,10 @@ const router = createBrowserRouter([
         path:"Individual-Training-Record",
         element: <Individual_Training />
       },
-      {path:"idt", element: <Individual_Training />},
+      {
+        path:"Individual-Training-Record",
+        element: <Individual_Training />
+      },
       //add additional pages here
       {
         path: '/flights',

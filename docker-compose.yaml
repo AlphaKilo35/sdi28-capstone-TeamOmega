@@ -70,15 +70,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 3
-
-
-
-
+    networks:
+      - appnetwork
 networks:
-  backend:
+  appnetwork:
     driver: bridge
-  frontend:
-    driver: bridge
-
-volumes:
-  postgres_volume:
