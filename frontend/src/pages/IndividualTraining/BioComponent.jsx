@@ -16,7 +16,8 @@ const BioComponent = () => {
         const fetchUserData = async () => {
             setTimeout(() => {
                 setUserData({
-                    name: "John Doe",
+                    id: ""
+                    name: "",
                     rank: "Sergeant",
                     branch: "Army",
                     specialty: "Infantry (MOS 11B)",
