@@ -37,7 +37,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-600 bg-cover">
+    <div className="min-h-screen flex items-center justify-center bg-slate-900 bg-cover">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 ">
         {!signupSuccess ? (
           <>
