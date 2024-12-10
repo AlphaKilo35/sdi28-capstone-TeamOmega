@@ -3,27 +3,26 @@ import React, { useEffect, useState } from "react";
 const BioComponent = () => {
    
     const [userData, setUserData] = useState({
-      name: "John Doe",
-      rank: "Sergeant",
-      branch: "Army",
-      specialty: "Infantry (MOS 11B)",
-      unit: "1st Infantry Division",
-      dutyPosition: "Squad Leader",
-      unitAddress: "123 Military Base Rd, Fort Example, USA",
+      id: "",
+      username: "",
+      password: "",
+      name: "",
+      email: "",
+      role: "",
+      jm: "",
     });
 
     useEffect(() => {
         const fetchUserData = async () => {
             setTimeout(() => {
                 setUserData({
-                    id: ""
+                    id: "",
+                    username: "",
+                    password: "",
                     name: "",
-                    rank: "Sergeant",
-                    branch: "Army",
-                    specialty: "Infantry (MOS 11B)",
-                    unit: "1st Infantry Division",
-                    dutyPosition: "Squad Leader",
-                    unitAddress: "123 Military Base Rd, Fort Example, USA",
+                    email: "",
+                    role: "",
+                    jm: "",
                   });
                 }, 500); 
               };
@@ -35,25 +34,25 @@ const BioComponent = () => {
         <div className="bio-component">
           <h2>Personal Information</h2>
           <div className="bio-field">
-            <strong>Name:</strong> {userData.name}
+            <strong>Id:</strong> {userData.name}
           </div>
           <div className="bio-field">
-            <strong>Rank:</strong> {userData.rank}
+            <strong>Username:</strong> {userData.rank}
           </div>
           <div className="bio-field">
-            <strong>Branch:</strong> {userData.branch}
+            <strong>Password:</strong> {userData.branch}
           </div>
           <div className="bio-field">
-            <strong>MOS/Specialty:</strong> {userData.specialty}
+            <strong>Name:</strong> {userData.specialty}
           </div>
           <div className="bio-field">
-            <strong>Unit:</strong> {userData.unit}
+            <strong>Email:</strong> {userData.unit}
           </div>
           <div className="bio-field">
-            <strong>Duty Position:</strong> {userData.dutyPosition}
+            <strong>Role:</strong> {userData.dutyPosition}
           </div>
           <div className="bio-field">
-            <strong>Unit Address:</strong> {userData.unitAddress}
+            <strong>Jump Master Qualified:</strong> {userData.unitAddress}
           </div>
         </div>
       );
