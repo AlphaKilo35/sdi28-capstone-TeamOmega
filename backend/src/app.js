@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const session = require('express-session')
+const passport = require('passport')
+const authRouter = require('./routes/auth.js')
 //const route = require('./routes/routes.js)
 
 const app = express();
@@ -8,11 +11,23 @@ const app = express();
 //Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.Router());
 app.use(cookieParser());
+app.use(session({
+  secret: 'Airborne',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    sameSite: 'lax'
+  }
+}))
+
+app.use(passport.initialize());
+app.use(passport.authenticate('session'));
 
 //Routes
-
+app.use('/oauth2', authRouter)
 
 
 //General | Root Route
