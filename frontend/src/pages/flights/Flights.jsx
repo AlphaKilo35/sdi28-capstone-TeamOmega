@@ -20,7 +20,7 @@ const Flights = () =>{
     )
   }
   if(flightList != undefined){
-    console.log(flightList)
+    console.log(typeof flightList[0].date_time)
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200">
       {/* Header */}
@@ -44,26 +44,20 @@ const Flights = () =>{
                 <th className="py-3 px-6">Time</th>
               </tr>
             </thead>
-
             {/* Table Body */}
             <tbody>
               {/* Example Row */}
-              <tr className="border-b border-gold-400 hover:bg-gray-800">
-                <td className="py-4 px-6">C-130 Hercules</td>
-                <td className="py-4 px-6">30</td>
-                <td className="py-4 px-6">Fort Bragg</td>
-                <td className="py-4 px-6">Pope AAF</td>
-                <td className="py-4 px-6">2024-12-15</td>
-                <td className="py-4 px-6">14:00</td>
-              </tr>
-              <tr className="border-b border-gold-400 hover:bg-gray-800">
-                <td className="py-4 px-6">C-17 Globemaster</td>
-                <td className="py-4 px-6">50</td>
-                <td className="py-4 px-6">Fort Campbell</td>
-                <td className="py-4 px-6">McChord AFB</td>
-                <td className="py-4 px-6">2024-12-16</td>
-                <td className="py-4 px-6">16:30</td>
-              </tr>
+              {flightList.map((flight) => {
+                return (
+                  <tr className="border-b border-gold-400 hover:bg-gray-800">
+                  <td className="py-4 px-6">{flight.airframe}</td>
+                  <td className="py-4 px-6">{flight.number_pax}</td>
+                  <td className="py-4 px-6">{flight.drop_zone_id}</td>
+                  <td className="py-4 px-6">{flight.departure_id}</td>
+                  <td className="py-4 px-6">{flight.date_time.slice(0, 10)}</td>
+                  <td className="py-4 px-6">{flight.date_time.slice(11, 16).replace(/:/g,'')}</td>
+                </tr>
+                )})}
             </tbody>
           </table>
         </div>
