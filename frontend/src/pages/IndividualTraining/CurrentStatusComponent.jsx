@@ -20,3 +20,5 @@ const training_status = () => {
 
   )
 }
+
+export default training_status;
