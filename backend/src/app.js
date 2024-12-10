@@ -30,6 +30,17 @@ app.use(passport.initialize());
 app.use(passport.authenticate("session"));
 
 //Routes
+const departures = require('./routes/departures');
+const dropZones = require('./routes/drop_zones');
+const flights = require('./routes/flights')
+const manifests = require('./routes/manifests')
+
+// Register Routes
+app.use('/departures', departures);
+app.use('/drop_zones', dropZones);
+app.use('/flights', flights);
+app.use('/manifests', manifests);
+
 app.use("/oauth2", authRouter);
 
 //General | Root Route
