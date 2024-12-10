@@ -9,7 +9,6 @@ import Root_Layout from './pages/root_layout/root_layout.jsx'
 import ErrorPage from './pages/error_page/error_page.jsx'
 import Home from './pages/home/Home.jsx'
 import Manifest from './pages/manifest_generator/Manifest.jsx'
-import FlightAndChalk from '../FlightandChalk.jsx'
 
 /** Router **/
 const router = createBrowserRouter([
@@ -20,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <FlightAndChalk />  // Set FlightAndChalk as the index route
+        element: <Home/> 
       },
       {
         path: "/manifest",
