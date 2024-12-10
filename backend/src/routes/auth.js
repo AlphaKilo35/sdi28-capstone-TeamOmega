@@ -1,9 +1,10 @@
 const express = require("express");
+require("dotenv").config({ path: "../../../.env" });
 const passport = require("passport");
 const knex = require("../../knex.js");
 
 const GoogleStrategy = require("passport-google-oidc");
-
+console.log(process.env.GOOGLE_CLIENT_ID);
 passport.use(
   new GoogleStrategy(
     {
@@ -13,16 +14,17 @@ passport.use(
       scope: ["profile"],
     },
     async function verify(issuer, profile, cb) {
+      console.log(profile)
       const user = await knex
         .select("*")
-        .from("existing_credentials")
+        .from("external_credentials")
         .where({ provider: issuer, subject: profile.id });
       if (user.length === 0) {
         knex("users")
           .insert({ name: profile.displayName })
           .returning("id")
           .then((result) => {
-            knex("existing_credentails")
+            knex("external_credentials")
               .insert({
                 user_id: result[0].id,
                 provider: issuer,
@@ -36,7 +38,7 @@ passport.use(
       } else {
         knex("users")
           .select("*")
-          .where({ id: user.user_id })
+          .where({ id: user[0].user_id })
           .then((result) => {
             if (result.length === 0) {
               return cb(null, false);
@@ -61,18 +63,22 @@ passport.deserializeUser(function (user, cb) {
   });
 });
 
-router.get("/login/federated/google", passport.authenticate("google"));
+const router = express.Router();
+
+router.get("/login/google", passport.authenticate("google"));
 
 router.get(
-  "/oauth2/redirect/google",
+  "/redirect/google",
   passport.authenticate("google", {
     failureRedirect: "/",
   }),
   (req, res) => {
     if (req.isAuthenticated() && req.user) {
-      res.redirect("/home");
+      res.redirect("http://localhost:5173");
     } else {
-      res.redirect("/");
+      console.log("failure");
     }
   }
 );
+
+module.exports = router;

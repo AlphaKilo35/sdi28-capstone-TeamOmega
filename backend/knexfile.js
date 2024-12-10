@@ -1,17 +1,20 @@
 // Update with your config settings.
-require('dotenv').config();
+require('dotenv').config({path: '../.env'});
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
-
+console.log(process.env.DB_CONNECTION_STRING)
 module.exports = {
 
   development: {
     client: 'pg',
-    connection: process.env.DB_CONNECTION_STRING,
+    connection: 'postgresql://postgres:docker@database:5432/postgres',
     pool: {
       min:0,
       max:10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
     }
   },
 
