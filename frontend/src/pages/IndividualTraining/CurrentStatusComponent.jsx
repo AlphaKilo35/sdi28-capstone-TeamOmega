@@ -1,5 +1,5 @@
 import filters from './FiltersComponent.jsx';
-import useFetchData from '../hooks/useFetchData.jsx';
+import useFetchData from '../../hooks/useFetchData.jsx';
 
 //Get User ID from session cookie
 let userId = null;
