@@ -58,8 +58,45 @@ router.get('/:id', async (req, res) => {
 
 });
 
+//POST
 
+router.post('/flights/:id', (req, res) => {
+  let {id, airframe, number_pax, dropzone, departure_area, date, time} = req.body
+  knex('flight_tbl').returning('*').insert({id, airframe, number_pax, dropzone, departure_area, date, time})
+  .then(data => {
+    let flightId = data.map(flight => flight.id)
+    res.json(flightId)
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(404).send(err);
+  });
+})
 
+//UPDATE
 
+router.patch('/flights/:id', (req, res) => {
+  knex('flight_tbl').where('id', req.params.id).update(req.body).returning('*')
+  .then(data => {
+    res.json(data)
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(404).send(err);
+  });
+})
+
+//DELETE
+
+router.delete('/flights/:id', (req, res) => {
+  knex('flight_tbl')
+    .where('id', req.params.id)
+    .del()
+    .then(res.send('it workd'))
+    .catch((err) => {
+      console.error(err);
+      res.status(404).send(err);
+    });
+})
 
 module.exports = router;
