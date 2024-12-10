@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+
 const knex = require('knex')(require('../../knexfile')[process.env.NODE_ENV || 'development']);
+
 
 // Fetch departures
 
@@ -68,3 +70,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = router;
+

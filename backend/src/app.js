@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -5,6 +6,7 @@ const session = require("express-session");
 const passport = require("passport");
 const authRouter = require("./routes/auth.js");
 //const route = require('./routes/routes.js)
+
 
 const app = express();
 
@@ -48,4 +50,6 @@ app.get("/", (req, res) => {
   res.send("Express API Application is up and running");
 });
 
+
 module.exports = app;
+

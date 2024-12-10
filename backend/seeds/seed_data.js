@@ -1,6 +1,8 @@
 /**
  * @param { import("knex").Knex } knex
+
  * @returns { Promise<void> }
+
  */
 const { faker, fakerEN_US } = require('@faker-js/faker')
 
@@ -9,6 +11,7 @@ function createDeparture() {
   for (var d = 0; d < 5; d++) {
     departures.push({
       departure_name: faker.location.city()
+
     })
   }
   return departures;
@@ -19,6 +22,7 @@ function createDropzone() {
   for (var z = 0; z < 10; z++) {
     dropZones.push({
       dropzone_name: faker.location.city()
+
     })
   }
   return dropZones;
