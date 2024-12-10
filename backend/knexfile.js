@@ -8,7 +8,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: process.env.DB_CONNECTION_STRING,
+    connection: 'postgres://postgres:docker@localhost:5432/database',
     pool: {
       min:0,
       max:10
