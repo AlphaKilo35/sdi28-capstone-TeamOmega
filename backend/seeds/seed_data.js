@@ -8,7 +8,7 @@ function createDeparture() {
   let departures = [];
   for (var d = 0; d < 5; d++) {
     departures.push({
-      name: faker.location.city()
+      departure_name: faker.location.city()
     })
   }
   return departures;
@@ -18,7 +18,7 @@ function createDropzone() {
   let dropZones = [];
   for (var z = 0; z < 10; z++) {
     dropZones.push({
-      name: faker.location.city()
+      dropZone_name: faker.location.city()
     })
   }
   return dropZones;

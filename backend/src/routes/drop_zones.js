@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const knex = require('../knex');
+const knex = require('knex')(require('../../knexfile')[process.env.NODE_ENV || 'development']);
 
 
 // Fetch drop zones
@@ -70,3 +70,5 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to update drop zone' });
   }
 });
+
+module.exports = router;
