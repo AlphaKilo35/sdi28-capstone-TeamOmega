@@ -1,5 +1,5 @@
 // Update with your config settings.
-require('dotenv').config();
+require('dotenv').config({path: '../.env'});
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -12,6 +12,9 @@ module.exports = {
     pool: {
       min:0,
       max:10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
     }
   },
 
