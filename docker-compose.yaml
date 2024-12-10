@@ -14,8 +14,7 @@ services:
       - VITE_PORT=${VITE_PORT}
     ports:
       - '5173:5173'
-    networks:
-      - frontend
+
       # 5173 is the default Node.js server, change if ports have been changed to something like 8080
     volumes:
       - .:/app
@@ -34,9 +33,7 @@ services:
       - EXPRESS_PORT=${EXPRESS_PORT}
     ports:
       - '3000:3000'
-    networks:
-      - backend
-      - frontend
+
       # 3000 is default Express.js port, again - change if application has something different
     volumes:
       - .:/app
@@ -55,11 +52,9 @@ services:
       # Any environment variables from within the .env file (this file is in the .gitignore, must be made locally with variables matching)
     ports:
       - 5432:5432
-    volumes:
-      - postgres_volume:/var/lib/postgresql/data
 
-    networks:
-      - backend
+
+
 
     healthcheck:
       test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USERNAME} -d ${POSTGRES_DB_NAME}'" ]
@@ -68,12 +63,6 @@ services:
       retries: 3
 
 
-networks:
-  backend:
-    driver: bridge
-  frontend:
-    driver: bridge
 
 
-volumes:
-  postgres_volume:
+
