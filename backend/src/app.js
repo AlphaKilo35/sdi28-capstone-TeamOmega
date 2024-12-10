@@ -32,6 +32,13 @@ app.use(passport.authenticate("session"));
 //Routes
 app.use('/api/Individual-Training-Record', userRouter);
 app.use('/oauth2', authRouter);
+const departures = require('./routes/departures');
+const dropZones = require('./routes/drop_zones');
+
+// Register Routes
+app.use('/departures', departures);
+app.use('/drop_zones', dropZones);
+
 
 
 //General | Root Route
