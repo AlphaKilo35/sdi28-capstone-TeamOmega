@@ -16,38 +16,39 @@ router.get('/:id', async (req, res) => {
     })
 })
 
-router.get('/', async (req, res) => {
-    await knex('users_tbl as u')
-    .join('manifest_tbl as m', 'u.id', 'm.user_id')
-    .join('flight_tbl as f', 'm.flight_id', 'f.id')
-    .join('departure_tbl as d', 'f.departure_id', 'd.id')
-    .join('drop_zone_tbl as z', 'f.drop_zone_id', 'z.id')
-    .select(
-        'u.id as user_id',
-        'u.name as name',
-        'u.role as role',
-        'u.rm as rm',
-        'u.email as email',
-        'm.id as manifest_id',
-        'm.status as status',
-        'm.lift as lift',
-        'f.id as flight_id',
-        'f.airframe as airframe',
-        'f.type_tod as type_tod',
-        'f.type_load as type_load',
-        'f.date_time as date_time',
-        'f.number_pax as number_pax',
-        'f.number_passes as number_passes',
-        'd.departure_name as departure_name',
-        'z.dropzone_name as dropzone_name'
-    )
+//POST
+
+//UPDATE
+
+router.patch('/:id', async (req, res) => {
+    let userId = parseInt(req.params.id);
+    let { role, jm } = req.body;
+    await knex('users_tbl').where('id', userId).update('role', role).update('jm', jm).returning('*')
     .then(data => {
         res.json(data);
     })
     .catch(err => {
-        console.log('Failed to fetch unit data:', err);
-        res.status(400).json({err: 'Failed to fetch unit data'})
+        console.log('Failed to fetch user:', err);
+        res.status(400).json({err: 'Failed to fetch user'});
     })
+
 })
+
+//DELETE
+
+router.delete('/:id', async (req, res) => {
+    let userId = parseInt(req.params.id);
+    try { 
+        await knex('manifest_tbl').where('user_id', userId).del(); 
+        const deletedCount = await knex('users_tbl').where('id', userId).del(); 
+        if (deletedCount === 0) { 
+            return res.status(404).json({ error: 'User not found' }); 
+        }
+        res.status(200).json({ message: `User with ID ${userId} has been deleted`})
+    } catch (err) {
+        console.log('Failed to delete user:', err);
+        res.status(500).json({ error: 'Failed to delete user'})
+    }
+});
 
 module.exports = router;
