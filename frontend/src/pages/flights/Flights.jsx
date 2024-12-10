@@ -1,6 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react'
 
-const Flights = () => {
+const Flights = () =>{
+  const [flightList, setFlightList] = useState(undefined)
+
+  useEffect(() =>{
+    fetch("http://localhost:3000/flights")
+      .then((res) => res.json())
+      .then((data) => setFlightList(data));
+  }, [])
+
+
+
+  if(flightList === undefined)
+  {
+    return(
+      <>
+      <h1>Still Loading...</h1>
+      </>
+    )
+  }
+  if(flightList != undefined){
+    console.log(flightList)
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200">
       {/* Header */}
@@ -51,6 +71,7 @@ const Flights = () => {
     </div>
   );
 };
+}
 
 export default Flights;
 
