@@ -49,7 +49,7 @@ const Training_Status = () => {
       { jumpData.loading ? (<p>Loading. . .</p>) : ( renderUserData() ) }
     </div>
   );
-}
+};
 
 export default Training_Status;
 /**{Object.entries(userData[0]).map(([key, value], index) => (
