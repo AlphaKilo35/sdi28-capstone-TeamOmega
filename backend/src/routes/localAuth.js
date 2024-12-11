@@ -29,6 +29,7 @@ passport.use(
 );
 
 router.post("/login", (req, res, next) => {
+  console.log('/login router fired')
   passport.authenticate("local", (err, user, response) => {
     if (err) return res.status(500).json({ message: "server error" });
     if (!user) return res.status(404).json(response);

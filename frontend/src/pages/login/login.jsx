@@ -13,18 +13,22 @@ const LogIn = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    setBadUserResponse({ user: true, passwordMatch: true });
-    const checkCredentials = async () => {
+
+
+    const handleLogin = async () => {
+      setBadUserResponse({ user: true, passwordMatch: true });
       try {
-        let response = await fetch("http://localhost:3000/local/login", {
+        let response = await fetch('http://localhost:3000/local/login', {
           method: "POST",
+
           headers: {
-            "Content-Type:": "applicaion/json",
+            "Content-Type": "application/json",
           },
-          credentials: "include",
+
           body: JSON.stringify({ username: username, password: password }),
         });
+        console.log(response)
+        if(response.redirected) return;
         response = await response.json();
         if (response.userFound && response.user) {
           navigate("/home");
@@ -37,8 +41,8 @@ const LogIn = () => {
         console.error(err);
       }
     };
-    checkCredentials();
-  };
+
+
 
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:3000/oauth2/login/google";
