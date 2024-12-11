@@ -29,6 +29,15 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/dropzones', (req, res) => {
+  knex('drop_zone_tbl').select('*')
+    .then(data => res.send(data))
+})
+router.get('/departureAirfields', (req, res) => {
+  knex('departure_tbl').select('*')
+    .then(data => res.send(data))
+})
+
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -60,9 +69,10 @@ router.get('/:id', async (req, res) => {
 
 //POST
 
-router.post('/flights/:id', (req, res) => {
+router.post('/', (req, res) => {
   let {id, airframe, number_pax, dropzone, departure_area, date, time} = req.body
-  knex('flight_tbl').returning('*').insert({id, airframe, number_pax, dropzone, departure_area, date, time})
+  console.log(req.body)
+  knex('flight_tbl').returning('*').insert(req.body)
   .then(data => {
     let flightId = data.map(flight => flight.id)
     res.json(flightId)

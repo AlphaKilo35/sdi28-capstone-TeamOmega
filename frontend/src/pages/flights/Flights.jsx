@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import {useNavigate} from 'react-router-dom'
 
 
 
 const Flights = () =>{
   const navigate = useNavigate();
+  const [flightToDelete, setFlightToDelete] = useState(undefined)
+  const [departureAirfieldList, setDepartureAirfieldList] = useState(undefined)
+  const [dropzoneList, setDropzoneList] = useState(undefined)
   const [flightList, setFlightList] = useState(undefined)
   const [open, setOpen] = useState(false)
   const [newAirframe, setNewAirframe] = useState()
@@ -15,18 +17,69 @@ const Flights = () =>{
   const [newDepartureAirfield, setNewDepartureAirfield] = useState()
   const [newDateTime, setNewDateTime] = useState()
 
-  const newFLightDate = () => {
+  const newAirframeEntry = () => {
+    setNewAirframe(event.target.value)
+  }
+  const newNumberOFJumpersEntry = () => {
+    setNewNumberOFJumpers(event.target.value)
+  }
+  const newDropzoneEntry = () => {
+    setNewDropzone(event.target.value)
+    console.log(newDropzone)
+  }
+  const newDepartureAirfieldEntry = () => {
+    setNewDepartureAirfield(event.target.value)
+    console.log(newDepartureAirfield)
+  }
+  const newFLightDateEntry = () => {
     setNewDateTime(new Date(event.target.value).toISOString())
   }
 
+  const deleteFlight =() =>{
+    setFlightToDelete(event.target.value)
+  }
+  useEffect(()=>{
+    fetch(`http://localhost:3000/flights/${flightToDelete}`, {
+      method: "DELETE"
+    })
+    .then(()=>console.log("deleted"))
+  }, [flightToDelete])
   useEffect(() =>{
     fetch("http://localhost:3000/flights")
       .then((res) => res.json())
       .then((data) => setFlightList(data));
   }, [flightList])
 
-  const addFlight = () => {
+  useEffect(()=>{
+    fetch("http://localhost:3000/flights/dropzones")
+    .then((res) => res.json())
+    .then((data) => setDropzoneList(data))
+  }, [])
 
+  useEffect(()=>{
+    fetch("http://localhost:3000/flights/departureAirfields")
+    .then((res) => res.json())
+    .then((data) => setDepartureAirfieldList(data))
+    .then(()=> console.log(departureAirfieldList))
+  }, [])
+
+  const addFlight = () => {
+    const newFlight = {
+      airframe: newAirframe,
+      number_pax: newNumberOFJumpers,
+      departure_id: newDepartureAirfield,
+      drop_zone_id: newDropzone,
+      date_time: newDateTime
+      }
+      console.log(newFlight)
+    fetch("http://localhost:3000/flights", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newFlight)
+    })
+    .then(() => setOpen(false))
   }
 
   const toManifest =(event) =>{
@@ -37,7 +90,7 @@ const Flights = () =>{
   }
 
 
-  if(flightList === undefined)
+  if(flightList === undefined && dropzoneList === undefined && departureAirfieldList === undefined)
   {
     return(
       <>
@@ -45,7 +98,7 @@ const Flights = () =>{
       </>
     )
   }
-  if(flightList != undefined){
+  if(flightList != undefined && dropzoneList != undefined && departureAirfieldList !== undefined){
   return (
     <>
     <div className="min-h-screen bg-gray-900 text-gray-200">
@@ -76,7 +129,8 @@ const Flights = () =>{
             <tbody>
               {flightList.map((flight) => {
                 return (
-                  <tr className="border-b border-gold-400 hover:bg-gray-800" id = {flight.flight_id} onClick = {()=>{toManifest(event)}}>
+                  <>
+                  <tr className="border-t border-gold-400 hover:bg-gray-800" id = {flight.flight_id} onClick = {()=>{toManifest(event)}}>
                   <td className="py-4 px-6">{flight.airframe}</td>
                   <td className="py-4 px-6" id = {`flight${flight.flight_id}`}>{flight.number_pax}</td>
                   <td className="py-4 px-6">{flight.drop_zone_name}</td>
@@ -84,6 +138,12 @@ const Flights = () =>{
                   <td className="py-4 px-6">{flight.date_time.slice(0, 10)}</td>
                   <td className="py-4 px-6">{flight.date_time.slice(11, 16).replace(/:/g,'')}</td>
                 </tr>
+                <button type="button" onClick={deleteFlight}
+                className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                value = {flight.flight_id}>
+                Remove Flight
+              </button>
+              </>
                 )})}
             </tbody>
           </table>
@@ -113,12 +173,23 @@ const Flights = () =>{
                     <p className="text-sm text-gray-500">
                       Fill out the following info to add a flight
                     </p>
-                    <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Airframe"/>
-                    <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Number of Jumpers"/>
-                    <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Dropzone"/>
-                    <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Departure Airfield"/>
-                    <input type="datetime-local" className="form-input rounded-full px-4 py-3" placeholder = "Date" onChange = {newFLightDate}/>
-                    <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Time"/>
+                    <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Airframe" onChange = {newAirframeEntry}/>
+                    <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Number of Jumpers" onChange = {newNumberOFJumpersEntry}/>
+                    <select className="form-input rounded-full px-4 py-3" placeholder = "Dropzone" onChange = {newDropzoneEntry}>
+                    <option value = 'null'>---Select a Dropzone---</option>
+                      {dropzoneList.map((dropzone) =>{
+                        return(
+                        <option value = {dropzone.id}>{dropzone.dropzone_name}</option>
+                      )})}
+                    </select>
+                    <select className="form-input rounded-full px-4 py-3" placeholder = "Departure Airfield" onChange = {newDepartureAirfieldEntry}>
+                    <option value = 'null'>---Select a Departure Airfield---</option>
+                      {departureAirfieldList.map((departureairfield) =>{
+                        return(
+                        <option value = {departureairfield.id}>{departureairfield.departure_name}</option>
+                      )})}
+                    </select>
+                    <input type="datetime-local" className="form-input rounded-full px-4 py-3" placeholder = "Date" onChange = {newFLightDateEntry}/>
                   </div>
                 </div>
               </div>
@@ -126,7 +197,7 @@ const Flights = () =>{
             <div className="bg-gray-800 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={addFlight}
                 className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
               >
                 Submit
