@@ -2,6 +2,7 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
+
 exports.up = function (knex) {
   return knex.schema.createTable("external_credentials", (table) => {
     table.increments("id");

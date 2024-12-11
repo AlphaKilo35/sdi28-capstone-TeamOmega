@@ -9,6 +9,8 @@ import Root_Layout from './pages/root_layout/root_layout.jsx'
 import ErrorPage from './pages/error_page/error_page.jsx'
 import Home from './pages/home/Home.jsx'
 import Manifest from './pages/manifest_generator/Manifest.jsx'
+import Flights from './pages/flights/Flights.jsx'
+
 
 /** Router **/
 const router = createBrowserRouter([
@@ -19,11 +21,17 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+
         element: <Home/> 
       },
       {
         path: "/manifest",
         element: <Manifest />
+      },
+      //add additional pages here
+      {
+        path: '/flights',
+        element: <Flights />
       }
     ]
   }
