@@ -29,28 +29,37 @@ const BioComponent = () => {
     }, []);
 
     return (
-        <div className="bio-component">
-          <h2>Personal Information</h2>
-          <div className="bio-field">
-            <strong>Id:</strong> {userData.name}
+      // bio-component
+        <div className="flex flex-col bg-gray-50 p-6 w-full sm:w-1/3 md:w-1/4 shadow-lg rounded-lg">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Personal Information</h2>
+          {/* User Data */}
+          <div className="mb-4">
+            <strong className="text-gray-700">Id:</strong> 
+            <span className="text-gray-900">{userData.name}</span>
           </div>
-          <div className="bio-field">
-            <strong>Username:</strong> {userData.rank}
+          <div className="mb-4">
+            <strong className="text-gray-700">Username:</strong> 
+            <span className="text-gray-900">{userData.rank}</span>
           </div>
-          <div className="bio-field">
-            <strong>Password:</strong> {userData.branch}
+          <div className="mb-4">
+            <strong className="text-gray-700">Password:</strong> 
+            <span className="text-gray-900">{userData.branch}</span>
           </div>
-          <div className="bio-field">
-            <strong>Name:</strong> {userData.specialty}
+          <div className="mb-4">
+            <strong className="text-gray-700"g>Name:</strong> 
+            <span className="text-gray-900">{userData.specialty}</span>
           </div>
-          <div className="bio-field">
-            <strong>Email:</strong> {userData.unit}
+          <div className="mb-4">
+            <strong className="text-gray-700">Email:</strong> 
+            <span className="text-gray-900">{userData.unit}</span>
           </div>
-          <div className="bio-field">
-            <strong>Role:</strong> {userData.dutyPosition}
+          <div className="mb-4">
+            <strong className="text-gray-700">Role:</strong> 
+            <span className="text-gray-900">{userData.dutyPosition}</span>
           </div>
-          <div className="bio-field">
-            <strong>Jump Master Qualified:</strong> {userData.unitAddress}
+          <div className="mb-4">
+            <strong className="text-gray-700">Jump Master Qualified:</strong> 
+            <span className="text-gray-900">{userData.unitAddress}</span>
           </div>
         </div>
       );
