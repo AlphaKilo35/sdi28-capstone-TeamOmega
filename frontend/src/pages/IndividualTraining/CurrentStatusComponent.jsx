@@ -4,8 +4,6 @@ import useFetchData from '../../hooks/useFetchData.jsx';
 const Training_Status = () => {
   let userId = 1;
   let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
-  //let userData = ["1", "bob"]
-  console.log(userData.dataObject);
 
   let renderUserData = () => {
     if (!userData|| userData.length === 0 ) return <p>No User Data Found</p>
