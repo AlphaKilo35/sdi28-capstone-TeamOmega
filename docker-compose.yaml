@@ -13,8 +13,10 @@ services:
       - VITE_PORT=${VITE_PORT}
     ports:
       - '5173:5173'
+    networks:
+      - appnetwork
 
-      # 5173 is the default Node.js server, change if ports have been changed to something like 8080
+  #     # 5173 is the default Node.js server, change if ports have been changed to something like 8080
   backend:
     # Backend Express Server
     build: backend/
@@ -28,6 +30,9 @@ services:
       - EXPRESS_PORT=${EXPRESS_PORT}
     ports:
       - '3000:3000'
+    networks:
+      - appnetwork
+
 
       # 3000 is default Express.js port, again - change if application has something different
   database:
@@ -43,6 +48,12 @@ services:
       # Any environment variables from within the .env file (this file is in the .gitignore, must be made locally with variables matching)
     ports:
       - 5432:5432
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    networks:
+      - appnetwork
+
+
 
 
 
@@ -53,7 +64,12 @@ services:
       timeout: 3s
       retries: 3
 
+networks:
+  appnetwork:
+    driver: bridge
 
+volumes:
+  postgres_volume:
 
 
 
