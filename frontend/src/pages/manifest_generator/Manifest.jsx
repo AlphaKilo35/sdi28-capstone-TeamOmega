@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom'
 
 export default function Manifest({ totalSeats = 20, flightId = 2 }) {
   const [search, setSearch] = useState("");
   const [manifestJumpers, setManifestJumpers] = useState([]);
   const [manifestStatus, setManifestStatus] = useState("incomplete");
   const [availableJumpers, setAvailableJumpers] = useState([]);
+  const location = useLocation()
+  const flightInfo = location.state
+  console.log(flightInfo)
 
   useEffect(() => {
     fetch(`http://localhost:3000/manifests/flight/${flightId}/users`)
