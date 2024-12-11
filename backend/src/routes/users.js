@@ -18,6 +18,18 @@ router.get('/:id', async (req, res) => {
 
 //POST
 
+router.post('/', async (req, res) => {
+    let { username, name, email, role, jm, password } = req.body;
+    await knex('users_tbl').returning('*').insert({username, name, email, role, jm, password})
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        console.log('Failed to create user:', err);
+        res.status(500).json({err: 'Failed to create user'})
+    })
+})
+
 //UPDATE
 
 router.patch('/:id', async (req, res) => {

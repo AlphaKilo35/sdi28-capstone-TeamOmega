@@ -3,6 +3,8 @@
  * @returns { Promise<void> }
  */
 const { faker, fakerEN_US } = require('@faker-js/faker')
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 function createDeparture() {
   let departures = [];
@@ -33,9 +35,25 @@ function createUsers() {
     let emailAddress = `${userName}@military.mil`;
     let roleType = roles[Math.floor(Math.random() * 3)];
     let jmBool = Math.random() < .5;
+    let userPassword = faker.internet.password()
+    // let newSalt = bcrypt.genSalt(saltRounds, (err, salt) => {
+    //   if (err) {
+    //     throw new Error;
+    //   }
+    //   return salt
+    // })
+    // async function hashPassword(userPassword, newSalt) {
+    //   const hashedPassword = await bcrypt.hash(userPassword, newSalt, (err, hash) => {
+    //     if (err) {
+    //     throw new Error;
+    //     }
+    //     return hash
+    //   })
+    //   return hashedPassword;
+    // }
     users.push({
       username: userName,
-      password: faker.internet.password(),
+      password: userPassword,
       name: fullName,
       email: emailAddress,
       role: roleType,
