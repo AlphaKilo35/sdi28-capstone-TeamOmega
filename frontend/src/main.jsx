@@ -10,6 +10,11 @@ import Root_Layout from './pages/root_layout/root_layout.jsx'
 import ErrorPage from './pages/error_page/error_page.jsx'
 import Home from './pages/home/Home.jsx'
 
+import Flights from './pages/flights/Flights.jsx'
+import Signup from './pages/sign_up/sign_up.jsx'
+import Login from './pages/login/login.jsx'
+
+
 /** Router **/
 const router = createBrowserRouter([
   {
@@ -18,10 +23,21 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: "/",
-        element: <Home />
+        path: '/login',
+        element: <Login />
+      },
+      {
+
+        path: '/signup',
+        element: <Signup />
+
       },
       //add additional pages here
+      {
+        path: '/flights',
+        element: <Flights />
+      },
+
     ]
   }
 ])

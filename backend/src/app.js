@@ -1,10 +1,13 @@
+
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
 const authRouter = require("./routes/auth.js");
+const localAuth = require('./routes/localAuth.js')
 //const route = require('./routes/routes.js)
+
 
 const app = express();
 
@@ -44,10 +47,13 @@ app.use('/manifests', manifests);
 app.use('/users', users)
 
 app.use("/oauth2", authRouter);
+app.use('/local', localAuth)
 
 //General | Root Route
 app.get("/", (req, res) => {
   res.send("Express API Application is up and running");
 });
 
+
 module.exports = app;
+

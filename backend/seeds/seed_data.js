@@ -1,12 +1,15 @@
 /**
  * @param { import("knex").Knex } knex
+
  * @returns { Promise<void> }
+
  */
 const { faker, fakerEN_US } = require('@faker-js/faker')
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 function createDeparture() {
+
 
   const departures = [
     { departure_name: "MAAF" },
@@ -17,6 +20,7 @@ function createDeparture() {
 }
 
 function createDropzone() {
+
   
   const dropZones = [
     { dropzone_name: "Sicily" },
@@ -25,6 +29,7 @@ function createDropzone() {
     { dropzone_name: "St Mere" },
     { dropzone_name: "Luzon" },
   ];
+
 
   return dropZones;
 }
