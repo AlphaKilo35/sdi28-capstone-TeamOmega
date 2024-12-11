@@ -37,9 +37,6 @@ const SignUp = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:3000/oauth2/login/google'
-  }
 
 
   return (
@@ -101,20 +98,14 @@ const SignUp = () => {
                   SIGN UP
                 </button>
               </div>
-              <div className="flex justify-center">
-                <div className="mt-2 border-2 rounded-full w-24 text-center bg-[url('/googlepng.png')] h-10 bg-cover ">
-                  <button onClick={handleGoogleLogin}className="h-full w-full">
-                    <p className="text-2xl"></p>
-                  </button>
-                </div>
-              </div>
+
               <div className="relative flex justify-center">
                 <p className="text-gray-600 mt-6">Already have an account?</p>
               </div>
             </div>
             <div className="relative flex justify-center">
               <p className="font-medium text-gray-500 hover:text-purple-600">
-                <Link to="/">Login</Link>
+                <Link to="/login">Login</Link>
               </p>
             </div>
           </>

@@ -81,4 +81,8 @@ router.get(
   }
 );
 
+router.get('/users', (res, req)=>{
+  res.send(req.user)
+})
+
 module.exports = router;

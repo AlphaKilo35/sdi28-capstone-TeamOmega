@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
 const authRouter = require("./routes/auth.js");
+const localAuth = require('./routes/localAuth.js')
 //const route = require('./routes/routes.js)
 
 
@@ -44,6 +45,7 @@ app.use('/flights', flights);
 app.use('/manifests', manifests);
 
 app.use("/oauth2", authRouter);
+app.use('/local', localAuth)
 
 //General | Root Route
 app.get("/", (req, res) => {
