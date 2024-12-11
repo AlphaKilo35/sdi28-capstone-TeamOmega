@@ -16,6 +16,18 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    if (loading) {
+        return;
+    }
+
+    if (!username || !password) {
+        setMessage('All fields are required.');
+        return;
+    }
+    setLoading(true);
+    setMessage('');
+
     try {
       const response = await fetch("http://localhost:3000/local/signup", {
         method: "POST",
