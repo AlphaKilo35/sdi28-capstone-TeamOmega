@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 export default function Manifest() {
   const [search, setSearch] = useState("");
   const [manifestJumpers, setManifestJumpers] = useState([]);
-  const [manifestStatus, setManifestStatus] = useState("");
+  const [manifestStatus, setManifestStatus] = useState("scheduled");
   const [availableJumpers, setAvailableJumpers] = useState([]);
   const [isAddingJumper, setIsAddingJumper] = useState(false);
 
@@ -81,7 +81,6 @@ export default function Manifest() {
       };
 
       setManifestJumpers(current => {
-        // Double-check the limit before adding
         if (current.length >= totalSeats) {
           throw new Error("Manifest is full");
         }
@@ -155,7 +154,7 @@ export default function Manifest() {
                 <button
                   onClick={() => addToManifest(jumper)}
                   disabled={manifestJumpers.length >= totalSeats}
-                  className="bg-blue-500 text-white cursor-pointer"
+                  className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                 >
                   add
                 </button>
