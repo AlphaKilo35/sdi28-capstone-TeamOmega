@@ -104,14 +104,16 @@ export default function Manifest({ totalSeats = 20, flightId = 2 }) {
       .catch((error) => console.log("Error updating status:", error));
   };
   return (
-    <div className="p-4">
+
+    //main container
+    <div className="p-4 min-h-screen bg-gray-900 text-gray-200">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* available jumpers container */}
         <div className="border p-4">
           <h2 className="font-bold">Available Jumpers</h2>
           <input
             type="text"
-            className="w-full border p-2 mb-4"
+            className="w-full border p-2 mb-4 text-gray-900"
             placeholder="Search jumpers..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -141,19 +143,21 @@ export default function Manifest({ totalSeats = 20, flightId = 2 }) {
         {/* manifest container*/}
         <div className="border p-4">
           <h2 className="font-bold">Flight Manifest</h2>
+
+        {/* jump status*/}
           <div className="flex gap-2">
-            <div className="text-sm">Status: {manifestStatus}</div>
+            <div className="text-sm ">Status: {manifestStatus}</div>
             <select
               value={manifestStatus}
               onChange={(e) => updateStatus(e.target.value)}
-              className="px-2 py-1 border rounded"
-            >
+              className="px-2 py-1 border rounded text-gray-900">
               <option value="scheduled">Scheduled</option>
               <option value="scratched">Scratched</option>
               <option value="complete">Complete</option>
             </select>
           </div>
 
+            {/* seats available*/}
           <div className="mb-4">
             Available Seats: {totalSeats - manifestJumpers.length} /{" "}
             {totalSeats}
