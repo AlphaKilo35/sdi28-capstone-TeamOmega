@@ -55,6 +55,7 @@ export default function Manifest() {
 
         return [...current, jumperWithManifestId];
       });
+      console.log("Manifest created:", data);
     } catch (error) {
       console.log("Error creating manifest:", error);
     } finally {
