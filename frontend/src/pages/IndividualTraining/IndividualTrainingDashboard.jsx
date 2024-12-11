@@ -10,17 +10,19 @@ import Pay_Tracker from './PayLoss.jsx';
 
 function Individual_Training () {
 return (
-  <div className="individual_training_dashboard">
-      <h4>Individual Training Dashboard</h4>
-      <div className="soldier_bio_panel">
+  <div className="min-h-screen flex flex-col pb-16">
+      <h2 className='text-center text-2xl font-semibold mb-4'>Individual Training Dashboard</h2>
+      <div className="flex flex-col md:flex-row gap-6 flex-grow">
+        <div className='w-full sm:w-full md:w-1/3 bg-white p-6 shadow-lg rounded-lg max-h-[653px] min-w-[330px] overflow-auto'>
         <BioComponent />
       </div>
-      <div className="training_table">
+      <div className=" bg-white p-6 rounded-lg flex-grow">
         <Training_Status />
       </div>
-      <div className="pay_tracker">
+      <div className="pay-loss">
         <Pay_Tracker />
       </div>
+  </div>
   </div>
 
 )

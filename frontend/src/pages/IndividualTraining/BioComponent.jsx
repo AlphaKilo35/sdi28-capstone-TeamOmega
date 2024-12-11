@@ -64,32 +64,41 @@ const BioComponent = () => {
     return <p>Error: {error}</p>;
   }
 
-  return (
-    <div className="bio-component">
-      <h2>Personal Information</h2>
-      <div className="bio-field">
-        <strong>Id:</strong> {userData.id}
-      </div>
-      <div className="bio-field">
-        <strong>Username:</strong> {userData.username}
-      </div>
-      <div className="bio-field">
-        <strong>Password:</strong> {userData.password}
-      </div>
-      <div className="bio-field">
-        <strong>Name:</strong> {userData.name}
-      </div>
-      <div className="bio-field">
-        <strong>Email:</strong> {userData.email}
-      </div>
-      <div className="bio-field">
-        <strong>Role:</strong> {userData.role}
-      </div>
-      <div className="bio-field">
-        <strong>Jump Master Qualified:</strong> {userData.jm}
-      </div>
-    </div>
-  );
-};
+    return (
+      // bio-component
+        <div className="flex flex-col p-6 w-full sm:w-1/3 md:w-1/4 rounded-lg">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Personal Information</h2>
+          {/* User Data */}
+          <div className="mb-4">
+            <strong className="text-gray-700">Id: </strong> 
+            <span className="text-gray-900">{userData.name}</span>
+          </div>
+          <div className="mb-4">
+            <strong className="text-gray-700">Username: </strong> 
+            <span className="text-gray-900">{userData.rank}</span>
+          </div>
+          <div className="mb-4">
+            <strong className="text-gray-700">Password: </strong> 
+            <span className="text-gray-900">{userData.branch}</span>
+          </div>
+          <div className="mb-4">
+            <strong className="text-gray-700"g>Name: </strong> 
+            <span className="text-gray-900">{userData.specialty}</span>
+          </div>
+          <div className="mb-4">
+            <strong className="text-gray-700">Email: </strong> 
+            <span className="text-gray-900">{userData.unit}</span>
+          </div>
+          <div className="mb-4">
+            <strong className="text-gray-700">Role: </strong> 
+            <span className="text-gray-900">{userData.dutyPosition}</span>
+          </div>
+          <div className="mb-4">
+            <strong className="text-gray-700">Jump Master Qualified: </strong> 
+            <span className="text-gray-900">{userData.unitAddress}</span>
+          </div>
+        </div>
+      );
+    };
 
 export default BioComponent;

@@ -3,7 +3,7 @@ import useFetchData from '../../hooks/useFetchData.jsx';
 
 const Training_Status = () => {
   const [pageLoad, setPageLoad] = useState(true);
-  const [userId, setUserId] = useState(5)
+  const [userId, setUserId] = useState(3)
   let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
   const jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`)
 
@@ -22,30 +22,32 @@ const Training_Status = () => {
     if (!userData|| userData.length === 0 ) return <p>No User Data Found</p>
     let tableHeaders = Object.keys(jumpData.dataObject[0]);
     return (
-      <div className="trng-tbl-container">
-        <h4>Training Table</h4>
-        <table border="1" cellPadding="5" cellSpacing="0">
+      <div className="bg-white p-6 shadow-lg rounded-lg w-full min-w-full max-h-[650px]">
+        <div className='overflow-x-auto'>
+        <h4 className="text-xl font-semibold text-gray-800 mb-4">Training Table</h4>
+        <table className="min-w-full border-collapse">
           <thead>
-            <tr>
-              { tableHeaders.map( (header) => ( <th key={header}>{header}</th> )) }
+            <tr className="bg-gray-200">
+              { tableHeaders.map( (header) => ( <th key={header} className='p-2 text-left border'>{header}</th> )) }
             </tr>
           </thead>
           <tbody>
             {jumpData.dataObject.map( (row, index) => (
               <tr key={index}>
                 {tableHeaders.map( (header) => (
-                  <td key={header}>{row[header]}</td>
+                  <td key={header} className='p-2 border'>{row[header]}</td>
                 ))}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      </div>
     );
   };
   console.log(jumpData)
   return (
-    <div className="trng-tbl-container">
+    <div className="w-full p-6">
       { jumpData.loading ? (<p>Loading. . .</p>) : ( renderUserData() ) }
     </div>
   );

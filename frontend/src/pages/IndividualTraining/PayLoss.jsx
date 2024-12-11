@@ -6,9 +6,12 @@ const PayLoss = () => {
   const [daysUntilPayLoss, setDaysUntilPayLoss] = useState(5); // Replace with real data
 
   return (
-    <div>
-      <h1>Pay Loss Tracker</h1>
-
+    <div 
+      className={`fixed bottom-0 left-0 right-0 bg-red-400 text-black py-4 px-8 text-center shadow-2xl z-50 transition-all ${
+          isCurrent ? "bg-green-400" : ""
+      }`}
+    >
+      <h2 className="text-2xl font-bold mb-2">Pay Loss Tracker</h2>
       {/* Current Jump Status */}
       <div
         style={{
@@ -28,7 +31,7 @@ const PayLoss = () => {
       )}
 
       {/* Days Until Pay Loss */}
-      <div>
+      <div className="mb-4">
         <p>
           {daysUntilPayLoss > 0
             ? `You have ${daysUntilPayLoss} day(s) to find a jump before pay loss.`
@@ -42,6 +45,7 @@ const PayLoss = () => {
           href="https://your-airborne-calendar-link.com"
           target="_blank"
           rel="noopener noreferrer"
+          className=" font-semibold text-blue-600 underline"
         >
           Go to Airborne Calendar
         </a>
