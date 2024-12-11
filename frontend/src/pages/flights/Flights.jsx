@@ -9,6 +9,15 @@ const Flights = () =>{
   const navigate = useNavigate();
   const [flightList, setFlightList] = useState(undefined)
   const [open, setOpen] = useState(false)
+  const [newAirframe, setNewAirframe] = useState()
+  const [newNumberOFJumpers, setNewNumberOFJumpers] = useState()
+  const [newDropzone, setNewDropzone] = useState()
+  const [newDepartureAirfield, setNewDepartureAirfield] = useState()
+  const [newDateTime, setNewDateTime] = useState()
+
+  const newFLightDate = () => {
+    setNewDateTime(new Date(event.target.value).toISOString())
+  }
 
   useEffect(() =>{
     fetch("http://localhost:3000/flights")
@@ -108,7 +117,7 @@ const Flights = () =>{
                     <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Number of Jumpers"/>
                     <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Dropzone"/>
                     <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Departure Airfield"/>
-                    <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Date"/>
+                    <input type="datetime-local" className="form-input rounded-full px-4 py-3" placeholder = "Date" onChange = {newFLightDate}/>
                     <input type="text" className="form-input rounded-full px-4 py-3" placeholder = "Time"/>
                   </div>
                 </div>
