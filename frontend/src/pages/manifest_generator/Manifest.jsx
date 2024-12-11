@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom'
 
-export default function Manifest({ totalSeats = 20, flightId = 2 }) {
+export default function Manifest() {
   const [search, setSearch] = useState("");
   const [manifestJumpers, setManifestJumpers] = useState([]);
-  const [manifestStatus, setManifestStatus] = useState("incomplete");
+  const [manifestStatus, setManifestStatus] = useState("");
   const [availableJumpers, setAvailableJumpers] = useState([]);
+  const [isAddingJumper, setIsAddingJumper] = useState(false);
+
+  
   const location = useLocation()
-  const flightInfo = location.state
-  console.log(flightInfo)
+  const totalSeats = location.state.numberOfSeats
+  const flightId = location.state.flight_id
 
   useEffect(() => {
     fetch(`http://localhost:3000/manifests/flight/${flightId}/users`)
@@ -47,9 +50,15 @@ export default function Manifest({ totalSeats = 20, flightId = 2 }) {
   );
 
   ///adds user to manifest in UI and creates row in database
-  const addToManifest = (jumper) => {
-    if (manifestJumpers.length < totalSeats) {
-      fetch("http://localhost:3000/manifests/", {
+  const addToManifest = async (jumper) => {
+    if (manifestJumpers.length >= totalSeats || isAddingJumper) {
+      return;
+    }
+
+    setIsAddingJumper(true);
+    
+    try {
+      const response = await fetch("http://localhost:3000/manifests/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,30 +69,45 @@ export default function Manifest({ totalSeats = 20, flightId = 2 }) {
           status: "scheduled",
           lift: 1,
         }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          const jumperWithManifestId = {
-            ...jumper,
-            manifest_id: parseInt(data.manifest_id),
-            status: "scheduled",
-            lift: 1,
-          };
-          setManifestJumpers([...manifestJumpers, jumperWithManifestId]);
-          console.log("Manifest created:", data);
-        })
-        .catch((error) => console.log("Error creating manifest:", error));
+      });
+
+      const data = await response.json();
+      
+      const jumperWithManifestId = {
+        ...jumper,
+        manifest_id: parseInt(data.manifest_id),
+        status: "scheduled",
+        lift: 1,
+      };
+
+      setManifestJumpers(current => {
+        // Double-check the limit before adding
+        if (current.length >= totalSeats) {
+          throw new Error("Manifest is full");
+        }
+        return [...current, jumperWithManifestId];
+      });
+      
+      console.log("Manifest created:", data);
+    } catch (error) {
+      console.log("Error creating manifest:", error);
+    } finally {
+      setIsAddingJumper(false);
     }
   };
 
+
   ///removes user from manifest in UI and deletes row in database
-  const removeFromManifest = (jumper) => {
-    setManifestJumpers(manifestJumpers.filter((j) => j.id !== jumper.id));
-    fetch(`http://localhost:3000/manifests/${jumper.manifest_id}`, {
+  const removeFromManifest = (jumperToRemove) => {
+    setManifestJumpers(manifestJumpers.filter(
+      (jumper) => jumper.manifest_id !== jumperToRemove.manifest_id
+    ));
+
+    fetch(`http://localhost:3000/manifests/${jumperToRemove.manifest_id}`, {
       method: "DELETE",
     })
       .then((response) =>
-        console.log(`Manifest for jumper ${jumper.id} deleted`)
+        console.log(`Manifest ${jumperToRemove.manifest_id} deleted`)
       )
       .catch((error) => console.log("Error deleting manifest:", error));
   };
@@ -162,9 +186,9 @@ export default function Manifest({ totalSeats = 20, flightId = 2 }) {
             Available Seats: {totalSeats - manifestJumpers.length} /{" "}
             {totalSeats}
           </div>
-          {manifestJumpers.map((jumper, index) => (
+          {manifestJumpers.map((jumper) => (
             <div
-              key={`manifest-${jumper.id}-${index}`}
+              key={`manifest-${jumper.manifest_id}`}
               className="flex justify-between p-2 border"
             >
               <div>
