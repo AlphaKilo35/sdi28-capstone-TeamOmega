@@ -36,12 +36,14 @@ const departures = require('./routes/departures');
 const dropZones = require('./routes/drop_zones');
 const flights = require('./routes/flights')
 const manifests = require('./routes/manifests')
+const users = require('./routes/users')
 
 // Register Routes
 app.use('/departures', departures);
 app.use('/drop_zones', dropZones);
 app.use('/flights', flights);
 app.use('/manifests', manifests);
+app.use('/users', users)
 
 app.use("/oauth2", authRouter);
 

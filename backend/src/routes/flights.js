@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
       'f.number_pax',
       'f.number_passes',
       'd.departure_name as departure_name',
-      'z.dropZone_name as drop_zone_name'
+      'z.dropzone_name as drop_zone_name'
 
     );
     res.status(200).json(flights);
