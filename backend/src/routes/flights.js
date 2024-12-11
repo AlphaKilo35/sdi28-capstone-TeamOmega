@@ -70,13 +70,9 @@ router.get('/:id', async (req, res) => {
 //POST
 
 router.post('/', (req, res) => {
-  let {id, airframe, number_pax, dropzone, departure_area, date, time} = req.body
   console.log(req.body)
   knex('flight_tbl').returning('*').insert(req.body)
-  .then(data => {
-    let flightId = data.map(flight => flight.id)
-    res.json(flightId)
-  })
+  .then(data => res.json(data))
   .catch((err) => {
     console.error(err);
     res.status(404).send(err);
@@ -98,9 +94,9 @@ router.patch('/flights/:id', (req, res) => {
 
 //DELETE
 
-router.delete('/flights/:id', (req, res) => {
+router.delete('/', (req, res) => {
   knex('flight_tbl')
-    .where('id', req.params.id)
+    .where('id', req.body.id)
     .del()
     .then(res.send('it workd'))
     .catch((err) => {

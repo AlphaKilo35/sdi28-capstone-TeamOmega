@@ -37,13 +37,23 @@ const Flights = () =>{
 
   const deleteFlight =() =>{
     setFlightToDelete(event.target.value)
+
   }
-  useEffect(()=>{
-    fetch(`http://localhost:3000/flights/${flightToDelete}`, {
-      method: "DELETE"
-    })
-    .then(()=>console.log("deleted"))
-  }, [flightToDelete])
+
+  useEffect(() => {
+    if (flightToDelete) {
+      fetch("http://localhost:3000/flights", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: flightToDelete }),
+      }).then(() => {
+        setFlightToDelete(undefined);
+      });
+    }
+  }, [flightToDelete]);
+
   useEffect(() =>{
     fetch("http://localhost:3000/flights")
       .then((res) => res.json())
@@ -124,25 +134,26 @@ const Flights = () =>{
                 <th className="py-3 px-6">Departure Airfield</th>
                 <th className="py-3 px-6">Date</th>
                 <th className="py-3 px-6">Time</th>
+                <th className="py-3 px-6"></th>
               </tr>
             </thead>
             <tbody>
               {flightList.map((flight) => {
                 return (
                   <>
-                  <tr className="border-t border-gold-400 hover:bg-gray-800" id = {flight.flight_id} onClick = {()=>{toManifest(event)}}>
-                  <td className="py-4 px-6">{flight.airframe}</td>
-                  <td className="py-4 px-6" id = {`flight${flight.flight_id}`}>{flight.number_pax}</td>
-                  <td className="py-4 px-6">{flight.drop_zone_name}</td>
-                  <td className="py-4 px-6">{flight.departure_name}</td>
-                  <td className="py-4 px-6">{flight.date_time.slice(0, 10)}</td>
-                  <td className="py-4 px-6">{flight.date_time.slice(11, 16).replace(/:/g,'')}</td>
-                </tr>
-                <button type="button" onClick={deleteFlight}
+                  <tr className="border-t border-gold-400 hover:bg-gray-800" id = {flight.flight_id} >
+                  <td className="py-4 px-6" onClick = {()=>{toManifest(event)}}>{flight.airframe}</td>
+                  <td className="py-4 px-6" id = {`flight${flight.flight_id}`} onClick = {()=>{toManifest(event)}}>{flight.number_pax}</td>
+                  <td className="py-4 px-6" onClick = {()=>{toManifest(event)}}>{flight.drop_zone_name}</td>
+                  <td className="py-4 px-6" onClick = {()=>{toManifest(event)}}>{flight.departure_name}</td>
+                  <td className="py-4 px-6" onClick = {()=>{toManifest(event)}}>{flight.date_time.slice(0, 10)}</td>
+                  <td className="py-4 px-6" onClick = {()=>{toManifest(event)}}>{flight.date_time.slice(11, 16).replace(/:/g,'')}</td>
+                  <button type="button" onClick={deleteFlight}
                 className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                 value = {flight.flight_id}>
                 Remove Flight
               </button>
+                </tr>
               </>
                 )})}
             </tbody>
@@ -219,7 +230,6 @@ const Flights = () =>{
   );
 };
 }
-
 export default Flights;
 
 
