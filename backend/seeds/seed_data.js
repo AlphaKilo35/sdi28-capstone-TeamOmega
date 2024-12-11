@@ -9,24 +9,28 @@ const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 function createDeparture() {
-  let departures = [];
-  for (var d = 0; d < 5; d++) {
-    departures.push({
-      departure_name: faker.location.city()
 
-    })
-  }
+
+  const departures = [
+    { departure_name: "MAAF" },
+    { departure_name: "PAAF" },
+  ];
+
   return departures;
 }
 
 function createDropzone() {
-  let dropZones = [];
-  for (var z = 0; z < 10; z++) {
-    dropZones.push({
-      dropzone_name: faker.location.city()
 
-    })
-  }
+  
+  const dropZones = [
+    { dropzone_name: "Sicily" },
+    { dropzone_name: "Normandy" },
+    { dropzone_name: "Holland" },
+    { dropzone_name: "St Mere" },
+    { dropzone_name: "Luzon" },
+  ];
+
+
   return dropZones;
 }
 
@@ -93,8 +97,8 @@ function createFlights() {
       airframe: newAirframe.name,
       type_tod: flightTod,
       type_load: flightLoad,
-      departure_id: Math.floor(Math.random() * 5) + 1,
-      drop_zone_id: Math.floor(Math.random() * 10) + 1,
+      departure_id: Math.floor(Math.random() * 2) + 1,
+      drop_zone_id: Math.floor(Math.random() * 5) + 1,
       date_time: date,
       number_pax: newAirframe.pax,
       number_passes: Math.floor(Math.random() * 3) + 1
@@ -116,8 +120,8 @@ function createFlights() {
       airframe: newAirframe.name,
       type_tod: flightTod,
       type_load: flightLoad,
-      departure_id: Math.floor(Math.random() * 5) + 1,
-      drop_zone_id: Math.floor(Math.random() * 10) + 1,
+      departure_id: Math.floor(Math.random() * 2) + 1,
+      drop_zone_id: Math.floor(Math.random() * 5) + 1,
       date_time: date,
       number_pax: newAirframe.pax,
       number_passes: Math.floor(Math.random() * 3) + 1
