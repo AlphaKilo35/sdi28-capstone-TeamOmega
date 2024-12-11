@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Countdown from 'react-countdown'
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -16,29 +17,33 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch("http://localhost:3000/local/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          admin: adminSelected,
+          authCode: authCode,
+        }),
       });
 
       const data = await response.json();
+      console.log(signupSuccess)
+      data ? setSignupSuccess(true) : setSignupSuccess(false);
       console.log(data);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Login failed");
-      }
+      // if (!data.ok) {
+      //   throw new Error(data.message || "Login failed");
+      // }
 
-      localStorage.setItem("userId", data.userId);
-
-      navigate("/home");
     } catch (error) {
       setError(error.message);
     }
   };
-  console.log(adminSelected)
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900 bg-cover">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 ">
@@ -105,17 +110,20 @@ const SignUp = () => {
               </div>
               {adminSelected && (
                 <div>
-                  <h3 className="text-sm text-gray-600">
-                    Authorization code
-                  </h3>
+                  <h3 className="text-sm text-gray-600">Authorization code</h3>
                   <input
                     className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                     placeHolder=""
+                    onChange={(e)=>setAuthCode(e.target.value)}
+                    value = {authCode}
                   ></input>
                 </div>
               )}
               <div className="space-y-4">
-                <button className="w-full py-2 border rounded-md bg-black bg-cover text-white hover:opacity-90">
+                <button
+                  className="w-full py-2 border rounded-md bg-black bg-cover text-white hover:opacity-90"
+                  onClick={handleSignUp}
+                >
                   SIGN UP
                 </button>
               </div>

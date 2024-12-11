@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+
 const knex = require("../../knex.js");
 
 const bcrypt = require("bcryptjs");
@@ -40,5 +41,34 @@ router.post("/login", (req, res, next) => {
     });
   })(req, res, next);
 });
+
+
+router.post("/signup", (req, res) => {
+  const {username, password, admin, authCode} = req.body
+  console.log(req.body)
+  const salt = bcrypt.genSaltSync(10)
+  const hash = bcrypt.hashSync(password, salt)
+
+  const createUser = async () => {
+    try {
+
+      if(!admin) {
+        const user = await knex('users').insert({username: username, password: hash, role: "User" }).returning('*')
+        console.log(user)
+        res.status(200).json(true)
+      }
+      else if(admin && authCode === process.env.ADMIN_AUTH_STRING) {
+        const user = await knex('users').insert({username: username, password: hash, role: "Admin"}).returning('*')
+        console.log(user)
+        res.status(200).json(true)
+      } else {
+        res.status(401).json(false)
+      }
+    } catch (err) {
+      res.status(500).json(false)
+    }
+  }
+  createUser();
+})
 
 module.exports = router;
