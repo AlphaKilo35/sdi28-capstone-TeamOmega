@@ -5,7 +5,7 @@ const Training_Status = () => {
   const [pageLoad, setPageLoad] = useState(true);
   const [userId, setUserId] = useState(3)
   let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
-  const jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`)
+  let jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`)
 
 
   useEffect( () => {
