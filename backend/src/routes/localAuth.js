@@ -1,29 +1,42 @@
 const express = require("express");
 const router = express.Router();
-const knex = require("../knex.js");
+const knex = require("../../knex.js");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
-router.post("/login", (req, res) => {
-  const { username, password } = req.body;
-
-  const checkCredentails = async () => {
+passport.use(
+  new LocalStrategy(async function (username, password, cb) {
     try {
       const user = await knex("users").where({
         username: username,
       });
+      const isAuthenticated = bcrypt.compareSync(password, user[0].password);
       if (user.length === 0) {
-        res.status(200).json({ userFound: false, user: null });
-      } else {
-        const isAuthenticated = bcrypt.compareSync(password, user[0].password);
-        isAuthenticated
-          ? res.status(200).json({ userFound: true, user: user[0] })
-          : res.status(200).json({ userFound: true, user: null });
+        return cb(null, false, { userFound: false, user: null });
       }
+      if (!isAuthenticated) {
+        return cb(null, false, { userFound: true, user: null });
+      }
+      return cb(null, user);
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      return cb(err)
     }
-  };
-  checkCredentails();
+  })
+);
+
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, response) => {
+    if (err) return res.status(500).json({ message: "server error" });
+    if (!user) return res.status(404).json(response);
+
+    req.logIn(user, (err) => {
+      if (err) return res.status(500).json({ message: "Login error" });
+      if (req.isAuthenticated()) {
+        res.redirect("http://localhost:5173");
+      }
+    });
+  })(req, res, next);
 });
 
 module.exports = router;

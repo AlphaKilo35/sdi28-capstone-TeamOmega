@@ -6,20 +6,38 @@ const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [badUserResponse, setBadUserResponse] = useState({
+    user: true,
+    passwordMatch: true,
+  });
+
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async () => {
+    setBadUserResponse({ user: true, passwordMatch: true });
     const checkCredentials = async () => {
-      let response = await fetch("http://localhost:3000/local/login", {
-        method: "POST",
-        headers: {
-          "Content-Type:": "applicaion/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ username: username, password: password })
-      });
-      response = await response.json();
+      try {
+        let response = await fetch("http://localhost:3000/local/login", {
+          method: "POST",
+          headers: {
+            "Content-Type:": "applicaion/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ username: username, password: password }),
+        });
+        response = await response.json();
+        if (response.userFound && response.user) {
+          navigate("/home");
+        } else if (response.userFound && !response.user) {
+          setBadUserResponse({ user: true, passwordMatch: false });
+        } else {
+          setBadUserResponse({ user: false, passwordMatch: true });
+        }
+      } catch (err) {
+        console.error(err);
+      }
     };
+    checkCredentials();
   };
 
   const handleGoogleLogin = () => {
@@ -42,6 +60,11 @@ const LogIn = () => {
                 value={username}
               />
             </div>
+            {!badUserResponse?.user && (
+              <div className="text-right">
+                <p className="text-sm text-red-400">User not found</p>
+              </div>
+            )}
           </div>
           <div className="space-y-2">
             <label className="block text-sm text-gray-600">Password</label>
@@ -54,6 +77,11 @@ const LogIn = () => {
                 value={password}
               ></input>
             </div>
+            {!badUserResponse?.passwordMatch && (
+              <div className="text-right">
+                <p className="text-sm text-red-400">Incorrect Password</p>
+              </div>
+            )}
             <div className="text-right">
               <a
                 href="#"
@@ -71,9 +99,10 @@ const LogIn = () => {
             <div className="flex flex-col items-center pt-3 text-sm text-black">
               <p>Login with:</p>
               <div className=" border-2 rounded-full w-24 text-center bg-[url('/googlepng.png')] h-10 bg-cover ">
-                <button onClick={handleGoogleLogin} className="h-full w-full">
-                  <p className="text-2xl"></p>
-                </button>
+                <button
+                  onClick={handleGoogleLogin}
+                  className="h-full w-full"
+                ></button>
               </div>
             </div>
             <div className="text-center text-sm text-gray-500 pt-4">

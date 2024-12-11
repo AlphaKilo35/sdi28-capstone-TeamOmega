@@ -13,6 +13,7 @@ import Home from './pages/home/Home.jsx'
 import Flights from './pages/flights/Flights.jsx'
 import Signup from './pages/sign_up/sign_up.jsx'
 import Login from './pages/login/login.jsx'
+import SplashPage from './pages/roleSplashPage/roleSplashPage.jsx'
 
 
 /** Router **/
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         path: '/flights',
         element: <Flights />
       },
+      {
+        path: '/setRole',
+        element: <SplashPage />
+      }
 
     ]
   }

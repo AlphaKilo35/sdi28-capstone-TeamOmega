@@ -11,6 +11,7 @@ exports.up = function(knex) {
     table.string('email');
     table.string('role');
     table.boolean('jm');
+    table.boolean('previousLogin').defaultTo(false)
   })
 
 };

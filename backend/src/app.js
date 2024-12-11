@@ -32,6 +32,18 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.authenticate("session"));
 
+passport.serializeUser(function (user, cb) {
+  process.nextTick(function () {
+    cb(null, { id: user.id });
+  });
+});
+
+passport.deserializeUser(function (user, cb) {
+  process.nextTick(function () {
+    return cb(null, user);
+  });
+});
+
 //Routes
 const departures = require('./routes/departures');
 const dropZones = require('./routes/drop_zones');
@@ -46,7 +58,7 @@ app.use('/flights', flights);
 app.use('/manifests', manifests);
 app.use('/users', users)
 
-app.use("/oauth2", authRouter);
+app.use('/oauth2', authRouter);
 app.use('/local', localAuth)
 
 //General | Root Route

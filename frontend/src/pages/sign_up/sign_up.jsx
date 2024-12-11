@@ -9,6 +9,8 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [adminSelected, setAdminSelected] = useState(false);
+  const [authCode, setAuthCode] = useState("");
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
@@ -36,9 +38,7 @@ const SignUp = () => {
       setError(error.message);
     }
   };
-
-
-
+  console.log(adminSelected)
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900 bg-cover">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 ">
@@ -52,7 +52,7 @@ const SignUp = () => {
                   <input
                     type="text"
                     placeholder="Type your username"
-                    className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   ></input>
@@ -62,7 +62,7 @@ const SignUp = () => {
                   <input
                     type="password"
                     placeholder="Choose a password"
-                    className="w-full pl-10 border pr-4 border-gray-200 rounded-md py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    className="w-full pl-2 border pr-4 border-gray-200 rounded-md py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   ></input>
@@ -82,7 +82,7 @@ const SignUp = () => {
                   <input
                     type="password"
                     placeholder="Confirm your password"
-                    className="border pl-10 py-2 pr-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    className="border pl-2 py-2 pr-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   ></input>
@@ -91,6 +91,27 @@ const SignUp = () => {
               {!passwordMatch && (
                 <div className="text-red-400">
                   <p>Password does not match. Please try again.</p>
+                </div>
+              )}
+              <div>
+                <h3 className="text-sm text-gray-600">Select your role</h3>
+                <select
+                  className="w-full border rounded-md mt-2 p-2"
+                  onChange={(e) => setAdminSelected(e.target.value === "true")}
+                >
+                  <option value={false}>User</option>
+                  <option value={true}>Admin</option>
+                </select>
+              </div>
+              {adminSelected && (
+                <div>
+                  <h3 className="text-sm text-gray-600">
+                    Authorization code
+                  </h3>
+                  <input
+                    className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    placeHolder=""
+                  ></input>
                 </div>
               )}
               <div className="space-y-4">
