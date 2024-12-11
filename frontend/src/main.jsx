@@ -32,6 +32,10 @@ const router = createBrowserRouter([
         element: <Signup />
 
       },
+      {
+        path: '/home',
+        element: <Home />
+      },
       //add additional pages here
       {
         path: '/flights',
