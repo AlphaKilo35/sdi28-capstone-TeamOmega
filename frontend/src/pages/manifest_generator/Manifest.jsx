@@ -131,7 +131,7 @@ export default function Manifest({ totalSeats = 20, flightId = 2 }) {
                 <button
                   onClick={() => addToManifest(jumper)}
                   disabled={manifestJumpers.length >= totalSeats}
-                  className="bg-blue-500 text-white"
+                  className="bg-blue-500 text-white cursor-pointer"
                 >
                   add
                 </button>
@@ -173,7 +173,7 @@ export default function Manifest({ totalSeats = 20, flightId = 2 }) {
               </div>
               <button
                 onClick={() => removeFromManifest(jumper)}
-                className="bg-red-500 text-white"
+                className="bg-red-500 text-white cursor-pointer"
               >
                 remove
               </button>
