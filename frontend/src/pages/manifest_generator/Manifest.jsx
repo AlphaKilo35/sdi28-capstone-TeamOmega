@@ -133,7 +133,7 @@ export default function Manifest() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* available jumpers container */}
         <div className="border p-4">
-          <h2 className="font-bold">Available Jumpers</h2>
+          <h2 className="font-bold p-2">Available Jumpers</h2>
           <input
             type="text"
             className="w-full border p-2 mb-4 text-gray-900"
@@ -196,7 +196,7 @@ export default function Manifest() {
               </div>
               <button
                 onClick={() => removeFromManifest(jumper)}
-                className="bg-red-500 text-white cursor-pointer"
+                className="inline-flex w-full justify-center rounded-md bg-red-500  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gold-600 sm:ml-3 sm:w-auto"
               >
                 remove
               </button>
