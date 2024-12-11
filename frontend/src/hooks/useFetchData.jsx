@@ -16,10 +16,11 @@ function useFetchData ( url ) {
     setDataObject(responseData);
     setLoading(false);
   }, [url]);
-
-  useEffect( () => { fetchData(); }, [fetchData])
+  //fetchData();
+  useEffect( () => { fetchData(); }, [])
   //console.log(dataObject);
   return {dataObject, loading}
+  //return {dataObject};
 }
 
 export default useFetchData;

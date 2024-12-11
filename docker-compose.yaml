@@ -1,5 +1,8 @@
 #Assumes Node.js React Frontend, Express.js API server, & PostgreSQL Database
 
+volumes:
+  postgres_volume:
+
 services:
   frontend:
   # GUI
@@ -14,12 +17,12 @@ services:
       - VITE_PORT=${VITE_PORT}
     ports:
       - '5173:5173'
-    networks:
-      - frontend
-
       # 5173 is the default Node.js server, change if ports have been changed to something like 8080
     volumes:
-      - .:/app
+      - type: bind
+        source: ./frontend
+        target: /frontend
+      - /node_module:/frontend/node_modules
     networks:
       - appnetwork
   backend:
@@ -35,13 +38,11 @@ services:
       - EXPRESS_PORT=${EXPRESS_PORT}
     ports:
       - '3000:3000'
-    networks:
-      - backend
-      - frontend
-
       # 3000 is default Express.js port, again - change if application has something different
     volumes:
-      - .:/app
+      - type: bind
+        source: ./backend
+        target: /backend
     networks:
       - appnetwork
   database:
@@ -59,12 +60,6 @@ services:
       - 5432:5432
     volumes:
       - postgres_volume:/var/lib/postgresql/data
-    networks:
-      - backend
-
-
-
-
     healthcheck:
       test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USERNAME} -d ${POSTGRES_DB_NAME}'" ]
       interval: 1s

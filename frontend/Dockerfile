@@ -1,13 +1,13 @@
 FROM node:20-alpine
 
-RUN mkdir -p /frontend
+#RUN mkdir -p /frontend
 
 WORKDIR /frontend
 
 COPY . /frontend
 
+#RUN rm -rf node_modules package-lock.json
 RUN npm install
-  #assuming node.js / react
 
 EXPOSE 5173
   #Default node server port
