@@ -112,12 +112,12 @@ const Flights = () =>{
   return (
     <>
     <div className="min-h-screen bg-gray-900 text-gray-200">
-      <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
-        <h1 className="text-3xl font-bold text-center">Flight Tracker</h1>
+      <header className="flex flex-row bg-gray-800 text-gold-400 p-4 shadow-md justify-center flex-wrap:wrap">
+        <h1 className="text-3xl font-bold text-center ">Flight Tracker</h1>
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto mt-2"
+          className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
         >
           Add flight
         </button>
