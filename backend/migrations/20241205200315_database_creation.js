@@ -45,7 +45,7 @@ exports.up = function(knex) {
     table.integer('user_id');
     table.foreign('user_id').references('users_tbl.id');
     table.integer('flight_id');
-    table.foreign('flight_id').references('flight_tbl.id');
+    table.foreign('flight_id').references('flight_tbl.id').onDelete("CASCADE");
     table.string('status');
     table.integer('lift');
   })
