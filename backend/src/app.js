@@ -12,7 +12,11 @@ const localAuth = require('./routes/localAuth.js')
 const app = express();
 
 //Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -28,6 +32,8 @@ app.use(
     },
   })
 );
+
+
 
 app.use(passport.initialize());
 app.use(passport.authenticate("session"));

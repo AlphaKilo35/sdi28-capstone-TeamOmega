@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "knex migrate:latest && knex seed:run && node ./server.js",
+    "dev": "knex migrate:latest && node ./server.js",
     "start-dev": "knex migrate:rollback && knex migrate:latest && knex seed:run && node ./server.js"
   },
   "author": "",

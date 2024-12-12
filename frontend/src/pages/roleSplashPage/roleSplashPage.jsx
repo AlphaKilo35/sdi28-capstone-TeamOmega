@@ -1,26 +1,36 @@
 import { useState } from "react";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 const SplashPage = () => {
   const [adminSelected, setAdminSelected] = useState(false);
-  const [authCode, setAuthCode] = useState('')
+  const [authCode, setAuthCode] = useState("");
+  const [incorrectAuthString, setIncorrectAuthString] = useState(false);
 
+  const navigate = useNavigate();
 
   const handleSetRole = () => {
     const setRole = async () => {
-      response = await fetch('http://localhost:3000/oauth2/set_role', {
+      let response = await fetch("http://localhost:3000/oauth2/role", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
-        }
-      })
-    }
-  }
-
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ admin: adminSelected, authCode: authCode }),
+      });
+      response = await response.json();
+      if (response.roleCreated) {
+        navigate("/");
+      } else if (response?.messageCode === 0) {
+        setIncorrectAuthString(true);
+      }
+    };
+    setRole();
+  };
 
   return (
     <div className="min-h-screen bg-gray-800 flex justify-center items-center ">
-      <div className="font-serif max-h-min w-96 bg-white rounded-md p-2">
+      <div className="font-serif min-h-max w-96 bg-white rounded-md p-2">
         <div className="space-y-4">
           <div className="">
             <h1 className="text-center text-2xl">Welcome!</h1>
@@ -38,21 +48,27 @@ const SplashPage = () => {
             </select>
           </div>
           {adminSelected && (
-                <div>
-                  <h3 className="text-sm text-gray-600">
-                    Authorization code
-                  </h3>
-                  <input
-                    className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    placeHolder=""
-                    onChange={(e)=>setAuthCode(e.target.value)}
-                    value ={authCode}
-                  ></input>
+            <div>
+              <h3 className="text-sm text-gray-600">Authorization code</h3>
+              <input
+                className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                onChange={(e) => setAuthCode(e.target.value)}
+                value={authCode}
+              ></input>
+              {incorrectAuthString && (
+                <div className="text-right mt-2">
+                  <p className="text-sm text-red-400">
+                    Incorrect authentication code
+                  </p>
                 </div>
               )}
+            </div>
+          )}
           <div className="text-right pt-6">
-            <button className="border p-2 rounded-md bg-blue-400 hover:bg-blue-500"
-            onClick={handleSetRole}>
+            <button
+              className="border p-2 rounded-md bg-blue-400 hover:bg-blue-500"
+              onClick={handleSetRole}
+            >
               Continue
             </button>
           </div>

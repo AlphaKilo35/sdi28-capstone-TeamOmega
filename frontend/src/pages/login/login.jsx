@@ -13,36 +13,33 @@ const LogIn = () => {
 
   const navigate = useNavigate();
 
+  const handleLogin = async () => {
+    setBadUserResponse({ user: true, passwordMatch: true });
+    try {
+      let response = await fetch("http://localhost:3000/local/login", {
+        method: "POST",
 
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-    const handleLogin = async () => {
-      setBadUserResponse({ user: true, passwordMatch: true });
-      try {
-        let response = await fetch('http://localhost:3000/local/login', {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({ username: username, password: password }),
-        });
-        console.log(response)
-        if(response.redirected) return;
-        response = await response.json();
-        if (response.userFound && response.user) {
-          navigate("/home");
-        } else if (response.userFound && !response.user) {
-          setBadUserResponse({ user: true, passwordMatch: false });
-        } else {
-          setBadUserResponse({ user: false, passwordMatch: true });
-        }
-      } catch (err) {
-        console.error(err);
+        body: JSON.stringify({ username: username, password: password }),
+        credentials: 'include'
+      });
+      console.log(response);
+      response = await response.json();
+      console.log(response)
+      if (response?.redirectUrl) {
+        navigate(response.redirectUrl);
+      } else if (response.userFound && !response.user) {
+        setBadUserResponse({ user: true, passwordMatch: false });
+      } else {
+        setBadUserResponse({ user: false, passwordMatch: true });
       }
-    };
-
-
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:3000/oauth2/login/google";

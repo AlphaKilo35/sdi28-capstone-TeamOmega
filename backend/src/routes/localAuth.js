@@ -21,7 +21,7 @@ passport.use(
       if (!isAuthenticated) {
         return cb(null, false, { userFound: true, user: null });
       }
-      return cb(null, user);
+      return cb(null, user[0]);
     } catch (err) {
       return cb(err)
     }
@@ -36,8 +36,9 @@ router.post("/login", (req, res, next) => {
 
     req.logIn(user, (err) => {
       if (err) return res.status(500).json({ message: "Login error" });
-      if (req.isAuthenticated()) {
-        res.redirect("http://localhost:5173");
+      if (req.isAuthenticated() && req.user) {
+
+        res.status(200).json({redirectUrl: '/'})
       }
     });
   })(req, res, next);
