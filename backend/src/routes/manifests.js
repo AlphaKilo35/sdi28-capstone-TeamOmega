@@ -21,61 +21,7 @@ router.get("/flight/:flight_id/users", (req, res) => {
       res.status(500).json({ error: "Failed to fetch users for this flight" });
     });
 });
-router.get('/', async (req, res) => {
-  await knex('users_tbl as u')
-  .join('manifest_tbl as m', 'u.id', 'm.user_id')
-  .join('flight_tbl as f', 'm.flight_id', 'f.id')
-  .join('departure_tbl as d', 'f.departure_id', 'd.id')
-  .join('drop_zone_tbl as z', 'f.drop_zone_id', 'z.id')
-  .select(
-      'u.id as user_id',
-      'u.name as name',
-      'u.role as role',
-      'u.jm as jm',
-      'u.email as email',
-      'm.id as manifest_id',
-      'm.status as status',
-      'm.lift as lift',
-      'f.id as flight_id',
-      'f.airframe as airframe',
-      'f.type_tod as type_tod',
-      'f.type_load as type_load',
-      'f.date_time as date_time',
-      'f.number_pax as number_pax',
-      'f.number_passes as number_passes',
-      'd.departure_name as departure_name',
-      'z.dropzone_name as dropzone_name'
-  )
-  .then(data => {
-      res.json(data);
-  })
-  .catch(err => {
-      console.log('Failed to fetch unit data:', err);
-      res.status(400).json({err: 'Failed to fetch unit data'})
-  })
-});
-
-// router.get('/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const jumpLog = await knex('users_tbl as u')
-//     .join('manifest_tbl as m', 'u.id', 'm.user_id')
-//     .join('flight_tbl as f', 'm.flight_id', 'f.id')
-//     .join('departure_tbl as d', 'f.departure_id', 'd.id')
-//     .join('drop_zone_tbl as z', 'f.drop_zone_id', 'z.id')
-//     .select(
-//       "users_tbl.*",
-//       "manifest_tbl.status",
-//       "manifest_tbl.id as manifest_id",
-//       "manifest_tbl.lift"
-//     )
-//     .then((usersOnFlight) => {
-//       res.status(200).json(usersOnFlight);
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error: "Failed to fetch users for this flight" });
-//     });
-// });
+ 
 
 //get all users available for a jump
 router.get("/users", async (req, res) => {
