@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 
 
 const Flights = () =>{
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [flightToDelete, setFlightToDelete] = useState(undefined)
   const [departureAirfieldList, setDepartureAirfieldList] = useState(undefined)
   const [dropzoneList, setDropzoneList] = useState(undefined)
@@ -57,8 +57,8 @@ const Flights = () =>{
   useEffect(() =>{
     fetch("http://localhost:3000/flights")
       .then((res) => res.json())
-      .then((data) => setFlightList(data));
-  }, [flightList])
+      .then((data) => setFlightList(data))
+  }, [flightToDelete])
 
   useEffect(()=>{
     fetch("http://localhost:3000/flights/dropzones")
@@ -113,7 +113,7 @@ const Flights = () =>{
     <>
     <div className="min-h-screen bg-gray-900 text-gray-200">
       <header className="flex flex-row bg-gray-800 text-gold-400 p-4 shadow-md justify-center flex-wrap:wrap">
-        <h1 className="text-3xl font-bold text-center ">Flight Tracker</h1>
+        <h1 className="text-3xl font-bold text-center">Flight Tracker</h1>
         <button
           type="button"
           onClick={() => setOpen(true)}
