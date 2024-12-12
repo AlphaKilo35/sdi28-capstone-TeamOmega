@@ -24,11 +24,11 @@ const LogIn = () => {
         },
 
         body: JSON.stringify({ username: username, password: password }),
-        credentials: 'include'
+        credentials: "include",
       });
       console.log(response);
       response = await response.json();
-      console.log(response)
+      console.log(response);
       if (response?.redirectUrl) {
         navigate(response.redirectUrl);
       } else if (response.userFound && !response.user) {
@@ -56,7 +56,7 @@ const LogIn = () => {
               <input
                 type="text"
                 placeholder="Type your username"
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
               />
@@ -73,7 +73,7 @@ const LogIn = () => {
               <input
                 type="password"
                 placeholder="Type your password"
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               ></input>
