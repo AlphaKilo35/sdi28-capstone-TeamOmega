@@ -2,7 +2,7 @@
 
 volumes:
   postgres_volume:
-  node_modules:  
+  node_modules:
 
 services:
   frontend:
@@ -17,13 +17,13 @@ services:
     environment:
       - VITE_PORT=${VITE_PORT}
     ports:
-      - '5173:5173'
+      - ${VITE_PORT}:5173
       # 5173 is the default Node.js server, change if ports have been changed to something like 8080
     volumes:
       - type: bind
         source: ./frontend
         target: /frontend
-      - node_modules:/frontend/node_modules
+      - /node_module:/frontend/node_modules
     networks:
       - appnetwork
   backend:
@@ -38,7 +38,7 @@ services:
     environment:
       - EXPRESS_PORT=${EXPRESS_PORT}
     ports:
-      - '3000:3000'
+      - ${EXPRESS_PORT}:3000
       # 3000 is default Express.js port, again - change if application has something different
     volumes:
       - type: bind
@@ -58,7 +58,7 @@ services:
       #- PGUSER=postgres #For Health Check
       # Any environment variables from within the .env file (this file is in the .gitignore, must be made locally with variables matching)
     ports:
-      - 5433:5432
+      - 5432:5432
     volumes:
       - postgres_volume:/var/lib/postgresql/data
     healthcheck:
