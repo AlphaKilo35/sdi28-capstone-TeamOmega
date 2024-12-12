@@ -1,21 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Countdown from 'react-countdown'
+import Countdown from "react-countdown";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState({ status: false, code: "" });
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [blankField, setBlankField] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [adminSelected, setAdminSelected] = useState(false);
   const [authCode, setAuthCode] = useState("");
+  const [incorrectAuthString, setIncorrectAuthString] = useState(false);
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setBlankField(false);
+      setPasswordMatch(false);
+      setPassword("");
+      setConfirmPassword("");
+      return;
+    }
+    if (!password || !username || !confirmPassword) {
+      setPasswordMatch(true);
+      setBlankField(true);
+      return;
+    }
     try {
       const response = await fetch("http://localhost:3000/local/signup", {
         method: "POST",
@@ -31,14 +45,13 @@ const SignUp = () => {
       });
 
       const data = await response.json();
-      console.log(signupSuccess)
-      data ? setSignupSuccess(true) : setSignupSuccess(false);
-      console.log(data);
+      console.log(data)
+      if (data.code === 1) setIncorrectAuthString(true);
+      data.success ? setSignupSuccess(true) : setSignupSuccess(false);
 
       // if (!data.ok) {
       //   throw new Error(data.message || "Login failed");
       // }
-
     } catch (error) {
       setError(error.message);
     }
@@ -50,35 +63,34 @@ const SignUp = () => {
         {!signupSuccess ? (
           <>
             <h1 className="text-2xl font-bold text-center mb-8">Sign up</h1>
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <label className="text-sm block text-gray-600">Username</label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Type your username"
-                    className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  ></input>
-                </div>
-                <label className="text-sm block text-gray-600 ">Password</label>
-                <div className="relative">
-                  <input
-                    type="password"
-                    placeholder="Choose a password"
-                    className="w-full pl-2 border pr-4 border-gray-200 rounded-md py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  ></input>
-                  <div className="text-right">
-                    <p className="text-xs text-gray-600 mt-1 ml-3">
-                      Password must be at least 8 characters and contain
-                      capitals, numbers, and symbols
-                    </p>
-                  </div>
+            <div className="space-y-4">
+              <label className="text-sm block text-gray-600">Username</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Type your username"
+                  className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                ></input>
+              </div>
+              <label className="text-sm block text-gray-600 ">Password</label>
+              <div className="relative">
+                <input
+                  type="password"
+                  placeholder="Choose a password"
+                  className="w-full pl-2 border pr-4 border-gray-200 rounded-md py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                ></input>
+                <div className="text-right">
+                  <p className="text-xs text-gray-600 mt-1 ml-3">
+                    Password must be at least 8 characters and contain capitals,
+                    numbers, and symbols
+                  </p>
                 </div>
               </div>
+
               <div className="space-y-3">
                 <label className="text-sm text-gray-600 block">
                   Confirm your password
@@ -94,8 +106,9 @@ const SignUp = () => {
                 </div>
               </div>
               {!passwordMatch && (
-                <div className="text-red-400">
-                  <p>Password does not match. Please try again.</p>
+                <div className="text-red-400 text-right">
+                  <p className="text-xs">Password does not match.</p>
+                  <p className="text-xs">Please try again.</p>
                 </div>
               )}
               <div>
@@ -114,9 +127,23 @@ const SignUp = () => {
                   <input
                     className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                     placeHolder=""
-                    onChange={(e)=>setAuthCode(e.target.value)}
-                    value = {authCode}
+                    onChange={(e) => setAuthCode(e.target.value)}
+                    value={authCode}
                   ></input>
+                </div>
+              )}
+              {incorrectAuthString && (
+                <div className="text-right">
+                  <p className="text-xs text-red-400">
+                    Incorrect authorization code.
+                  </p>
+                </div>
+              )}
+              {blankField && (
+                <div className="text-right">
+                  <p className="text-xs text-red-400">
+                    Fields cannot be left blank.
+                  </p>
                 </div>
               )}
               <div className="space-y-4">
