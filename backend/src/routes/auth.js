@@ -1,7 +1,9 @@
 const express = require("express");
 require("dotenv").config({ path: "../../../.env" });
 const passport = require("passport");
-const knex = require('knex')(require('../../knexfile')[process.env.NODE_ENV || 'development']);
+const knex = require("knex")(
+  require("../../knexfile")[process.env.NODE_ENV || "development"]
+);
 
 const GoogleStrategy = require("passport-google-oidc");
 console.log(process.env.GOOGLE_CLIENT_ID);
@@ -14,7 +16,6 @@ passport.use(
       scope: ["profile"],
     },
     async function verify(issuer, profile, cb) {
-      console.log(profile);
       const user = await knex
         .select("*")
         .from("external_credentials")
@@ -82,27 +83,32 @@ router.get("/redirect/google", (req, res, next) => {
   )(req, res, next);
 });
 
-router.post("/set_role", (req, res) => {
+router.post("/role", (req, res) => {
   const { admin, authCode } = req.body;
+
 
   if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
     try {
       knex("users")
-        .insert({ previousLogin: true, role: "Admin" })
-        .where({ id: req.user.id });
-      res.status(200).json({ roleCreated: true, message: "success" });
+        .update({ previousLogin: true, role: "Admin" })
+        .where({ id: req.user.id })
+        .then(() => {
+          res.status(200).json({ roleCreated: true, message: "success" });
+        });
     } catch (err) {
+      
       res.status(500).json({ message: err.message });
     }
-  }
-  if (admin && authCode !== process.env.ADMIN_AUTH_STRING) {
-    res.status(403).json({ message: "Incorrect authentication string" });
+  } else if (admin && authCode !== process.env.ADMIN_AUTH_STRING) {
+    res.status(404).json({ messageCode: 0 });
   } else {
     try {
       knex("users")
-        .insert({ previousLogin: true, role: "User" })
-        .where({ id: req.user.id });
-      res.status(200).json({ roleCreated: true, message: "success" });
+        .update({ previousLogin: true, role: "User" })
+        .where({ id: req.user.id })
+        .then(() => {
+          res.status(200).json({ roleCreated: true, message: "success" });
+        });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }

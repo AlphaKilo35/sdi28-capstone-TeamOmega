@@ -73,6 +73,6 @@ services:
 #   appnetwork:
 #     driver: bridge
 
+
 volumes:
   postgres_volume:
-
