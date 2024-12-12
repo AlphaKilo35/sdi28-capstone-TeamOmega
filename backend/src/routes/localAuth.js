@@ -47,7 +47,6 @@ router.post("/login", (req, res, next) => {
 
 router.post("/signup", (req, res) => {
   const {username, password, admin, authCode} = req.body
-  console.log(req.body)
   const salt = bcrypt.genSaltSync(10)
   const hash = bcrypt.hashSync(password, salt)
 
@@ -55,13 +54,11 @@ router.post("/signup", (req, res) => {
     try {
 
       if(!admin) {
-        const user = await knex('users').insert({username: username, password: hash, role: "User" }).returning('*')
-        console.log(user)
+        knex('users').insert({username: username, password: hash, role: "User" })
         res.status(200).json(true)
       }
-      else if(admin && authCode === process.env.ADMIN_AUTH_STRING) {
-        const user = await knex('users').insert({username: username, password: hash, role: "Admin"}).returning('*')
-        console.log(user)
+      if(admin && authCode === process.env.ADMIN_AUTH_STRING) {
+        knex('users').insert({username: username, password: hash, role: "Admin" })
         res.status(200).json(true)
       } else {
         res.status(401).json(false)

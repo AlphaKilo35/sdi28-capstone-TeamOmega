@@ -29,17 +29,12 @@ const SignUp = () => {
     setMessage('');
 
     try {
-      const response = await fetch("http://localhost:3000/local/signup", {
+      const response = await fetch("http://localhost:3000/login/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-          admin: adminSelected,
-          authCode: authCode,
-        }),
+        body: JSON.stringify({ username: username, password: password, admin: adminSelected, authCode: authCode }),
       });
 
       const data = await response.json();
@@ -47,15 +42,22 @@ const SignUp = () => {
       data ? setSignupSuccess(true) : setSignupSuccess(false);
       console.log(data);
 
-      // if (!data.ok) {
-      //   throw new Error(data.message || "Login failed");
-      // }
+      if (!data.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      data ? setSignupSuccess(true) : setSignupSuccess(false)
+
+      // localStorage.setItem("userId", data.userId);
+
 
     } catch (error) {
       setError(error.message);
     }
   };
 
+
+  // console.log(adminSelected)
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900 bg-cover">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96 ">
@@ -132,10 +134,9 @@ const SignUp = () => {
                 </div>
               )}
               <div className="space-y-4">
-                <button
-                  className="w-full py-2 border rounded-md bg-black bg-cover text-white hover:opacity-90"
+                <button className="w-full py-2 border rounded-md bg-black bg-cover text-white hover:opacity-90"
                   onClick={handleSignUp}
-                >
+                  >
                   SIGN UP
                 </button>
               </div>
