@@ -1,6 +1,11 @@
 import { useState, useEffect, createContext } from "react";
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 import "./profile.css";
+import EmailPopup from './EmailPopup.jsx';
+import RolePopup from './RolePopup.jsx';
+import JmPopup from './JmPopup.jsx';
+
+export const UserContext = createContext({})
 
 function Profile() {
 
@@ -50,6 +55,7 @@ function Profile() {
         return (<div>Loading...</div>)
     } else {   
         return (
+            <UserContext.Provider value={user}>
             <div className="min-h-screen bg-gray-900 text-gray-200 homepage">
                 <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
                     <h1 className="text-3xl font-bold text-center">Profile of {user.name}</h1>
@@ -60,66 +66,36 @@ function Profile() {
                 </div>
                 <div className="text-2xl font-bold text-center py-8">
                     <h1>Email: </h1>
-                    <span><h2>{email}</h2></span><b></b>
+                    <span><h2>{email}</h2></span>
                     <button 
                         className="inline-block px-4 py-2 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95" 
                         type="submit" 
                         onClick={toggleEmailPopup}
                     >Update Email Address
                     </button>
-                    {emailPopup && (
-                        <div className="bg-gray-800 border border-gold-600 p-4 rounded-md text-2xl font-bold text-center popup-overlay">
-                            <h2>Update Your Email Address</h2><b></b>
-                            <button 
-                                className="inline-block px-8 py-4 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95"
-                                type="submit"
-                                onClick={toggleEmailPopup}
-                            >Update
-                            </button>
-                        </div>
-                    )}
+                    {emailPopup && (<EmailPopup onSetPopup={toggleEmailPopup} changeEmail={setEmail} originEmail={user.email}/>)}
                 </div>
                 <div className="text-2xl font-bold text-center py-8">
                     <h1>Role: </h1>
-                    <span><h2>{Capitalize(role)}</h2></span><b></b>
+                    <span><h2>{Capitalize(role)}</h2></span>
                     <button 
                         className="inline-block px-4 py-2 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95" 
                         type="submit" 
                         onClick={toggleRolePopup}
                     >Update Role
                     </button>
-                    {rolePopup && (
-                        <div className="bg-gray-800 border border-gold-600 p-4 rounded-md text-2xl font-bold text-center popup-overlay">
-                            <h2>Update Your Role</h2><b></b>
-                            <button 
-                                className="inline-block px-8 py-4 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95"
-                                type="submit"
-                                onClick={toggleRolePopup}
-                            >Update
-                            </button>
-                        </div>
-                    )}
+                    {rolePopup && (<RolePopup onSetPopup={toggleRolePopup}/>)}
                 </div>
                 <div className="text-2xl font-bold text-center py-8">
                     <h1>Jumpmaster: </h1>
-                    <span><h2>{jm === true ? 'Yes' : 'No' }</h2></span><b></b>
+                    <span><h2>{jm === true ? 'Yes' : 'No' }</h2></span>
                     <button 
                         className="inline-block px-4 py-2 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95" 
                         type="submit" 
                         onClick={toggleJmPopup}
                     >Update JM Status
                     </button>
-                    {jmPopup && (
-                        <div className="bg-gray-800 border border-gold-600 p-4 rounded-md text-2xl font-bold text-center popup-overlay">
-                            <h2>Update Your JM Status</h2><b></b>
-                            <button 
-                                className="inline-block px-8 py-4 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95"
-                                type="submit"
-                                onClick={toggleJmPopup}
-                            >Update
-                            </button>
-                        </div>
-                    )}
+                    {jmPopup && (<JmPopup onSetPopup={toggleJmPopup}/>)}
                 </div>
                 <div className="text-2xl font-bold text-center py-8">
                     <button 
@@ -129,6 +105,7 @@ function Profile() {
                     </button>
                 </div>
             </div>
+            </UserContext.Provider>
         )
     }
 }
