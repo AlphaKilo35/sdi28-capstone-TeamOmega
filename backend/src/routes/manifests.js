@@ -8,7 +8,19 @@ router.get("/flight/:flight_id/users", (req, res) => {
   knex("manifest_tbl")
     .join("users_tbl", "manifest_tbl.user_id", "users_tbl.id")
     .where("manifest_tbl.flight_id", flight_id)
-
+    .select(
+      "users_tbl.*",
+      "manifest_tbl.status",
+      "manifest_tbl.id as manifest_id",
+      "manifest_tbl.lift"
+    )
+    .then((usersOnFlight) => {
+      res.status(200).json(usersOnFlight);
+    })
+    .catch((error) => {
+      res.status(500).json({ error: "Failed to fetch users for this flight" });
+    });
+});
 router.get('/', async (req, res) => {
   await knex('users_tbl as u')
   .join('manifest_tbl as m', 'u.id', 'm.user_id')
@@ -41,29 +53,29 @@ router.get('/', async (req, res) => {
       console.log('Failed to fetch unit data:', err);
       res.status(400).json({err: 'Failed to fetch unit data'})
   })
-})
-
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const jumpLog = await knex('users_tbl as u')
-    .join('manifest_tbl as m', 'u.id', 'm.user_id')
-    .join('flight_tbl as f', 'm.flight_id', 'f.id')
-    .join('departure_tbl as d', 'f.departure_id', 'd.id')
-    .join('drop_zone_tbl as z', 'f.drop_zone_id', 'z.id')
-    .select(
-      "users_tbl.*",
-      "manifest_tbl.status",
-      "manifest_tbl.id as manifest_id",
-      "manifest_tbl.lift"
-    )
-    .then((usersOnFlight) => {
-      res.status(200).json(usersOnFlight);
-    })
-    .catch((error) => {
-      res.status(500).json({ error: "Failed to fetch users for this flight" });
-    });
 });
+
+// router.get('/:id', async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const jumpLog = await knex('users_tbl as u')
+//     .join('manifest_tbl as m', 'u.id', 'm.user_id')
+//     .join('flight_tbl as f', 'm.flight_id', 'f.id')
+//     .join('departure_tbl as d', 'f.departure_id', 'd.id')
+//     .join('drop_zone_tbl as z', 'f.drop_zone_id', 'z.id')
+//     .select(
+//       "users_tbl.*",
+//       "manifest_tbl.status",
+//       "manifest_tbl.id as manifest_id",
+//       "manifest_tbl.lift"
+//     )
+//     .then((usersOnFlight) => {
+//       res.status(200).json(usersOnFlight);
+//     })
+//     .catch((error) => {
+//       res.status(500).json({ error: "Failed to fetch users for this flight" });
+//     });
+// });
 
 //get all users available for a jump
 router.get("/users", async (req, res) => {
