@@ -20,7 +20,6 @@ router.get('/', async (req, res) => {
       'f.number_passes',
       'd.departure_name AS departure_name',
       'z.dropzone_name AS drop_zone_name'
-
     );
     res.status(200).json(flights);
   } catch (error) {

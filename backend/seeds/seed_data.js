@@ -5,26 +5,32 @@
 
  */
 const { faker, fakerEN_US } = require('@faker-js/faker')
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 function createDeparture() {
-  let departures = [];
-  for (var d = 0; d < 5; d++) {
-    departures.push({
-      departure_name: faker.location.city()
 
-    })
-  }
+
+  const departures = [
+    { departure_name: "MAAF" },
+    { departure_name: "PAAF" },
+  ];
+
   return departures;
 }
 
 function createDropzone() {
-  let dropZones = [];
-  for (var z = 0; z < 10; z++) {
-    dropZones.push({
-      dropzone_name: faker.location.city()
 
-    })
-  }
+  
+  const dropZones = [
+    { dropzone_name: "Sicily" },
+    { dropzone_name: "Normandy" },
+    { dropzone_name: "Holland" },
+    { dropzone_name: "St Mere" },
+    { dropzone_name: "Luzon" },
+  ];
+
+
   return dropZones;
 }
 
@@ -37,9 +43,25 @@ function createUsers() {
     let emailAddress = `${userName}@military.mil`;
     let roleType = roles[Math.floor(Math.random() * 3)];
     let jmBool = Math.random() < .5;
+    let userPassword = faker.internet.password()
+    // let newSalt = bcrypt.genSalt(saltRounds, (err, salt) => {
+    //   if (err) {
+    //     throw new Error;
+    //   }
+    //   return salt
+    // })
+    // async function hashPassword(userPassword, newSalt) {
+    //   const hashedPassword = await bcrypt.hash(userPassword, newSalt, (err, hash) => {
+    //     if (err) {
+    //     throw new Error;
+    //     }
+    //     return hash
+    //   })
+    //   return hashedPassword;
+    // }
     users.push({
       username: userName,
-      password: faker.internet.password(),
+      password: userPassword,
       name: fullName,
       email: emailAddress,
       role: roleType,
@@ -60,7 +82,7 @@ function createFlights() {
   ];
   let types = ["T", "MT", "NT", "J", "CE", "C"];
   for (var f = 0; f < 10; f++) {
-    let date = faker.date.soon(10);
+    let date = faker.date.future(180);
     let flightTod;
     let newAirframe = airframes[Math.floor(Math.random() * 5)];
     let dateHour = date.getHours();
@@ -75,8 +97,31 @@ function createFlights() {
       airframe: newAirframe.name,
       type_tod: flightTod,
       type_load: flightLoad,
-      departure_id: Math.floor(Math.random() * 5) + 1,
-      drop_zone_id: Math.floor(Math.random() * 10) + 1,
+      departure_id: Math.floor(Math.random() * 2) + 1,
+      drop_zone_id: Math.floor(Math.random() * 5) + 1,
+      date_time: date,
+      number_pax: newAirframe.pax,
+      number_passes: Math.floor(Math.random() * 3) + 1
+    })
+  }
+  for (var f = 0; f < 10; f++) {
+    let date = faker.date.past(180);
+    let flightTod;
+    let newAirframe = airframes[Math.floor(Math.random() * 5)];
+    let dateHour = date.getHours();
+    if (dateHour > 6 && dateHour < 18) {
+      flightTod = "day"
+    } else {
+      flightTod = "night"
+    }
+
+    let flightLoad = types[Math.floor(Math.random() * 6)];
+    flights.push({
+      airframe: newAirframe.name,
+      type_tod: flightTod,
+      type_load: flightLoad,
+      departure_id: Math.floor(Math.random() * 2) + 1,
+      drop_zone_id: Math.floor(Math.random() * 5) + 1,
       date_time: date,
       number_pax: newAirframe.pax,
       number_passes: Math.floor(Math.random() * 3) + 1

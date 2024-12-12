@@ -10,7 +10,9 @@ import ErrorPage from './pages/error_page/error_page.jsx'
 import Home from './pages/home/Home.jsx'
 import Manifest from './pages/manifest_generator/Manifest.jsx'
 import Flights from './pages/flights/Flights.jsx'
-
+import Signup from './pages/sign_up/sign_up.jsx'
+import Login from './pages/login/login.jsx'
+import SplashPage from './pages/roleSplashPage/roleSplashPage.jsx'
 
 /** Router **/
 const router = createBrowserRouter([
@@ -27,10 +29,21 @@ const router = createBrowserRouter([
         path: "/manifest",
         element: <Manifest />
       },
-      //add additional pages here
+      {
+        path: '/login',
+        element: <Login />
+      },
+      {
+        path: '/signup',
+        element: <Signup />
+      },
       {
         path: '/flights',
         element: <Flights />
+      },
+      {
+        path: '/setRole',
+        element: <SplashPage />
       }
     ]
   }

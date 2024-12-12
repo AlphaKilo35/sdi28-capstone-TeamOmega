@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config({ path: "../../../.env" });
 const passport = require("passport");
-const knex = require("../../knex.js");
+const knex = require('knex')(require('../../knexfile')[process.env.NODE_ENV || 'development']);
 
 const GoogleStrategy = require("passport-google-oidc");
 console.log(process.env.GOOGLE_CLIENT_ID);
@@ -14,7 +14,7 @@ passport.use(
       scope: ["profile"],
     },
     async function verify(issuer, profile, cb) {
-      console.log(profile)
+      console.log(profile);
       const user = await knex
         .select("*")
         .from("external_credentials")
@@ -32,7 +32,9 @@ passport.use(
               })
               .then(() => {
                 const user = { id: result[0].id, name: profile.displayName };
-                return cb(null, user);
+                return cb(null, user, {
+                  previousLogin: result[0].previousLogin,
+                });
               });
           });
       } else {
@@ -43,7 +45,9 @@ passport.use(
             if (result.length === 0) {
               return cb(null, false);
             } else {
-              return cb(null, result[0]);
+              return cb(null, result[0], {
+                previousLogin: result[0].previousLogin,
+              });
             }
           });
       }
@@ -51,34 +55,58 @@ passport.use(
   )
 );
 
-passport.serializeUser(function (user, cb) {
-  process.nextTick(function () {
-    cb(null, { id: user.id, username: user?.username, name: user.name });
-  });
-});
-
-passport.deserializeUser(function (user, cb) {
-  process.nextTick(function () {
-    return cb(null, user);
-  });
-});
-
 const router = express.Router();
 
 router.get("/login/google", passport.authenticate("google"));
 
-router.get(
-  "/redirect/google",
-  passport.authenticate("google", {
-    failureRedirect: "/",
-  }),
-  (req, res) => {
-    if (req.isAuthenticated() && req.user) {
-      res.redirect("http://localhost:5173");
-    } else {
-      console.log("failure");
+router.get("/redirect/google", (req, res, next) => {
+  passport.authenticate(
+    "google",
+    {
+      failureRedirect: "/",
+    },
+    (err, user, response) => {
+      if (err) return next(err);
+      if (!user) return res.redirect("/");
+
+      req.logIn(user, (err) => {
+        if (req.isAuthenticated() && req.user) {
+          if (response.previousLogin) {
+            res.redirect("http://localhost:5173");
+          } else {
+            res.redirect("http://localhost:5173/setRole");
+          }
+        }
+      });
+    }
+  )(req, res, next);
+});
+
+router.post("/set_role", (req, res) => {
+  const { admin, authCode } = req.body;
+
+  if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
+    try {
+      knex("users")
+        .insert({ previousLogin: true, role: "Admin" })
+        .where({ id: req.user.id });
+      res.status(200).json({ roleCreated: true, message: "success" });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
   }
-);
+  if (admin && authCode !== process.env.ADMIN_AUTH_STRING) {
+    res.status(403).json({ message: "Incorrect authentication string" });
+  } else {
+    try {
+      knex("users")
+        .insert({ previousLogin: true, role: "User" })
+        .where({ id: req.user.id });
+      res.status(200).json({ roleCreated: true, message: "success" });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+});
 
 module.exports = router;

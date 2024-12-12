@@ -1,65 +1,161 @@
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Countdown from 'react-countdown'
 
-// const SignUp = () => {
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [error, setError] = useState('');
-//     const navigate = useNavigate();
+const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [signupSuccess, setSignupSuccess] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [adminSelected, setAdminSelected] = useState(false);
+  const [authCode, setAuthCode] = useState("");
+  const navigate = useNavigate();
 
-//     const handleSignUp = async (e) => {
-//         e.preventDefault();
-//         try {
-//             const response = await fetch('http://localhost:3000/login', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify({ email, password }),
-//             });
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/local/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+          admin: adminSelected,
+          authCode: authCode,
+        }),
+      });
 
-//             const data = await response.json();
-//             console.log(data)
+      const data = await response.json();
+      console.log(signupSuccess)
+      data ? setSignupSuccess(true) : setSignupSuccess(false);
+      console.log(data);
 
-//             if (!response.ok) {
-//                 throw new Error(data.message || 'Login failed');
-//             }
+      // if (!data.ok) {
+      //   throw new Error(data.message || "Login failed");
+      // }
 
-//             localStorage.setItem('userId', data.userId);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-//             navigate('/home');
-//         } catch (error) {
-//             setError(error.message);
-//         }
-//     };
-//     return (
-//         <div className="logInP">
-//             <link href="App.css" rel="stylesheet"></link>
-//             <h2>Log In</h2>
-//             <form onSubmit={handleLogin}>
-//                 <div>
-//                     <label>Email:</label>
-//                     <input
-//                         type="email"
-//                         value={email}
-//                         onChange={(e) => setEmail(e.target.value)}
-//                         required
-//                     />
-//                 </div>
-//                 <div>
-//                     <label>Password:</label>
-//                     <input
-//                         type="password"
-//                         value={password}
-//                         onChange={(e) => setPassword(e.target.value)}
-//                         required
-//                     />
-//                 </div>
-//                 {error && <p style={{ color: 'red' }}>{error}</p>}
-//                 <button type="submit">Log In</button>
-//             </form>
-//         </div>
-//     );
-// };
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-900 bg-cover">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96 ">
+        {!signupSuccess ? (
+          <>
+            <h1 className="text-2xl font-bold text-center mb-8">Sign up</h1>
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-sm block text-gray-600">Username</label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Type your username"
+                    className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  ></input>
+                </div>
+                <label className="text-sm block text-gray-600 ">Password</label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    placeholder="Choose a password"
+                    className="w-full pl-2 border pr-4 border-gray-200 rounded-md py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  ></input>
+                  <div className="text-right">
+                    <p className="text-xs text-gray-600 mt-1 ml-3">
+                      Password must be at least 8 characters and contain
+                      capitals, numbers, and symbols
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <label className="text-sm text-gray-600 block">
+                  Confirm your password
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    placeholder="Confirm your password"
+                    className="border pl-2 py-2 pr-4 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  ></input>
+                </div>
+              </div>
+              {!passwordMatch && (
+                <div className="text-red-400">
+                  <p>Password does not match. Please try again.</p>
+                </div>
+              )}
+              <div>
+                <h3 className="text-sm text-gray-600">Select your role</h3>
+                <select
+                  className="w-full border rounded-md mt-2 p-2"
+                  onChange={(e) => setAdminSelected(e.target.value === "true")}
+                >
+                  <option value={false}>User</option>
+                  <option value={true}>Admin</option>
+                </select>
+              </div>
+              {adminSelected && (
+                <div>
+                  <h3 className="text-sm text-gray-600">Authorization code</h3>
+                  <input
+                    className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                    placeHolder=""
+                    onChange={(e)=>setAuthCode(e.target.value)}
+                    value = {authCode}
+                  ></input>
+                </div>
+              )}
+              <div className="space-y-4">
+                <button
+                  className="w-full py-2 border rounded-md bg-black bg-cover text-white hover:opacity-90"
+                  onClick={handleSignUp}
+                >
+                  SIGN UP
+                </button>
+              </div>
 
-// export default SignUp;
+              <div className="relative flex justify-center">
+                <p className="text-gray-600 mt-6">Already have an account?</p>
+              </div>
+            </div>
+            <div className="relative flex justify-center">
+              <p className="font-medium text-gray-500 hover:text-purple-600">
+                <Link to="/login">Login</Link>
+              </p>
+            </div>
+          </>
+        ) : (
+          <div>
+            <h1 className="text-2xl font-bold text-center mb-8">Success!</h1>
+            <h3>
+              You will be redirected to the login page in...
+              <Countdown
+                date={Date.now() + 5000}
+                renderer={({ seconds }) => {
+                  return <span> {seconds}</span>;
+                }}
+                onComplete={() => navigate("/login")}
+              />
+            </h3>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default SignUp;
