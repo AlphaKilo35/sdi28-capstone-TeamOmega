@@ -86,6 +86,7 @@ router.get("/redirect/google", (req, res, next) => {
 router.post("/role", (req, res) => {
   const { admin, authCode } = req.body;
 
+
   if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
     try {
       knex("users")
@@ -95,10 +96,11 @@ router.post("/role", (req, res) => {
           res.status(200).json({ roleCreated: true, message: "success" });
         });
     } catch (err) {
+      
       res.status(500).json({ message: err.message });
     }
   } else if (admin && authCode !== process.env.ADMIN_AUTH_STRING) {
-    res.status(403).json({ messageCode: 0 });
+    res.status(404).json({ messageCode: 0 });
   } else {
     try {
       knex("users")

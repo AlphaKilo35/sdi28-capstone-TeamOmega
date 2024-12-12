@@ -46,9 +46,9 @@ const LogIn = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900 bg-cover">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h1 className="text-2xl font-bold text-center mb-8">Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-800 bg-cover">
+      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96">
+        <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
         <div className="space-y-6">
           <div className="space-y-2">
             <label className="block text-sm text-gray-600">Username</label>
@@ -56,7 +56,7 @@ const LogIn = () => {
               <input
                 type="text"
                 placeholder="Type your username"
-                className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
               />
@@ -73,7 +73,7 @@ const LogIn = () => {
               <input
                 type="password"
                 placeholder="Type your password"
-                className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               ></input>
