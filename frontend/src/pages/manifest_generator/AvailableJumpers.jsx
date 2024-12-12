@@ -3,8 +3,8 @@ import SearchBar from './SearchBar'
 
 export default function AvailableJumpers({ filteredJumpers, addToManifest, totalSeats, manifestJumpers, search, setSearch }) {
   return (
-    <div className="border border-gold-400 p-2 ">
-    <h2 className="font-bold p-2 ">Available Jumpers</h2>
+    <div className="border border-gold-400 p-4 ">
+    <h2 className="font-bold p-2 text-center text-2xl ">Available Jumpers</h2>
     <SearchBar search={search} setSearch={setSearch} />
     <div>
       {filteredJumpers.map((jumper) => (
