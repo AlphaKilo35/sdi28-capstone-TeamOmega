@@ -117,7 +117,7 @@ const Flights = () =>{
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+          className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto mt-2"
         >
           Add flight
         </button>
@@ -149,7 +149,7 @@ const Flights = () =>{
                   <td className="py-4 px-6" onClick = {()=>{toManifest(event)}}>{flight.date_time.slice(0, 10)}</td>
                   <td className="py-4 px-6" onClick = {()=>{toManifest(event)}}>{flight.date_time.slice(11, 16).replace(/:/g,'')}</td>
                   <button type="button" onClick={deleteFlight}
-                className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto mt-2 mr-2"
                 value = {flight.flight_id}>
                 Remove Flight
               </button>
