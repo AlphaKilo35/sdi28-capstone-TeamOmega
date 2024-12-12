@@ -165,8 +165,8 @@ const SignUp = () => {
           </>
         ) : (
           <div>
-            <h1 className="text-2xl font-bold text-center mb-8">Success!</h1>
-            <h3>
+            <h1 className="text-2xl font-bold text-center text-white mb-8">Success!</h1>
+            <h3 className = "text-white">
               You will be redirected to the login page in...
               <Countdown
                 date={Date.now() + 5000}
