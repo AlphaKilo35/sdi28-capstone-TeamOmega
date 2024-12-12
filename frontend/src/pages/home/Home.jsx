@@ -18,7 +18,6 @@ function Home() {
     fetch(`http://localhost:3000/users/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data[0]);
         setUser(data[0]);
       });
   }, []);
@@ -29,19 +28,19 @@ function Home() {
     return (
       <>
         <UserContext.Provider value={user}>
-        <div className="min-h-screen bg-gray-900 text-gray-200 homepage">
-        <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
-          <h1 className="text-3xl font-bold text-center">Welcome, {user.name}</h1>
-        </header>
-        
-        <main className="grid grid-cols-3 gap-6 p-6">
-            <ProfileNav />
-            <JumpLogNav />
-            <FlightsNav />
-            <ManifestNav />
-            <UnitTrainingNav />
+          <div className="min-h-screen bg-gray-900 text-gray-200 homepage">
+            <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
+              <h1 className="text-3xl font-bold text-center">Welcome, {user.name}</h1>
+            </header>
+          
+            <main className="grid grid-cols-3 gap-6 p-6">
+              <ProfileNav />
+              <JumpLogNav />
+              <FlightsNav />
+              <ManifestNav />
+              <UnitTrainingNav />
             </main>
-            </div>
+          </div>
         </UserContext.Provider>
       </>
     );
