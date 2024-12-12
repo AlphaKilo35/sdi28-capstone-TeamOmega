@@ -5,11 +5,11 @@ import React from 'react'
 export default function StatusSelector({manifestStatus, updateStatus}) {
   return (
     <div className="flex gap-2">
-    <div className="text-sm">Status: {manifestStatus}</div>
+    <div className="text-sm mt-1">Flight Status</div>
     <select
       value={manifestStatus}
       onChange={(e) => updateStatus(e.target.value)}
-      className="px-2 py-1 border rounded text-gray-900"
+      className="px-2 py-1 border rounded text-white-900"
     >
       <option value="scheduled">Scheduled</option>
       <option value="scratched">Scratched</option>

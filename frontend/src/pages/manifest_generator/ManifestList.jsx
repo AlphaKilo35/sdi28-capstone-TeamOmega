@@ -1,12 +1,12 @@
 import React from 'react'
 import StatusSelector from './StatusSelector'
 export default function ManifestList({ manifestJumpers, removeFromManifest, manifestStatus, updateStatus, totalSeats }) {
- 
+
     return (
     <div className="border border-gold-400 p-4">
-    <h2 className="font-bold">Flight Manifest</h2>
+    <h2 className="font-bold mb-2">Flight Manifest</h2>
     <StatusSelector manifestStatus={manifestStatus} updateStatus={updateStatus} />
-    <div className="mb-4">
+    <div className="mt-2 mb-4">
       Available Seats: {totalSeats - manifestJumpers.length} / {totalSeats}
     </div>
     {manifestJumpers.map((jumper) => (
