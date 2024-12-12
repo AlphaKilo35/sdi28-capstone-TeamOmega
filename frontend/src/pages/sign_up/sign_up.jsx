@@ -122,7 +122,7 @@ const SignUp = () => {
               </div>
               {adminSelected && (
                 <div>
-                  <h3 className="text-sm text-gray-600">Authorization code</h3>
+                  <h3 className="text-sm text-gray-400">Authorization code</h3>
                   <input
                     className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
                     placeHolder=""

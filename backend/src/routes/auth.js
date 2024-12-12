@@ -13,16 +13,18 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/oauth2/redirect/google",
-      scope: ["profile"],
+      scope: ["profile", "email"],
     },
     async function verify(issuer, profile, cb) {
+
       const user = await knex
         .select("*")
         .from("external_credentials")
         .where({ provider: issuer, subject: profile.id });
       if (user.length === 0) {
+
         knex("users")
-          .insert({ name: profile.displayName })
+          .insert({ name: profile.displayName, email: profile.emails[0].value })
           .returning("id")
           .then((result) => {
             knex("external_credentials")
@@ -96,7 +98,7 @@ router.post("/role", (req, res) => {
           res.status(200).json({ roleCreated: true, message: "success" });
         });
     } catch (err) {
-      
+
       res.status(500).json({ message: err.message });
     }
   } else if (admin && authCode !== process.env.ADMIN_AUTH_STRING) {
