@@ -51,7 +51,7 @@ const LogIn = () => {
         <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
         <div className="space-y-6">
           <div className="space-y-2">
-            <label className="block text-sm text-gray-600">Username</label>
+            <label className="block text-sm text-gray-400">Username</label>
             <div className="relative">
               <input
                 type="text"
@@ -68,7 +68,7 @@ const LogIn = () => {
             )}
           </div>
           <div className="space-y-2">
-            <label className="block text-sm text-gray-600">Password</label>
+            <label className="block text-sm text-gray-400">Password</label>
             <div className="relative">
               <input
                 type="password"
@@ -86,29 +86,29 @@ const LogIn = () => {
             <div className="text-right">
               <a
                 href="#"
-                className="text-sm text-gray-600 hover:text-purple-500"
+                className="text-sm text-gray-400 hover:text-gold-400"
               >
                 Forgot Password?
               </a>
             </div>
             <button
-              className="w-full py-2 bg-black bg-cover text-white rounded-md hover:opacity-90 transition-opacity"
+              className="w-full py-2 bg-gold-600 bg-cover text-black font-bold rounded-md hover:opacity-90 transition-opacity"
               onClick={handleLogin}
             >
               LOGIN
             </button>
-            <div className="flex flex-col items-center pt-3 text-sm text-black">
+            <div className="flex flex-col items-center pt-3 text-sm text-white">
               <p>Login with:</p>
-              <div className=" border-2 rounded-full w-24 text-center bg-[url('/googlepng.png')] h-10 bg-cover ">
+              <div className="  rounded-full w-24 text-center bg-[url('/googlepng.png')] h-10 bg-cover ">
                 <button
                   onClick={handleGoogleLogin}
                   className="h-full w-full"
                 ></button>
               </div>
             </div>
-            <div className="text-center text-sm text-gray-500 pt-4">
+            <div className="text-center text-sm text-gray-200 pt-4">
               <p>Or Sign Up Below</p>
-              <button className="mt-2 font-medium text-gray-600 hover:text-purple-500">
+              <button className="mt-2 font-medium text-gray-400 hover:text-gold-400">
                 <Link to="/signup">Sign Up</Link>
               </button>
             </div>

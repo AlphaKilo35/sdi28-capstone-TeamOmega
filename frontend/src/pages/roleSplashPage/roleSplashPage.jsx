@@ -30,11 +30,11 @@ const SplashPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-800 flex justify-center items-center ">
-      <div className="font-serif min-h-max w-96 bg-white rounded-md p-2">
+      <div className="font-serif min-h-max w-96 bg-gray-900 rounded-md p-2">
         <div className="space-y-4">
           <div className="">
-            <h1 className="text-center text-2xl">Welcome!</h1>
-            <h1 className="mt-8">
+            <h1 className="text-center text-white text-2xl">Welcome!</h1>
+            <h1 className="mt-8 text-white">
               Since this is your first login, please select your role below:
             </h1>
           </div>
@@ -49,7 +49,7 @@ const SplashPage = () => {
           </div>
           {adminSelected && (
             <div>
-              <h3 className="text-sm text-gray-600">Authorization code</h3>
+              <h3 className="text-sm text-gray-400">Authorization code</h3>
               <input
                 className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
                 onChange={(e) => setAuthCode(e.target.value)}
