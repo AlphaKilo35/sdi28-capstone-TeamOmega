@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function StatusSelector({manifestStatus, updateStatus}) {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 ml-8">
     <div className="text-sm mt-1">Flight Status</div>
     <select
       value={manifestStatus}
