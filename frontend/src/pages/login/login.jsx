@@ -23,7 +23,7 @@ const LogIn = () => {
           "Content-Type": "application/json",
         },
 
-        body: JSON.stringify({ username: username, password: password }),
+        body: JSON.stringify({ email: email, password: password }),
         credentials: "include",
       });
       console.log(response);
@@ -45,20 +45,35 @@ const LogIn = () => {
     window.location.href = "http://localhost:3000/oauth2/login/google";
   };
 
+  const handleDevLogin = () => {
+    fetch('http://localhost:3000/local/dev', {
+      credentials: 'include'
+    })
+    .then((res)=>res.json())
+    .then((data)=>{
+      if(data) navigate('/')
+    })
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-800 bg-cover">
       <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96">
         <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
+        <div className = "text-center ">
+
+        <button className = "w-full h-full text-white hover:text-gold-400"
+        onClick={handleDevLogin}>Dev Login</button>
+        </div>
         <div className="space-y-6">
           <div className="space-y-2">
-            <label className="block text-sm text-gray-400">Username</label>
+            <label className="block text-sm text-gray-400">Email</label>
             <div className="relative">
               <input
                 type="text"
-                placeholder="Type your username"
+                placeholder="Type your email"
                 className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
             </div>
             {!badUserResponse?.user && (
@@ -98,7 +113,7 @@ const LogIn = () => {
               LOGIN
             </button>
             <div className="flex flex-col items-center pt-3 text-sm text-white">
-              <p>Login with:</p>
+              <p>Login with</p>
               <div className="  rounded-full w-24 text-center bg-[url('/googlepng.png')] h-10 bg-cover ">
                 <button
                   onClick={handleGoogleLogin}

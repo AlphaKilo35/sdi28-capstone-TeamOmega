@@ -16,13 +16,11 @@ passport.use(
       scope: ["profile", "email"],
     },
     async function verify(issuer, profile, cb) {
-
       const user = await knex
         .select("*")
-        .from("external_credentials")
-        .where({ provider: issuer, subject: profile.id });
+        .from("users_tbl")
+        .where({ email: profile.emails[0].value });
       if (user.length === 0) {
-
         knex("users_tbl")
           .insert({ name: profile.displayName, email: profile.emails[0].value })
           .returning("id")
@@ -32,6 +30,7 @@ passport.use(
                 user_id: result[0].id,
                 provider: issuer,
                 subject: profile.id,
+                email: profile.emails[0].value,
               })
               .then(() => {
                 const user = { id: result[0].id, name: profile.displayName };
@@ -41,18 +40,7 @@ passport.use(
               });
           });
       } else {
-        knex("users_tbl")
-          .select("*")
-          .where({ id: user[0].user_id })
-          .then((result) => {
-            if (result.length === 0) {
-              return cb(null, false);
-            } else {
-              return cb(null, result[0], {
-                previousLogin: result[0].previousLogin,
-              });
-            }
-          });
+        return cb(null, user[0], { previousLogin: user[0].previousLogin });
       }
     }
   )
@@ -88,7 +76,6 @@ router.get("/redirect/google", (req, res, next) => {
 router.post("/role", (req, res) => {
   const { admin, authCode } = req.body;
 
-
   if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
     try {
       knex("users_tbl")
@@ -98,7 +85,6 @@ router.post("/role", (req, res) => {
           res.status(200).json({ roleCreated: true, message: "success" });
         });
     } catch (err) {
-
       res.status(500).json({ message: err.message });
     }
   } else if (admin && authCode !== process.env.ADMIN_AUTH_STRING) {

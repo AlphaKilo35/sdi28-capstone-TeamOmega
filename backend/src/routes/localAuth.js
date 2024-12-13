@@ -8,10 +8,10 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 passport.use(
-  new LocalStrategy(async function (username, password, cb) {
+  new LocalStrategy({usernameField: 'email'},async function (email, password, cb) {
     try {
       const user = await knex("users_tbl").where({
-        username: username,
+        email: email,
       });
       const isAuthenticated = bcrypt.compareSync(password, user[0].password);
       if (user.length === 0) {
@@ -48,7 +48,7 @@ router.post("/login", (req, res, next) => {
 });
 
 router.post("/signup", (req, res) => {
-  const { fullName, username, password, admin, authCode } = req.body;
+  const { fullName, email, password, admin, authCode } = req.body;
   console.log(req.body);
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
@@ -57,13 +57,13 @@ router.post("/signup", (req, res) => {
     try {
       if (!admin) {
         const user = await knex("users_tbl")
-          .insert({ name: fullName, username: username, password: hash, role: "User" })
+          .insert({ name: fullName, email: email, password: hash, role: "User" })
           .returning("*");
         console.log(user);
         res.status(200).json({ success: true, code: 0 });
       } else if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
         const user = await knex("users_tbl")
-          .insert({ name: fullName, username: username, password: hash, role: "Admin" })
+          .insert({ name: fullName, email: email, password: hash, role: "Admin" })
           .returning("*");
         console.log(user);
         res.status(200).json({ success: true, code: 0 });
@@ -78,11 +78,19 @@ router.post("/signup", (req, res) => {
 });
 
 router.get('/verify', (req, res)=>{
+  
   if(req.isAuthenticated()){
     res.status(200).json(true)
   } else {
     res.status(200).json(false)
   }
+})
+
+router.get('/dev', (req, res)=> {
+ req.logIn({id: 'dev'}, (error)=>{
+  if(error) console.log(error)
+    res.status(200).json(true)
+ })
 })
 
 module.exports = router;

@@ -74,7 +74,7 @@ const Flights = () => {
     fetch("http://localhost:3000/flights")
       .then((res) => res.json())
       .then((data) => setFlightList(data));
-  }, [flightList]);
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:3000/flights/dropzones")

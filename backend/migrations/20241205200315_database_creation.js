@@ -35,7 +35,7 @@ exports.up = function(knex) {
     table.string('username').unique({indexName: 'username_unique'});
     table.string('password');
     table.string('name');
-    table.string('email');
+    table.string('email').unique({indexName: 'email_unique'});
     table.string('role');
     table.boolean('jm');
     table.boolean('previousLogin').defaultTo(false)
@@ -51,6 +51,7 @@ exports.up = function(knex) {
       .deferrable("deferred");
     table.string("provider");
     table.string("subject");
+    table.string("email")
   })
 
   .createTable('manifest_tbl', table => {

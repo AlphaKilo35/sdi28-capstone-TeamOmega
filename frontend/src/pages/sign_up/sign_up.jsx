@@ -27,7 +27,7 @@ const SignUp = () => {
       setConfirmPassword("");
       return;
     }
-    if (!password || !fullName || !username || !confirmPassword) {
+    if (!password || !fullName || !email || !confirmPassword) {
       setPasswordMatch(true);
       setBlankField(true);
       return;
@@ -39,12 +39,16 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ fullName: fullName, username: username, password: password, admin: adminSelected, authCode: authCode }),
+        body: JSON.stringify({ fullName: fullName, email: email, password: password, admin: adminSelected, authCode: authCode }),
       });
 
       const data = await response.json();
       console.log(data)
-      if (data.code === 1) setIncorrectAuthString(true);
+      if (data.code === 1) {
+        setIncorrectAuthString(true);
+        setPasswordMatch(true)
+        setBlankField(false)
+      }
       data.success ? setSignupSuccess(true) : setSignupSuccess(false);
 
       // if (!data.ok) {
@@ -74,14 +78,14 @@ const SignUp = () => {
                   onChange={(e) => setFullName(e.target.value)}
                 ></input>
               </div>
-              <label className="text-sm block text-gray-400">Username</label>
+              <label className="text-sm block text-gray-400">Email</label>
               <div className="relative">
                 <input
-                  type="text"
-                  placeholder="Type your username"
+                  type="email"
+                  placeholder="Type your email"
                   className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 ></input>
               </div>
               <label className="text-sm block text-gray-400 ">Password</label>
