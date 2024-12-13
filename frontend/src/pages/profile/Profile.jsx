@@ -66,16 +66,36 @@ function Profile() {
 
     function handleSaveChanges() {
         if (emailChange || roleChange || jmChange) {
+            const updateData = {};
             if (emailChange) {
-                console.log('Email changed successfully!')
+                updateData.email = email;
+            }
+            if (roleChange && tokenCorrect) {
+                updateData.role = role;
+            }
+            if (jmChange && tokenCorrect) {
+                updateData.jm = jm;
             }
             if (roleChange || jmChange && !tokenCorrect) {
                 setValidatePopup(true)
-            } else {
-                
+            }else{
+            fetch(`http://localhost:3000/users/${user.id}`, {
+                method: 'PATCH',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updateData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('user updated successfully: ', data)
+            })
+            .catch(err => {
+                console.log('Failed to fetch user:', err);
+                res.status(400).json({err: 'Failed to fetch user'});
+            })
             }
+        }
         } 
-    }
+    
 
     if (!user.name) {
         return (<div>Loading...</div>)
