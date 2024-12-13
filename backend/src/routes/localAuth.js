@@ -78,13 +78,15 @@ router.post("/signup", (req, res) => {
 });
 
 router.get('/verify', (req, res)=>{
-  
+
   if(req.isAuthenticated()){
-    res.status(200).json(true)
+    res.status(200).json(req.user)
   } else {
     res.status(200).json(false)
   }
 })
+
+
 
 router.get('/dev', (req, res)=> {
  req.logIn({id: 'dev'}, (error)=>{
