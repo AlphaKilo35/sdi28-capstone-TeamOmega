@@ -10,7 +10,7 @@ const LocalStrategy = require("passport-local").Strategy;
 passport.use(
   new LocalStrategy(async function (username, password, cb) {
     try {
-      const user = await knex("users").where({
+      const user = await knex("users_tbl").where({
         username: username,
       });
       const isAuthenticated = bcrypt.compareSync(password, user[0].password);
@@ -36,7 +36,7 @@ router.post("/login", (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) return res.status(500).json({ message: "Login error" });
       if (req.isAuthenticated() && req.user) {
-        knex("users")
+        knex("users_tbl")
           .update({ previousLogin: true })
           .where({ id: req.user.id })
           .then(() => {
@@ -48,7 +48,7 @@ router.post("/login", (req, res, next) => {
 });
 
 router.post("/signup", (req, res) => {
-  const { username, password, admin, authCode } = req.body;
+  const { fullName, username, password, admin, authCode } = req.body;
   console.log(req.body);
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
@@ -56,14 +56,14 @@ router.post("/signup", (req, res) => {
   const createUser = async () => {
     try {
       if (!admin) {
-        const user = await knex("users")
-          .insert({ username: username, password: hash, role: "User" })
+        const user = await knex("users_tbl")
+          .insert({ name: fullName, username: username, password: hash, role: "User" })
           .returning("*");
         console.log(user);
         res.status(200).json({ success: true, code: 0 });
       } else if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
-        const user = await knex("users")
-          .insert({ username: username, password: hash, role: "Admin" })
+        const user = await knex("users_tbl")
+          .insert({ name: fullName, username: username, password: hash, role: "Admin" })
           .returning("*");
         console.log(user);
         res.status(200).json({ success: true, code: 0 });
@@ -76,5 +76,13 @@ router.post("/signup", (req, res) => {
   };
   createUser();
 });
+
+router.get('/verify', (req, res)=>{
+  if(req.isAuthenticated()){
+    res.status(200).json(true)
+  } else {
+    res.status(200).json(false)
+  }
+})
 
 module.exports = router;

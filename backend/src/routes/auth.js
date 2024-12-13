@@ -23,7 +23,7 @@ passport.use(
         .where({ provider: issuer, subject: profile.id });
       if (user.length === 0) {
 
-        knex("users")
+        knex("users_tbl")
           .insert({ name: profile.displayName, email: profile.emails[0].value })
           .returning("id")
           .then((result) => {
@@ -41,7 +41,7 @@ passport.use(
               });
           });
       } else {
-        knex("users")
+        knex("users_tbl")
           .select("*")
           .where({ id: user[0].user_id })
           .then((result) => {
@@ -91,7 +91,7 @@ router.post("/role", (req, res) => {
 
   if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
     try {
-      knex("users")
+      knex("users_tbl")
         .update({ previousLogin: true, role: "Admin" })
         .where({ id: req.user.id })
         .then(() => {
@@ -105,7 +105,7 @@ router.post("/role", (req, res) => {
     res.status(404).json({ messageCode: 0 });
   } else {
     try {
-      knex("users")
+      knex("users_tbl")
         .update({ previousLogin: true, role: "User" })
         .where({ id: req.user.id })
         .then(() => {

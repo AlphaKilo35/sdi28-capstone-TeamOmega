@@ -32,12 +32,25 @@ exports.up = function(knex) {
 
   .createTable('users_tbl', table => {
     table.increments('id');
-    table.string('username');
+    table.string('username').unique({indexName: 'username_unique'});
     table.string('password');
     table.string('name');
     table.string('email');
     table.string('role');
     table.boolean('jm');
+    table.boolean('previousLogin').defaultTo(false)
+  })
+
+  .createTable("external_credentials", (table) => {
+    table.increments("id");
+    table.integer("user_id").unsigned();
+    table
+      .foreign("user_id")
+      .references("users_tbl.id")
+      .onDelete("cascade")
+      .deferrable("deferred");
+    table.string("provider");
+    table.string("subject");
   })
 
   .createTable('manifest_tbl', table => {
@@ -68,6 +81,10 @@ exports.down = function(knex) {
       table.dropForeign('flight_id');
     })
 
+    .alterTable('external_credentials', table => {
+      table.dropForeign('user_id')
+    })
+
     .then( function () {
       return knex.schema
       .dropTableIfExists('manifest_tbl')
@@ -75,5 +92,6 @@ exports.down = function(knex) {
       .dropTableIfExists('drop_zone_tbl')
       .dropTableIfExists('departure_tbl')
       .dropTableIfExists('users_tbl')
+      .dropTableIfExitst('external_credentials')
     })
 };
