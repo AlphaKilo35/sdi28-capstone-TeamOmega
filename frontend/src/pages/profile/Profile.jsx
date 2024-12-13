@@ -4,15 +4,18 @@ import "./profile.css";
 import EmailPopup from './EmailPopup.jsx';
 import RolePopup from './RolePopup.jsx';
 import JmPopup from './JmPopup.jsx';
+import ValidatePopup from './ValidatePopup';
 
 export const UserContext = createContext({})
 
 function Profile() {
 
     let [ user, setUser ] = useState({});
+    let [ isAdmin, setIsAdmin ] = useState(true);
 
     let [ email, setEmail ] = useState('');
     let [ emailPopup, setEmailPopup ] = useState(false);
+    let [ emailChange, setEmailChange ] = useState(false);
 
     let [ role, setRole ] = useState('');
     let [ rolePopup, setRolePopup ] = useState(false);
@@ -21,6 +24,9 @@ function Profile() {
     let [ jm, setJm ] = useState('');
     let [ jmPopup, setJmPopup ] = useState(false);
     let [ jmChange, setJmChange ] = useState(false);
+
+    let [ validatePopup, setValidatePopup ] = useState(false);
+    let [ tokenCorrect, setTokenCorrect ] = useState(false);
 
     const location = useLocation();
 
@@ -32,6 +38,9 @@ function Profile() {
             setEmail(data[0].email);
             setRole(data[0].role);
             setJm(data[0].jm)
+            // if (data[0].role === 'admin') {
+            //     setIsAdmin(true);
+            // }
         })
     }, [])
 
@@ -49,6 +58,23 @@ function Profile() {
 
     function toggleJmPopup() {
         setJmPopup(!jmPopup);
+    }
+
+    function toggleValidatePopup() {
+        setValidatePopup(!validatePopup);
+    }
+
+    function handleSaveChanges() {
+        if (emailChange || roleChange || jmChange) {
+            if (emailChange) {
+                console.log('Email changed successfully!')
+            }
+            if (roleChange || jmChange && !tokenCorrect) {
+                setValidatePopup(true)
+            } else {
+                
+            }
+        } 
     }
 
     if (!user.name) {
@@ -73,7 +99,7 @@ function Profile() {
                         onClick={toggleEmailPopup}
                     >Update Email Address
                     </button>
-                    {emailPopup && (<EmailPopup onSetPopup={toggleEmailPopup} changeEmail={setEmail} originEmail={user.email}/>)}
+                    {emailPopup && (<EmailPopup onSetPopup={toggleEmailPopup} changeEmail={setEmail} originEmail={user.email} emailChanged={setEmailChange}/>)}
                 </div>
                 <div className="text-2xl font-bold text-center py-8">
                     <h1>Role: </h1>
@@ -84,7 +110,7 @@ function Profile() {
                         onClick={toggleRolePopup}
                     >Update Role
                     </button>
-                    {rolePopup && (<RolePopup onSetPopup={toggleRolePopup}/>)}
+                    {rolePopup && (<RolePopup onSetPopup={toggleRolePopup} changeRole={setRole} originRole={user.role} adminStatus={isAdmin} roleChanged={setRoleChange}/>)}
                 </div>
                 <div className="text-2xl font-bold text-center py-8">
                     <h1>Jumpmaster: </h1>
@@ -95,14 +121,16 @@ function Profile() {
                         onClick={toggleJmPopup}
                     >Update JM Status
                     </button>
-                    {jmPopup && (<JmPopup onSetPopup={toggleJmPopup}/>)}
+                    {jmPopup && (<JmPopup onSetPopup={toggleJmPopup} changeJm={setJm} adminStatus={isAdmin} jmChanged={setJmChange}/>)}
                 </div>
                 <div className="text-2xl font-bold text-center py-8">
                     <button 
                         className="inline-block px-8 py-4 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95" 
                         type="submit"
+                        onClick={handleSaveChanges}
                     >Save Changes
                     </button>
+                    {validatePopup && (<ValidatePopup onSetPopup={toggleValidatePopup} correctToken={setTokenCorrect}/>)}
                 </div>
             </div>
             </UserContext.Provider>

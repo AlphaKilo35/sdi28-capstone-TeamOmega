@@ -10,6 +10,7 @@ export const UserContext = createContext({});
 
 function Home() {
   //NEED TO LASH THIS UP WITH LOG-IN COOKIES
+  //ADMIN_AUTH_STRING = "Secret Password"
   let userId = 1;
 
   let [user, setUser] = useState({});

@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { UserContext } from './Profile.jsx';
 import "./profile.css";
 
-function EmailPopup ({onSetPopup, changeEmail, originEmail}) {
+function EmailPopup ({onSetPopup, changeEmail, originEmail, emailChanged}) {
 
     const [ emailCorrect, setEmailCorrect ] = useState(true);
     const [ newEmail, setNewEmail ] = useState('');
@@ -18,10 +18,11 @@ function EmailPopup ({onSetPopup, changeEmail, originEmail}) {
         } else if (newEmail === originEmail) {
             setUniqueEmail(false)
             setEmailCorrect(true);
-        } else {
+        } else if (newEmail !== '') {
             changeEmail(newEmail);
             setUniqueEmail(true);
             setEmailCorrect(true);
+            emailChanged(true);
             onSetPopup()
         }
     }
@@ -45,7 +46,7 @@ function EmailPopup ({onSetPopup, changeEmail, originEmail}) {
             </div>
             <div>
                 {!uniqueEmail && (
-                    <div><h3 className="text-color-red-400">Email must differ!</h3></div>
+                    <div><h3 className="text-color-red-400">Email Must differ!</h3></div>
                 )}
             </div>
             <div>
