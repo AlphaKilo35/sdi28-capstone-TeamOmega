@@ -3,7 +3,7 @@ import useFetchData from '../../hooks/useFetchData.jsx';
 
 const Training_Status = () => {
   //const [pageLoad, setPageLoad] = useState(true);
-  const [userId, setUserId] = useState(17) //setUserId(a context, or from the seesion cookie)
+  const [userId, setUserId] = useState(11) //setUserId(a context, or from the seesion cookie)
 
   let headers = ["status","date_time","airframe","type_load","type_tod","departure_name", "drop_zone_name"]
 
@@ -35,14 +35,14 @@ const Training_Status = () => {
     let scheduledTraining = jumpData.dataObject
       .filter(item => item.status !== 'scratched' && item.status !== 'complete');
     return (
-      <div className="bg-white p-6 shadow-lg rounded-lg w-full min-w-full max-h-[650px]">
+      <div className="border-2 border-gold-400 bg-gray-500 p-6 shadow-lg rounded-lg w-full min-w-full max-h-[650px]">
         <div className='overflow-x-auto'>
-        <h4 className="text-xl font-semibold text-gray-800 mb-4">Training Table</h4>
+        <h4 className="text-xl text-center font-semibold text-gray-800 mb-4">Training Table</h4>
+        <h4 className='font-semibold'>Completed Training</h4>
         <table className="min-w-full border-collapse">
           <thead>
-            <h4>Completed Training</h4>
             <tr className="bg-gray-200">
-              { tableHeaders.map( (header) => ( <th key={header} className='p-2 text-left border'>{formatTableHeader(header)}</th> )) }
+              { tableHeaders.map( (header) => ( <th key={header} className=' border-t bg-gold-400 p-2 text-left border'>{formatTableHeader(header)}</th> )) }
             </tr>
           </thead>
           <tbody className="completed-training-table-body">
@@ -54,7 +54,7 @@ const Training_Status = () => {
               </tr>
             ))}
           </tbody>
-          <thead><h4>Upcoming Training</h4></thead>
+          <thead><h4 className='font-semibold'>Scheduled</h4></thead>
           <tbody className="scheduled-training-table-body">
             {scheduledTraining.map( (row, index) => (
               <tr key={index}>
