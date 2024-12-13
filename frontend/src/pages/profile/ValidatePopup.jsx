@@ -2,13 +2,13 @@ import { useState, useContext } from 'react';
 import { UserContext } from './Profile.jsx';
 import "./profile.css";
 
-function ValidatePopup ({onSetPopup, correctToken}) {
+function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
 
     const [ successfulValidation, setSuccessfulValidation ] = useState(false);
     const [ inputKey, setInputKey ] = useState('');
     const [ correctKey, setCorrectKey ] = useState(true)
 
-    let adminKey = 'Secret Password'
+    let adminKey = 'Secret Password';
 
     const user = useContext(UserContext);
 

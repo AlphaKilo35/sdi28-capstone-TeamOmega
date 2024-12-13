@@ -27,6 +27,7 @@ function Profile() {
 
     let [ validatePopup, setValidatePopup ] = useState(false);
     let [ tokenCorrect, setTokenCorrect ] = useState(false);
+    let [ savedChanges, setSavedChanges ] = useState(false);
 
     const location = useLocation();
 
@@ -67,6 +68,7 @@ function Profile() {
     function handleSaveChanges() {
         if (emailChange || roleChange || jmChange) {
             const updateData = {};
+            
             if (emailChange) {
                 updateData.email = email;
             }
@@ -76,22 +78,25 @@ function Profile() {
             if (jmChange && tokenCorrect) {
                 updateData.jm = jm;
             }
-            if (roleChange || jmChange && !tokenCorrect) {
+            if ((roleChange || jmChange) && !tokenCorrect) {
+                console.log('Token incorrect');
                 setValidatePopup(true)
-            }else{
-            fetch(`http://localhost:3000/users/${user.id}`, {
-                method: 'PATCH',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(updateData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('user updated successfully: ', data)
-            })
-            .catch(err => {
-                console.log('Failed to fetch user:', err);
-                res.status(400).json({err: 'Failed to fetch user'});
-            })
+            } else {
+                console.log('Changes Saved successfully')
+                fetch(`http://localhost:3000/users/${user.id}`, {
+                    method: 'PATCH',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(updateData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('user updated successfully: ', data)
+                })
+                .catch(err => {
+                    console.log('Failed to fetch user:', err);
+                    res.status(400).json({err: 'Failed to fetch user'});
+                })
+                setSavedChanges(true);
             }
         }
         } 
@@ -150,7 +155,8 @@ function Profile() {
                         onClick={handleSaveChanges}
                     >Save Changes
                     </button>
-                    {validatePopup && (<ValidatePopup onSetPopup={toggleValidatePopup} correctToken={setTokenCorrect}/>)}
+                    {validatePopup && (<ValidatePopup onSetPopup={toggleValidatePopup} correctToken={setTokenCorrect} isCorrect={tokenCorrect}/>)}
+                    {savedChanges && (<div><h2>Changes Saved Successfully</h2></div>)}
                 </div>
             </div>
             </UserContext.Provider>
