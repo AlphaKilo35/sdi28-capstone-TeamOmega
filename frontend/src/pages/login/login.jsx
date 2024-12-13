@@ -56,7 +56,7 @@ const LogIn = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-800 bg-cover">
+    <div className="min-h-screen flex items-center justify-center bg-grey-800 bg-opacity-40 bg-[url('/army-paratroopers_background_II.png')] ">
       <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96">
         <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
         <div className = "text-center ">
