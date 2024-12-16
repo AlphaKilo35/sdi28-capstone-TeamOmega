@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <Flights />
       },
       {
-        path: '/profiles/:name',
+        path: '/profiles',
         element: <Profile />
       },
       {
