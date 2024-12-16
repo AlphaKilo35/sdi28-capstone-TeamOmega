@@ -12,14 +12,14 @@ export default function Manifest() {
   const [isAddingJumper, setIsAddingJumper] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  ///grab this for your page nephi
   const [userId, setUserId] = useState(null); 
   const userData = useUserData(userId);
 
   if(userData){
-    console.log("user data", userData)
+    console.log(userData)
   }
-//////////
+
+
   const navigate = useNavigate();
   const location = useLocation();
   const totalSeats = location.state.numberOfSeats;
@@ -40,7 +40,7 @@ export default function Manifest() {
       .then((data) => {
         console.log(data);
         if (!data) navigate("/login");
-        setUserId(data.id) ///add this to your useEffect
+        setUserId(data.id) 
         setLoading(false)
       })
       .catch((err) => {
@@ -131,6 +131,7 @@ export default function Manifest() {
             manifestJumpers={manifestJumpers}
             search={search}
             setSearch={setSearch}
+            userData= {userData}
           />
           <ManifestList
             manifestJumpers={manifestJumpers}
@@ -138,6 +139,7 @@ export default function Manifest() {
             manifestStatus={manifestStatus}
             updateStatus={updateStatus}
             totalSeats={totalSeats}
+            userData={userData}
           />
         </div>
       </div>
