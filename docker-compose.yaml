@@ -58,7 +58,7 @@ services:
       #- PGUSER=postgres #For Health Check
       # Any environment variables from within the .env file (this file is in the .gitignore, must be made locally with variables matching)
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
     volumes:
       - postgres_volume:/var/lib/postgresql/data
     healthcheck:
