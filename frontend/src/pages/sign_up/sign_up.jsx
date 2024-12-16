@@ -4,6 +4,7 @@ import Countdown from "react-countdown";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("")
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +27,7 @@ const SignUp = () => {
       setConfirmPassword("");
       return;
     }
-    if (!password || !username || !confirmPassword) {
+    if (!password || !fullName || !email || !confirmPassword) {
       setPasswordMatch(true);
       setBlankField(true);
       return;
@@ -38,12 +39,16 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: username, password: password, admin: adminSelected, authCode: authCode }),
+        body: JSON.stringify({ fullName: fullName, email: email, password: password, admin: adminSelected, authCode: authCode }),
       });
 
       const data = await response.json();
       console.log(data)
-      if (data.code === 1) setIncorrectAuthString(true);
+      if (data.code === 1) {
+        setIncorrectAuthString(true);
+        setPasswordMatch(true)
+        setBlankField(false)
+      }
       data.success ? setSignupSuccess(true) : setSignupSuccess(false);
 
       // if (!data.ok) {
@@ -62,15 +67,25 @@ const SignUp = () => {
         {!signupSuccess ? (
           <>
             <h1 className="text-2xl font-bold text-center text-white mb-8">Sign up</h1>
-            <div className="space-y-4">
-              <label className="text-sm block text-gray-400">Username</label>
+            <div className="space-y-3">
+            <label className="text-sm block text-gray-400">Full Name</label>
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Type your username"
+                  placeholder="Ex: Jonathan Doe"
                   className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                ></input>
+              </div>
+              <label className="text-sm block text-gray-400">Email</label>
+              <div className="relative">
+                <input
+                  type="email"
+                  placeholder="Type your email"
+                  className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 ></input>
               </div>
               <label className="text-sm block text-gray-400 ">Password</label>
@@ -91,7 +106,7 @@ const SignUp = () => {
               </div>
 
               <div className="space-y-3">
-                <label className="text-sm text-gray-400 block">
+                <label className="text-sm text-gray-400 pt-2 block">
                   Confirm your password
                 </label>
                 <div className="relative">
@@ -122,10 +137,9 @@ const SignUp = () => {
               </div>
               {adminSelected && (
                 <div>
-                  <h3 className="text-sm text-gray-600">Authorization code</h3>
+                  <h3 className="text-sm text-gray-400">Authorization code</h3>
                   <input
                     className="pl-2 border w-full mt-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
-                    placeHolder=""
                     onChange={(e) => setAuthCode(e.target.value)}
                     value={authCode}
                   ></input>
@@ -165,8 +179,8 @@ const SignUp = () => {
           </>
         ) : (
           <div>
-            <h1 className="text-2xl font-bold text-center mb-8">Success!</h1>
-            <h3>
+            <h1 className="text-2xl font-bold text-center text-white mb-8">Success!</h1>
+            <h3 className = "text-white">
               You will be redirected to the login page in...
               <Countdown
                 date={Date.now() + 5000}
