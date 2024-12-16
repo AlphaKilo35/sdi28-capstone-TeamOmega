@@ -8,10 +8,10 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
 passport.use(
-  new LocalStrategy(async function (username, password, cb) {
+  new LocalStrategy({usernameField: 'email'},async function (email, password, cb) {
     try {
-      const user = await knex("users").where({
-        username: username,
+      const user = await knex("users_tbl").where({
+        email: email,
       });
       const isAuthenticated = bcrypt.compareSync(password, user[0].password);
       if (user.length === 0) {
@@ -36,15 +36,19 @@ router.post("/login", (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) return res.status(500).json({ message: "Login error" });
       if (req.isAuthenticated() && req.user) {
-        res.status(200).json({ redirectUrl: "/" });
+        knex("users_tbl")
+          .update({ previousLogin: true })
+          .where({ id: req.user.id })
+          .then(() => {
+            res.status(200).json({ redirectUrl: "/" });
+          });
       }
     });
   })(req, res, next);
 });
 
 router.post("/signup", (req, res) => {
-
-  const { username, password, admin, authCode } = req.body;
+  const { fullName, email, password, admin, authCode } = req.body;
   console.log(req.body);
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
@@ -52,26 +56,43 @@ router.post("/signup", (req, res) => {
   const createUser = async () => {
     try {
       if (!admin) {
-        const user = await knex("users")
-          .insert({ username: username, password: hash, role: "User" })
+        const user = await knex("users_tbl")
+          .insert({ name: fullName, email: email, password: hash, role: "User" })
           .returning("*");
         console.log(user);
-        res.status(200).json({success: true, code: 0});
+        res.status(200).json({ success: true, code: 0 });
       } else if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
-        const user = await knex("users")
-          .insert({ username: username, password: hash, role: "Admin" })
+        const user = await knex("users_tbl")
+          .insert({ name: fullName, email: email, password: hash, role: "Admin" })
           .returning("*");
         console.log(user);
-        res.status(200).json({success:true, code: 0});
-
+        res.status(200).json({ success: true, code: 0 });
       } else {
-        res.status(404).json({success:false, code: 1 });
+        res.status(404).json({ success: false, code: 1 });
       }
     } catch (err) {
-      res.status(500).json({success:false, code: 2});
+      res.status(500).json({ success: false, code: 2 });
     }
   };
   createUser();
 });
+
+router.get('/verify', (req, res)=>{
+
+  if(req.isAuthenticated()){
+    res.status(200).json(req.user)
+  } else {
+    res.status(200).json(false)
+  }
+})
+
+
+
+router.get('/dev', (req, res)=> {
+ req.logIn({id: 'dev'}, (error)=>{
+  if(error) console.log(error)
+    res.status(200).json(true)
+ })
+})
 
 module.exports = router;

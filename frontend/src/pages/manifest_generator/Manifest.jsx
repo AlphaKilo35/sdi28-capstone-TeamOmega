@@ -1,5 +1,5 @@
-import React, { useState} from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import AvailableJumpers from "./AvailableJumpers";
 import ManifestList from "./ManifestList";
 import useManifestJumpers from "../../hooks/useManifestJumpers";
@@ -9,10 +9,12 @@ export default function Manifest() {
   const [search, setSearch] = useState("");
   const [manifestStatus, setManifestStatus] = useState("scheduled");
   const [isAddingJumper, setIsAddingJumper] = useState(false);
+  const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
   const location = useLocation();
-  const totalSeats = location.state.numberOfSeats;
-  const flightId = location.state.flight_id;
+  const totalSeats = location.state?.numberOfSeats;
+  const flightId = location.state?.flight_id;
 
   const [manifestJumpers, setManifestJumpers] = useManifestJumpers(flightId);
   const availableJumpers = useAvailableJumpers();
@@ -20,9 +22,23 @@ export default function Manifest() {
   const filteredJumpers = availableJumpers.filter((jumper) =>
     jumper.name.toLowerCase().includes(search.toLowerCase())
   );
-  
 
-//adds user to the manifest in the UI and creates an entry in the database
+  useEffect(() => {
+    fetch("http://localhost:3000/local/verify", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (!data) navigate("/login");
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error("Auth verification failed", err);
+        navigate("/login");
+      });
+  }, []);
+  //adds user to the manifest in the UI and creates an entry in the database
   const addToManifest = async (jumper) => {
     if (manifestJumpers.length >= totalSeats || isAddingJumper) return;
 
@@ -49,9 +65,7 @@ export default function Manifest() {
       };
 
       setManifestJumpers((current) => {
-        if (current.length >= totalSeats) 
-        
-          throw new Error("Manifest is full");
+        if (current.length >= totalSeats) throw new Error("Manifest is full");
 
         return [...current, jumperWithManifestId];
       });
@@ -63,8 +77,7 @@ export default function Manifest() {
     }
   };
 
-
-//removes user from manifest in UI component and in the database
+  //removes user from manifest in UI component and in the database
   const removeFromManifest = (jumperToRemove) => {
     setManifestJumpers(
       manifestJumpers.filter(
@@ -79,8 +92,7 @@ export default function Manifest() {
       .catch((error) => console.log("Error deleting manifest:", error));
   };
 
-
-//updates jump status as complete, scheduled, or scratched in UI component and in the database for all jumpers on the flight
+  //updates jump status as complete, scheduled, or scratched in UI component and in the database for all jumpers on the flight
   const updateStatus = (newStatus) => {
     setManifestStatus(newStatus);
 
@@ -95,27 +107,29 @@ export default function Manifest() {
   };
 
   return (
-    <div className="p-4 min-h-screen bg-gray-900 text-gray-200">
-      <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
-        <h1 className="text-4xl font-bold text-center">Manifest Generator</h1>
-      </header>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <AvailableJumpers
-          filteredJumpers={filteredJumpers}
-          addToManifest={addToManifest}
-          totalSeats={totalSeats}
-          manifestJumpers={manifestJumpers}
-          search={search}
-          setSearch={setSearch}
-        />
-        <ManifestList
-          manifestJumpers={manifestJumpers}
-          removeFromManifest={removeFromManifest}
-          manifestStatus={manifestStatus}
-          updateStatus={updateStatus}
-          totalSeats={totalSeats}
-        />
+    !loading && (
+      <div className="p-4 min-h-screen bg-gray-900 text-gray-200">
+        <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
+          <h1 className="text-4xl font-bold text-center">Manifest Generator</h1>
+        </header>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <AvailableJumpers
+            filteredJumpers={filteredJumpers}
+            addToManifest={addToManifest}
+            totalSeats={totalSeats}
+            manifestJumpers={manifestJumpers}
+            search={search}
+            setSearch={setSearch}
+          />
+          <ManifestList
+            manifestJumpers={manifestJumpers}
+            removeFromManifest={removeFromManifest}
+            manifestStatus={manifestStatus}
+            updateStatus={updateStatus}
+            totalSeats={totalSeats}
+          />
+        </div>
       </div>
-    </div>
+    )
   );
 }
