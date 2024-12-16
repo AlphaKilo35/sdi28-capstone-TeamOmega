@@ -79,10 +79,15 @@ router.post("/signup", (req, res) => {
 
 router.get('/verify', (req, res)=>{
 
-  if(req.isAuthenticated()){
-    res.status(200).json(req.user)
-  } else {
-    res.status(200).json(false)
+  try{
+
+    if(req.isAuthenticated()){
+      res.status(200).json(req.user)
+    } else {
+      res.status(404).json(false)
+    }
+  } catch(err){
+    console.error('failed to verify user', err)
   }
 })
 
