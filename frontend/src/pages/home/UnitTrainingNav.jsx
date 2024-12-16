@@ -8,7 +8,7 @@ function UnitTrainingNav() {
 
   const navigate = useNavigate();
   function handleUnitTrainingNavigate() {
-    navigate(`/unittraining`);
+    navigate(`/Individual-Training-Record/${user.id}`);
   }
   if (user.role === "admin" || user.role === "leader") {
     return (
