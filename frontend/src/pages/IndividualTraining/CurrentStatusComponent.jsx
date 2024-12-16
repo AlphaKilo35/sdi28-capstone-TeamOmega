@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import useFetchData from '../../hooks/useFetchData.jsx';
 import {trainingContext} from './IndividualTrainingDashboard.jsx'
 const Training_Status = () => {
-  
+
   //const [pageLoad, setPageLoad] = useState(true);
   const [userId, setUserId] = useState(11) //setUserId(a context, or from the seesion cookie)
 
