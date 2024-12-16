@@ -12,7 +12,7 @@ function Profile() {
 
     let [ user, setUser ] = useState({});
     let [ currentUserId, setCurrentUserId ] = useState(0);
-    let [ isAdmin, setIsAdmin ] = useState(true);
+    let [ isAdmin, setIsAdmin ] = useState(false);
     let [ isLoading, setIsLoading ] = useState(true);
 
     let [ email, setEmail ] = useState('');
@@ -176,7 +176,7 @@ function Profile() {
                     </button>
                 </div>
                     {validatePopup && (<ValidatePopup onSetPopup={toggleValidatePopup} correctToken={setTokenCorrect} isCorrect={tokenCorrect}/>)}
-                    {savedChanges && (<div className="text-xl text-green"><h2>Changes Saved Successfully</h2></div>)}
+                    {savedChanges && (<div className="text-xl text-green-400"><h2>Changes Saved Successfully</h2></div>)}
                 
             </div>
             </div>

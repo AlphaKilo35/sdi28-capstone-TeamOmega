@@ -46,7 +46,7 @@ function RolePopup ({onSetPopup, changeRole, originRole, adminStatus, roleChange
                             </div>
                             {!adminStatus && (
                                 <div>
-                                    <h2 className="text-color-red-400">Role Change Unauthorized</h2>
+                                    <h2 className="text-red-400">Role Change Unauthorized</h2>
                                 </div>
                             )}
                             <div>
