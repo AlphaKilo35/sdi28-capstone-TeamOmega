@@ -21,7 +21,7 @@ router.get("/flight/:flight_id/users", (req, res) => {
       res.status(500).json({ error: "Failed to fetch users for this flight" });
     });
 });
- 
+
 
 //get all users available for a jump
 router.get("/users", async (req, res) => {
@@ -33,6 +33,25 @@ router.get("/users", async (req, res) => {
   }
 });
 
+//get all manifests associated with a user
+router.get("/user/:userId", (req, res) => {
+  const userId = parseInt(req.params.userId);
+  knex("manifest_tbl")
+    .where({user_id: userId })
+    .join('flight_tbl', 'manifest_tbl.flight_id', 'flight_tbl.id' )
+    .select("*")
+    .then((manifest) => {
+      if (manifest) {
+        res.status(200).json(manifest);
+        console.log(manifest)
+      }
+    })
+    .catch((error)=> {
+      res.status(500).json({ error: "Failed to fetch manifest" });
+    });
+})
+
+//get manifest by ID
 router.get("/:id", (req, res) => {
   const manifestId = parseInt(req.params.id);
   knex("manifest_tbl")

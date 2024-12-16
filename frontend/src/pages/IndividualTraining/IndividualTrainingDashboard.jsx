@@ -17,7 +17,7 @@ function Individual_Training () {
 let userId = 17;
 
 let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
-let jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`)
+let jumpData = useFetchData(`http://localhost:3000/manifests/user/${userId}`)
 
 return (
   <div className=" border-2 border-gold-400 bg-indigo-950 min-h-screen flex flex-col pb-16">
