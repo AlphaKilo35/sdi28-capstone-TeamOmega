@@ -39,7 +39,7 @@ function NavBarComponent() {
         <div className="absolute ml-20 flex justify-between w-full">
           <ul className="space-x-4 flex mb-2">
             <li className="ml-4">
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
             </li>
             <li className="">
               <Link to="/flights">Flights</Link>

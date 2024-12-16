@@ -40,7 +40,7 @@ router.post("/login", (req, res, next) => {
           .update({ previousLogin: true })
           .where({ id: req.user.id })
           .then(() => {
-            res.status(200).json({ redirectUrl: "/" });
+            res.status(200).json({ redirectUrl: "/home" });
           });
       }
     });

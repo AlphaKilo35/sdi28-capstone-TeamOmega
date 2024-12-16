@@ -93,6 +93,6 @@ exports.down = function(knex) {
       .dropTableIfExists('drop_zone_tbl')
       .dropTableIfExists('departure_tbl')
       .dropTableIfExists('users_tbl')
-      .dropTableIfExitst('external_credentials')
+      .dropTableIfExists('external_credentials')
     })
 };

@@ -33,9 +33,21 @@ router.post('/', async (req, res) => {
 //UPDATE
 
 router.patch('/:id', async (req, res) => {
-    let userId = parseInt(req.params.id);
-    let { role, jm } = req.body;
-    await knex('users_tbl').where('id', userId).update('role', role).update('jm', jm).returning('*')
+    const userId = parseInt(req.params.id);
+    const { role, jm, email } = req.body;
+    
+    const updateData = {};
+    if (role !== undefined) updateData.role = role;
+    if (jm !== undefined) updateData.jm = jm;
+    if(email !== undefined) updateData.email = email;
+    
+    if (role === undefined && jm === undefined && email === undefined) {
+        return res.status(400).json({ error: 'No valid fields to update' });
+    }
+    await knex('users_tbl')
+    .where('id', userId)
+    .update(updateData)
+    .returning('*')
     .then(data => {
         res.json(data);
     })
@@ -45,6 +57,7 @@ router.patch('/:id', async (req, res) => {
     })
 
 })
+
 
 //DELETE
 

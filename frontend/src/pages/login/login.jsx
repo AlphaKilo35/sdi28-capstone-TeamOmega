@@ -51,7 +51,7 @@ const LogIn = () => {
     })
     .then((res)=>res.json())
     .then((data)=>{
-      if(data) navigate('/')
+      if(data) navigate('/home')
     })
   }
 
