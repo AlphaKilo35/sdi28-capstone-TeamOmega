@@ -125,16 +125,17 @@ function Profile() {
     } else {   
         return (
             <UserContext.Provider value={user}>
-            <div className="min-h-screen flex items-center justify-center bg-gray-900 bg-cover">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-192">
-                <header className="bg-gray-900 text-gold-400 p-4 shadow-md">
+            <div className="relative min-h-screen bg-gray-800 z-10 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center bg-cover">
+            <div className="absolute inset-0 min-h-screen bg-gray-900 text-gray-200 opacity-95"></div>
+            <div className="bg-gray-900 z-10 p-8 rounded-lg shadow-lg w-192 shadow-lg">
+                <header className="bg-gray-800 rounded-lg text-gold-400 p-4 shadow-md">
                     <h1 className="text-3xl font-bold text-center">Profile of {user.name}</h1>
                 </header>
-                <div className="text-2xl text-white text-center py-8">
+                <div className="text-2xl text-white text-center py-4">
                     <h1 className="font-bold">Name: </h1>
                     <span><h2>{user.name}</h2></span>
                 </div>
-                <div className="text-2xl text-white text-center py-8">
+                <div className="text-2xl text-white text-center py-4">
                     <h1 className="font-bold">Email: </h1>
                     <span><h2>{email}</h2></span>
                     <button 
@@ -145,7 +146,7 @@ function Profile() {
                     </button>
                     {emailPopup && (<EmailPopup onSetPopup={toggleEmailPopup} changeEmail={setEmail} originEmail={user.email} emailChanged={setEmailChange}/>)}
                 </div>
-                <div className="text-2xl text-white text-center py-8">
+                <div className="text-2xl text-white text-center py-4">
                     <h1 className="font-bold">Role: </h1>
                     <span><h2>{Capitalize(role)}</h2></span>
                     <button 
@@ -156,7 +157,7 @@ function Profile() {
                     </button>
                     {rolePopup && (<RolePopup onSetPopup={toggleRolePopup} changeRole={setRole} originRole={user.role} adminStatus={isAdmin} roleChanged={setRoleChange}/>)}
                 </div>
-                <div className="text-2xl text-white text-center py-8">
+                <div className="text-2xl text-white text-center py-4">
                     <h1 className="font-bold">Jumpmaster: </h1>
                     <span><h2>{jm === true ? 'Yes' : 'No' }</h2></span>
                     <button 
@@ -167,7 +168,7 @@ function Profile() {
                     </button>
                     {jmPopup && (<JmPopup onSetPopup={toggleJmPopup} changeJm={setJm} adminStatus={isAdmin} jmChanged={setJmChange}/>)}
                 </div>
-                <div className="text-3xl font-bold text-center py-8">
+                <div className="text-3xl font-bold text-center py-4">
                     <button 
                         className="inline-block px-8 py-4 m-2 bg-gold-400 text-black text-bold rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95" 
                         type="submit"
