@@ -44,6 +44,9 @@ function NavBarComponent() {
             <li className="">
               <Link to="/flights">Flights</Link>
             </li>
+            <li>
+              <Link to="/Individual-Training-Record">Training Record</Link>
+            </li>
           </ul>
 
           <div className=" absolute right-28 flex ">

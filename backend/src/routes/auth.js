@@ -1,10 +1,7 @@
 const express = require("express");
 require("dotenv").config({ path: "../../../.env" });
 const passport = require("passport");
-const knex = require("knex")(
-  require("../../knexfile")[process.env.NODE_ENV || "development"]
-);
-
+const knex = require("knex")(require("../../knexfile")[process.env.NODE_ENV || "development"]);
 const GoogleStrategy = require("passport-google-oidc");
 console.log(process.env.GOOGLE_CLIENT_ID);
 passport.use(
@@ -49,7 +46,6 @@ passport.use(
 const router = express.Router();
 
 router.get("/login/google", passport.authenticate("google"));
-
 router.get("/redirect/google", (req, res, next) => {
   passport.authenticate(
     "google",

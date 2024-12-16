@@ -1,12 +1,11 @@
-
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
 const authRouter = require("./routes/auth.js");
+const userRouter = require('./routes/user_training')
 const localAuth = require('./routes/localAuth.js')
-//const route = require('./routes/routes.js)
 
 
 const app = express();
@@ -33,11 +32,6 @@ app.use(
   })
 );
 
-
-
-app.use(passport.initialize());
-app.use(passport.authenticate("session"));
-
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
     cb(null, { id: user.id });
@@ -62,8 +56,10 @@ app.use('/departures', departures);
 app.use('/drop_zones', dropZones);
 app.use('/flights', flights);
 app.use('/manifests', manifests);
-app.use('/users', users)
-
+app.use('/api/Individual-Training-Record', userRouter);
+app.use('/users', users);
+app.use(passport.initialize());
+app.use(passport.authenticate("session"));
 app.use('/oauth2', authRouter);
 app.use('/local', localAuth)
 
@@ -72,6 +68,34 @@ app.get("/", (req, res) => {
   res.send("Express API Application is up and running");
 });
 
+//Flight Route
+//Create entry
+app.post('/flights/:id', (req, res) => {
+  let {id, airframe, number_pax, dropzone, departure_area, date, time} = req.body
+  knex('flight_tbl').returning('*').insert({id, airframe, number_pax, dropzone, departure_area, date, time})
+  .then(data => {
+    let flightId = data.map(flight => flight.id)
+    res.json(flightId)
+  })
+})
+//Read entries
+app.get('/flights', (req,res)=>{
+  knex('flight_tbl').select('*')
+  .then(data => res.json(data))
+})
+//Update entries
+app.patch('/flights/:id', (req, res) => {
+  knex('flight_tbl').where('id', req.params.id).update(req.body).returning('*')
+  .then(data => {
+    res.json(data)
+  })
+})
+//Delete entries
+app.delete('/flights/:id', (req, res) => {
+  knex('flight_tbl')
+    .where('id', req.params.id)
+    .del()
+    .then(res.send('it workd'))
+})
 
 module.exports = app;
-

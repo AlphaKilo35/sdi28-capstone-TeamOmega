@@ -19,7 +19,6 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       setBlankField(false);
       setPasswordMatch(false);
@@ -50,7 +49,6 @@ const SignUp = () => {
         setBlankField(false)
       }
       data.success ? setSignupSuccess(true) : setSignupSuccess(false);
-
       // if (!data.ok) {
       //   throw new Error(data.message || "Login failed");
       // }
@@ -58,8 +56,6 @@ const SignUp = () => {
       setError(error.message);
     }
   };
-
-
   // console.log(adminSelected)
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-800 bg-cover">
