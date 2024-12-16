@@ -52,7 +52,7 @@ function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
                 <div className = "z-100 flex flex-col items-center">
                     <div><h2 className="text-2xl z-100 text-white">Validation Successful!</h2></div>
                     <div>
-                        <Check className = {` transition transform ${!successfulValidation ? 'min-h-0 translate-y-0px' : 'min-h-max translate-y-(-20px) duration-300'} bg-green-400 rounded-md mt-2 w-12 h-12 text-white `} />
+                        <Check className = {`  ${successfulValidation ? 'min-h-0 translate-y-0' : 'transform ease-out max-h-min translate-y-[-20px] duration-300'} bg-green-400 rounded-md mt-2 w-12 h-12 text-white `} />
                     </div>
                 </div>
             )}
