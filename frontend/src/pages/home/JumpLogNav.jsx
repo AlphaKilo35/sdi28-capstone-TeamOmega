@@ -9,8 +9,7 @@ function JumpLogNav() {
   const navigate = useNavigate();
 
   function handleJumpLogNavigate() {
-    let truncName = user.username.replace(/ /g, "");
-    navigate(`/jumplogs/${truncName}`, { state: { userId: user.id } });
+    navigate(`/jumplogs/${user.id}`);
   }
 
   return (

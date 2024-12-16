@@ -59,7 +59,7 @@ router.get("/redirect/google", (req, res, next) => {
       req.logIn(user, (err) => {
         if (req.isAuthenticated() && req.user) {
           if (response.previousLogin) {
-            res.redirect("http://localhost:5173");
+            res.redirect("http://localhost:5173/home");
           } else {
             res.redirect("http://localhost:5173/setRole");
           }
@@ -75,7 +75,7 @@ router.post("/role", (req, res) => {
   if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
     try {
       knex("users_tbl")
-        .update({ previousLogin: true, role: "Admin" })
+        .update({ previousLogin: true, role: "admin" })
         .where({ id: req.user.id })
         .then(() => {
           res.status(200).json({ roleCreated: true, message: "success" });
@@ -88,7 +88,7 @@ router.post("/role", (req, res) => {
   } else {
     try {
       knex("users_tbl")
-        .update({ previousLogin: true, role: "User" })
+        .update({ previousLogin: true, role: "user" })
         .where({ id: req.user.id })
         .then(() => {
           res.status(200).json({ roleCreated: true, message: "success" });

@@ -20,7 +20,7 @@ const SplashPage = () => {
       });
       response = await response.json();
       if (response.roleCreated) {
-        navigate("/");
+        navigate("/home");
       } else if (response?.messageCode === 0) {
         setIncorrectAuthString(true);
       }
