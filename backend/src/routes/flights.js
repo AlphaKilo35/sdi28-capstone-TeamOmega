@@ -67,7 +67,6 @@ router.get('/:id', async (req, res) => {
 });
 
 //POST
-
 router.post('/', (req, res) => {
   console.log(req.body)
   knex('flight_tbl').returning('*').insert(req.body)
@@ -92,10 +91,10 @@ router.patch('/flights/:id', (req, res) => {
 })
 
 //DELETE
-
 router.delete('/', (req, res) => {
   knex('flight_tbl')
     .where('id', req.body.id)
+
     .del()
     .then(res.send('it workd'))
     .catch((err) => {
@@ -103,4 +102,5 @@ router.delete('/', (req, res) => {
       res.status(404).send(err);
     });
 })
+
 module.exports = router;

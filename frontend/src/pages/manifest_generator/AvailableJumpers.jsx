@@ -1,7 +1,18 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 
-export default function AvailableJumpers({ filteredJumpers, addToManifest, totalSeats, manifestJumpers, search, setSearch }) {
+export default function AvailableJumpers({ 
+  filteredJumpers, 
+  addToManifest, 
+  totalSeats, 
+  manifestJumpers, 
+  search, 
+  setSearch,
+  userData
+}) {
+
+  const isAdmin = userData && userData.role.toLowerCase() === 'admin';
+  
   return (
     <div className="border border-gold-400 p-4 ">
     <h2 className="font-bold p-2 text-center text-2xl ">Available Jumpers</h2>
@@ -16,6 +27,7 @@ export default function AvailableJumpers({ filteredJumpers, addToManifest, total
             {jumper.name} {jumper.jm && <span className="font-bold"> (JM)</span>}
             <div className="text-gray-500">{jumper.unit}</div>
           </div>
+        {isAdmin &&(
           <button
             onClick={() => addToManifest(jumper)}
             disabled={manifestJumpers.length >= totalSeats}
@@ -23,6 +35,7 @@ export default function AvailableJumpers({ filteredJumpers, addToManifest, total
           >
             add
           </button>
+        )}
         </div>
       ))}
     </div>

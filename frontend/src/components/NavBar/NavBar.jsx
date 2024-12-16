@@ -55,7 +55,7 @@ function NavBarComponent() {
               <h3 onClick={() => handleNavigate('flights')}>Flights</h3>
             </li>
             <li className="ml-4 cursor-pointer">
-              <h3 onClick={() => handleNavigate('manifest')}>Manifest</h3>
+              <h3 onClick={() => handleNavigate(`Individual-Training-Record/${user.id}`)}>Training Record</h3>
             </li>
           </ul>
           <div className=" absolute right-28 flex ">

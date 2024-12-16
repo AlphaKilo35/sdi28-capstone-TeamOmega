@@ -36,7 +36,7 @@ function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
                         <input type="text" className="w-full pl-2 pr-4 py-2 text-black border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="Admin Key" onChange={(e) => setInputKey(e.target.value)}></input>
                     </div>
                     {!correctKey && (
-                        <div><h2 className="text-color-red-400">Inncorrect Admin Key</h2></div>
+                        <div><h2 className="text-red-400">Incorrect Admin Key</h2></div>
                     )}
                     <div>
                         <button
@@ -49,12 +49,12 @@ function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
                 </>
             )}
             {successfulValidation && (
-                <div className = "z-100 flex flex-col items-center">
-                    <div><h2 className="text-2xl z-100 text-white">Validation Successful!</h2></div>
-                    <div>
-                        <Check className = {`  ${successfulValidation ? 'min-h-0 translate-y-0' : 'transform ease-out max-h-min translate-y-[-20px] duration-300'} bg-green-400 rounded-md mt-2 w-12 h-12 text-white `} />
-                    </div>
-                </div>
+                <>
+                    <div><h2 className="text-2xl text-white">Validation Successful!</h2></div>
+                    {/* <div>
+                        <img className="element" src="https://image.similarpng.com/very-thumbnail/2021/05/Checkmark-green-tick-isolated-on-transparent-background-PNG.png" alternate="Green Checkmark"></img>
+                    </div> */}
+                </>
             )}
             <div>
                 <button

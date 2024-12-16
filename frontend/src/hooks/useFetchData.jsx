@@ -1,30 +1,26 @@
 import { useState, useEffect, useCallback } from 'react';
 
-
-
-function useFetchData ( url, numOfRecords = 1 ) {
+function useFetchData ( url ) {
   const [loading, setLoading] = useState(true);
-  const [dataList, setDataList] = useState([]);
+  const [dataObject, setDataObject] = useState({});
 
   const fetchData = useCallback( async () => {
     setLoading(true);
-    let responseData = [];
-    for (let i = 0; i < numOfRecords; i++) {
-      let response = await fetch(url)
-        .then(response => !response.ok ? Promise.reject(new Error('Failed to Fetch List')) : Promise.resolve(response.json()))
-        .catch(error => { console.log(error.message); });
-      let data = await response;
-      responseData.push(data);
-      /** Add a delay, if required by the API documentation / any other restrictions **/
-      //await new Promise(resolve => setTimeout(resolve, 50)) //50 milliseconds
-    }
-    setDataList(responseData);
+    let response = await fetch(url)
+      .then(response => !response.ok ? Promise.reject(new Error('Failed to Fetch List')) : Promise.resolve(response.json()))
+      .catch(error => { console.log(error.message); });
+    let responseData = await response;
+    /** Add a delay, if required by the API documentation / any other restrictions **/
+    //await new Promise(resolve => setTimeout(resolve, 50)) //50 milliseconds
+    //console.log(responseData)
+    setDataObject(responseData);
     setLoading(false);
-  }, [url, numOfRecords]);
-
-  useEffect( () => { fetchData(); }, [fetchData])
-
-  return {dataList, loading}
+  }, [url]);
+  //fetchData();
+  useEffect( () => { fetchData(); }, [])
+  //console.log(dataObject);
+  return {dataObject, loading}
+  //return {dataObject};
 }
 
 export default useFetchData;
