@@ -11,7 +11,9 @@ export const UserContext = createContext({})
 function Profile() {
 
     let [ user, setUser ] = useState({});
-    let [ isAdmin, setIsAdmin ] = useState(true);
+    let [ currentUserId, setCurrentUserId ] = useState(0);
+    let [ isAdmin, setIsAdmin ] = useState(false);
+    let [ isLoading, setIsLoading ] = useState(true);
 
     let [ email, setEmail ] = useState('');
     let [ emailPopup, setEmailPopup ] = useState(false);
@@ -29,21 +31,38 @@ function Profile() {
     let [ tokenCorrect, setTokenCorrect ] = useState(false);
     let [ savedChanges, setSavedChanges ] = useState(false);
 
-    const location = useLocation();
+    useEffect(() => {
+        fetch("http://localhost:3000/local/verify", {
+          credentials: "include",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setCurrentUserId(data?.id);
+            console.log('Current userId on profile load:', data.id)
+            if (!data) navigate("/login");
+          })
+          .catch((err) => {
+            console.error("Auth verification failed", err);
+            navigate("/login");
+          });
+      }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/users/${location.state.userId}`)
+        fetch(`http://localhost:3000/users/${currentUserId}`)
         .then(res => res.json())
         .then(data => {
-            setUser(data[0]);
-            setEmail(data[0].email);
-            setRole(data[0].role);
-            setJm(data[0].jm);
-            if (data[0].role === 'admin') {
-                setIsAdmin(true);
+            if (data[0]) {
+                setUser(data[0]);
+                setEmail(data[0].email);
+                setRole(data[0].role);
+                setJm(data[0].jm);
+                setIsLoading(false);
+                if (data[0].role === 'admin') {
+                    setIsAdmin(true);
+                }
             }
         })
-    }, [])
+    }, [currentUserId])
 
     function Capitalize(str){
         return str.charAt(0).toUpperCase() + str.slice(1);
@@ -101,8 +120,7 @@ function Profile() {
         }
         } 
     
-
-    if (!user.name) {
+    if (isLoading) {
         return (<div>Loading...</div>)
     } else {   
         return (
@@ -113,8 +131,8 @@ function Profile() {
                     <h1 className="text-3xl font-bold text-center">Profile of {user.name}</h1>
                 </header>
                 <div className="text-2xl text-white text-center py-8">
-                    <h1 className="font-bold">Username: </h1>
-                    <span><h2>{user.username}</h2></span>
+                    <h1 className="font-bold">Name: </h1>
+                    <span><h2>{user.name}</h2></span>
                 </div>
                 <div className="text-2xl text-white text-center py-8">
                     <h1 className="font-bold">Email: </h1>
@@ -158,7 +176,7 @@ function Profile() {
                     </button>
                 </div>
                     {validatePopup && (<ValidatePopup onSetPopup={toggleValidatePopup} correctToken={setTokenCorrect} isCorrect={tokenCorrect}/>)}
-                    {savedChanges && (<div className="text-xl text-green"><h2>Changes Saved Successfully</h2></div>)}
+                    {savedChanges && (<div className="text-xl text-green-400"><h2>Changes Saved Successfully</h2></div>)}
                 
             </div>
             </div>

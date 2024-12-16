@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <Profile />
       },
       {
-        path:'/Individual-Training-Record',
+        path:'/Individual-Training-Record/:id',
         element: <Individual_Training />
       },
     ],

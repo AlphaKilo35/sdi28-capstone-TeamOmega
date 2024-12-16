@@ -11,7 +11,7 @@ function RolePopup ({onSetPopup, changeRole, originRole, adminStatus, roleChange
     function handleRoleUpdate() {
         console.log(adminStatus);
         if (adminStatus && selectedValue !== originRole) {
-            if (selectedValue === 'member') {
+            if (selectedValue === 'user') {
                 console.log('Role updated to member')
                 changeRole('member');
                 roleChanged(true);
@@ -39,14 +39,14 @@ function RolePopup ({onSetPopup, changeRole, originRole, adminStatus, roleChange
                             </div>
                             <div>
                                 <select name="role" id="role" className="w-full pl-2 pr-4 py-2 text-black border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400" onChange={(e) => setSelectedValue(e.target.value)}>
-                                    <option value="member">Member</option>
+                                    <option value="user">Member</option>
                                     <option value="leader">Leader</option>
                                     <option value="admin">Admin</option>
                                 </select>
                             </div>
                             {!adminStatus && (
                                 <div>
-                                    <h2 className="text-color-red-400">Role Change Unauthorized</h2>
+                                    <h2 className="text-red-400">Role Change Unauthorized</h2>
                                 </div>
                             )}
                             <div>

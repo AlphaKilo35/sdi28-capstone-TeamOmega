@@ -5,12 +5,13 @@ import { UserContext } from "./Home.jsx";
 
 function ManifestNav() {
   let user = useContext(UserContext);
+  console.log(user);
 
   const navigate = useNavigate();
   function handleManifestNavigate() {
     navigate(`/manifest`);
   }
-  if (user.role === "admin") {
+  if (user?.role === "admin") {
     return (
         <div className="grid place-items-center bg-gray-900 text-gray-200">
       <div
