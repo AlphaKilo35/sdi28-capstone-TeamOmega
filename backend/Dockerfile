@@ -1,14 +1,15 @@
 FROM node:20-alpine
 
-RUN mkdir -p /backend
+#RUN mkdir -p /backend
 
 WORKDIR /backend
 
 COPY . /backend
 
-RUN npm install 
+
+RUN npm install -g nodemon && npm install
   #assuming node.js / react
-#RUN npm install -g nodemon
+
 
 EXPOSE 3000
   #Default express server port

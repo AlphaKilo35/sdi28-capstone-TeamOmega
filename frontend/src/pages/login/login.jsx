@@ -51,15 +51,17 @@ const LogIn = () => {
     })
     .then((res)=>res.json())
     .then((data)=>{
-      if(data) navigate('/home')
+      if(data) navigate('/')
     })
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-grey-800 bg-opacity-40 bg-[url('/army-paratroopers_background_II.png')] ">
-      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96">
-        <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
-        <div className = "text-center ">
+    <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
+    <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
+
+    <div className="relative bg-gray-900 p-8 rounded-lg shadow-lg w-96">
+      <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
+      <div className="text-center">
 
         <button className = "w-full h-full text-white hover:text-gold-400"
         onClick={handleDevLogin}>Dev Login</button>

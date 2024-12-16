@@ -19,7 +19,6 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       setBlankField(false);
       setPasswordMatch(false);
@@ -50,7 +49,6 @@ const SignUp = () => {
         setBlankField(false)
       }
       data.success ? setSignupSuccess(true) : setSignupSuccess(false);
-
       // if (!data.ok) {
       //   throw new Error(data.message || "Login failed");
       // }
@@ -58,12 +56,14 @@ const SignUp = () => {
       setError(error.message);
     }
   };
-
-
   // console.log(adminSelected)
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-800 bg-cover">
-      <div className="bg-gray-900 p-8 rounded-lg shadow-lg w-96 ">
+  <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
+    // <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
+
+    {/* <div className="min-h-screen flex items-center justify-center bg-gray-800 bg-cover"> */}
+      
+      <div className="relative z-10 bg-gray-900 p-8 rounded-lg shadow-lg w-96 ">
         {!signupSuccess ? (
           <>
             <h1 className="text-2xl font-bold text-center text-white mb-8">Sign up</h1>

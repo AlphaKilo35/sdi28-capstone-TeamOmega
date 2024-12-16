@@ -57,6 +57,9 @@ function NavBarComponent() {
             <li className="ml-4 cursor-pointer">
               <h3 onClick={() => handleNavigate('manifest')}>Manifest</h3>
             </li>
+            <li>
+              <Link to="/Individual-Training-Record">Training Record</Link>
+            </li>
           </ul>
           <div className=" absolute right-28 flex ">
             <CircleUserRound />
