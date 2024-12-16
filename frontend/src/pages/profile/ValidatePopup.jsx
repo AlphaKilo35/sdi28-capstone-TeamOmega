@@ -5,7 +5,7 @@ import "./profile.css";
 
 function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
 
-    const [ successfulValidation, setSuccessfulValidation ] = useState(false);
+    const [ successfulValidation, setSuccessfulValidation ] = useState(true);
     const [ inputKey, setInputKey ] = useState('');
     const [ correctKey, setCorrectKey ] = useState(true)
 
