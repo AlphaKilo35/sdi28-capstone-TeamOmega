@@ -37,7 +37,7 @@ function JmPopup ({onSetPopup, changeJm, originJm, adminStatus, jmChanged}) {
             </div>
             {!adminStatus && (
                 <div>
-                    <h2 className="text-color-red-400">JM Status Change Unauthorized</h2>
+                    <h2 className="text-red-400">Status Change Unauthorized</h2>
                 </div>
             )}
             <div>
