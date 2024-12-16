@@ -1,10 +1,11 @@
 import { useState, useContext } from 'react';
 import { UserContext } from './Profile.jsx';
+import {Check} from 'lucide-react'
 import "./profile.css";
 
 function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
 
-    const [ successfulValidation, setSuccessfulValidation ] = useState(false);
+    const [ successfulValidation, setSuccessfulValidation ] = useState(true);
     const [ inputKey, setInputKey ] = useState('');
     const [ correctKey, setCorrectKey ] = useState(true)
 
@@ -38,7 +39,7 @@ function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
                         <div><h2 className="text-color-red-400">Inncorrect Admin Key</h2></div>
                     )}
                     <div>
-                        <button 
+                        <button
                             className="inline-block px-4 py-2 m-2 bg-gold-400 text-black font-bold rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95"
                             type="submit"
                             onClick={handleValidationCheck}
@@ -48,15 +49,15 @@ function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
                 </>
             )}
             {successfulValidation && (
-                <>
-                    <div><h2 className="text-2xl text-white">Validation Successful!</h2></div>
-                    {/* <div>
-                        <img className="element" src="https://image.similarpng.com/very-thumbnail/2021/05/Checkmark-green-tick-isolated-on-transparent-background-PNG.png" alternate="Green Checkmark"></img>
-                    </div> */}
-                </>
+                <div className = "z-100 flex flex-col items-center">
+                    <div><h2 className="text-2xl z-100 text-white">Validation Successful!</h2></div>
+                    <div>
+                        <Check className = {` transition transform ${!successfulValidation ? 'min-h-0 translate-y-0px' : 'min-h-max translate-y-(-20px) duration-300'} bg-green-400 rounded-md mt-2 w-12 h-12 text-white `} />
+                    </div>
+                </div>
             )}
             <div>
-                <button 
+                <button
                     className="inline-block px-4 py-2 m-2 bg-gold-400 text-black font-bold rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95"
                     type="submit"
                     onClick={onSetPopup}
