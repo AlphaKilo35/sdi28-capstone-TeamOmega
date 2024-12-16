@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import useFetchData from '../../hooks/useFetchData.jsx';
-
+import {trainingContext} from './IndividualTrainingDashboard.jsx'
 const Training_Status = () => {
+  
   //const [pageLoad, setPageLoad] = useState(true);
   const [userId, setUserId] = useState(11) //setUserId(a context, or from the seesion cookie)
 
@@ -9,8 +10,9 @@ const Training_Status = () => {
 
   //needs refactored to be a useContext from the IndividualTrainingData Page
   //let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
-  let jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`)
-
+  //let jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`)
+  let jumpData = useContext(trainingContext)
+  console.log(jumpData)
 
   // useEffect( () => {
   //   console.log(jumpData.dataObject)
@@ -54,7 +56,9 @@ const Training_Status = () => {
               </tr>
             ))}
           </tbody>
-          <thead><h4 className='font-semibold'>Scheduled</h4></thead>
+          <h4 className='font-semibold'>Scheduled</h4>
+          <thead>
+          </thead>
           <tbody className="scheduled-training-table-body">
             {scheduledTraining.map( (row, index) => (
               <tr key={index}>
