@@ -13,6 +13,7 @@ import useUserData from "../../hooks/useUserData";
 const Flights = () =>{
   const navigate = useNavigate()
   const [flightToDelete, setFlightToDelete] = useState(undefined)
+  const [renderFlightTable, setRenderFlightTable] = useState(true)
   const [departureAirfieldList, setDepartureAirfieldList] = useState(undefined)
   const [dropzoneList, setDropzoneList] = useState(undefined)
   const [flightList, setFlightList] = useState(undefined)
@@ -74,7 +75,7 @@ const Flights = () =>{
         },
         body: JSON.stringify({ id: flightToDelete }),
       }).then(() => {
-        setFlightToDelete(undefined);
+        setRenderFlightTable(!renderFlightTable);
       });
     }
   }, [flightToDelete]);
@@ -84,7 +85,7 @@ const Flights = () =>{
       .then((res) => res.json())
 
       .then((data) => setFlightList(data))
-  }, [flightToDelete])
+  }, [renderFlightTable])
 
 
   useEffect(() => {
@@ -114,7 +115,9 @@ const Flights = () =>{
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newFlight),
-    }).then(() => setOpen(false));
+    })
+    .then(() => setOpen(false))
+    .then(() => setRenderFlightTable(!renderFlightTable))
   };
 
   const toManifest = (event) => {
