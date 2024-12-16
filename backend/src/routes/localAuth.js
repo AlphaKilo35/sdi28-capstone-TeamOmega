@@ -91,6 +91,16 @@ router.get('/verify', (req, res)=>{
   }
 })
 
+router.post('/logout', (req, res, next)=>{
+ try{
+  req.logout(function(err) {
+    if (err) {return next(err); }
+    res.status(200).json(true)
+  })
+ } catch (err){
+  res.status(500).json(false)
+ }
+})
 
 
 router.get('/dev', (req, res)=> {
