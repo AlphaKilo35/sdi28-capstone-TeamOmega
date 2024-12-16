@@ -51,6 +51,11 @@ function NavBarComponent() {
       );
   };
 
+  const handleProfileView = () => {
+    navigate('/profiles')
+    setDropdownSelect(!dropdownSelect)
+  }
+
   return (
     !isLoading && (
       <>
@@ -96,7 +101,7 @@ function NavBarComponent() {
                 >
                   <div
                     className="p-1 h-full cursor-pointer"
-                    onClick={() => navigate("/profiles")}
+                    onClick={handleProfileView}
                   >
                     Profile
                   </div>
