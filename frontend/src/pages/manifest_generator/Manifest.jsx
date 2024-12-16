@@ -4,6 +4,7 @@ import AvailableJumpers from "./AvailableJumpers";
 import ManifestList from "./ManifestList";
 import useManifestJumpers from "../../hooks/useManifestJumpers";
 import useAvailableJumpers from "../../hooks/useAvailableJumpers";
+import useUserData from "../../hooks/useUserData";
 
 export default function Manifest() {
   const [search, setSearch] = useState("");
@@ -11,10 +12,18 @@ export default function Manifest() {
   const [isAddingJumper, setIsAddingJumper] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const [userId, setUserId] = useState(null); 
+  const userData = useUserData(userId);
+
+  if(userData){
+    console.log(userData)
+  }
+
+
   const navigate = useNavigate();
   const location = useLocation();
-  const totalSeats = location.state?.numberOfSeats;
-  const flightId = location.state?.flight_id;
+  const totalSeats = location.state.numberOfSeats;
+  const flightId = location.state.flight_id;
 
   const [manifestJumpers, setManifestJumpers] = useManifestJumpers(flightId);
   const availableJumpers = useAvailableJumpers();
@@ -31,6 +40,7 @@ export default function Manifest() {
       .then((data) => {
         console.log(data);
         if (!data) navigate("/login");
+        setUserId(data.id) 
         setLoading(false)
       })
       .catch((err) => {
@@ -38,6 +48,7 @@ export default function Manifest() {
         navigate("/login");
       });
   }, []);
+
   //adds user to the manifest in the UI and creates an entry in the database
   const addToManifest = async (jumper) => {
     if (manifestJumpers.length >= totalSeats || isAddingJumper) return;
@@ -120,6 +131,7 @@ export default function Manifest() {
             manifestJumpers={manifestJumpers}
             search={search}
             setSearch={setSearch}
+            userData= {userData}
           />
           <ManifestList
             manifestJumpers={manifestJumpers}
@@ -127,6 +139,7 @@ export default function Manifest() {
             manifestStatus={manifestStatus}
             updateStatus={updateStatus}
             totalSeats={totalSeats}
+            userData={userData}
           />
         </div>
       </div>

@@ -6,19 +6,25 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
+import useUserData from "../../hooks/useUserData";
 
-const Flights = () => {
-  const navigate = useNavigate();
-  const [flightToDelete, setFlightToDelete] = useState(undefined);
-  const [departureAirfieldList, setDepartureAirfieldList] = useState(undefined);
-  const [dropzoneList, setDropzoneList] = useState(undefined);
-  const [flightList, setFlightList] = useState(undefined);
-  const [open, setOpen] = useState(false);
-  const [newAirframe, setNewAirframe] = useState();
-  const [newNumberOFJumpers, setNewNumberOFJumpers] = useState();
-  const [newDropzone, setNewDropzone] = useState();
-  const [newDepartureAirfield, setNewDepartureAirfield] = useState();
-  const [newDateTime, setNewDateTime] = useState();
+
+
+const Flights = () =>{
+  const navigate = useNavigate()
+  const [flightToDelete, setFlightToDelete] = useState(undefined)
+  const [departureAirfieldList, setDepartureAirfieldList] = useState(undefined)
+  const [dropzoneList, setDropzoneList] = useState(undefined)
+  const [flightList, setFlightList] = useState(undefined)
+  const [open, setOpen] = useState(false)
+  const [newAirframe, setNewAirframe] = useState()
+  const [newNumberOFJumpers, setNewNumberOFJumpers] = useState()
+  const [newDropzone, setNewDropzone] = useState()
+  const [newDepartureAirfield, setNewDepartureAirfield] = useState()
+  const [newDateTime, setNewDateTime] = useState()
+  const [userId, setUserId] = useState(null);
+  const userData = useUserData(userId);
+  const isAdmin = userData && userData.role.toLowerCase() === 'admin'
 
   const newAirframeEntry = () => {
     setNewAirframe(event.target.value);
@@ -49,12 +55,15 @@ const Flights = () => {
       .then((res) => res.json())
       .then((data) => {
         if (!data) navigate("/login");
+        setUserId(data.id)
       })
       .catch((err) => {
         console.error("Auth verification failed", err);
         navigate("/login");
       });
   }, []);
+
+
 
   useEffect(() => {
     if (flightToDelete) {
@@ -73,8 +82,10 @@ const Flights = () => {
   useEffect(() => {
     fetch("http://localhost:3000/flights")
       .then((res) => res.json())
-      .then((data) => setFlightList(data));
-  }, []);
+
+      .then((data) => setFlightList(data))
+  }, [flightToDelete])
+
 
   useEffect(() => {
     fetch("http://localhost:3000/flights/dropzones")
@@ -86,7 +97,6 @@ const Flights = () => {
     fetch("http://localhost:3000/flights/departureAirfields")
       .then((res) => res.json())
       .then((data) => setDepartureAirfieldList(data))
-      .then(() => console.log(departureAirfieldList));
   }, []);
 
   const addFlight = () => {
@@ -130,24 +140,23 @@ const Flights = () => {
       </>
     );
   }
-  if (
-    flightList != undefined &&
-    dropzoneList != undefined &&
-    departureAirfieldList !== undefined
-  ) {
-    return (
-      <>
-        <div className="min-h-screen bg-gray-900 text-gray-200">
-          <header className="flex flex-row bg-gray-800 text-gold-400 p-4 shadow-md justify-center flex-wrap:wrap">
-            <h1 className="text-3xl font-bold text-center ">Flight Tracker</h1>
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              className="inline-flex w-full justify-center rounded-md bg-gold-600  px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-            >
-              Add flight
-            </button>
-          </header>
+  if(flightList != undefined && dropzoneList != undefined && departureAirfieldList !== undefined){
+  return (
+    <>
+    <div className="min-h-screen bg-gray-900 text-gray-200">
+      <header className="flex flex-row bg-gray-800 text-gold-400 p-4 shadow-md justify-center flex-wrap:wrap">
+        <h1 className="text-3xl font-bold text-center">Flight Tracker</h1>
+        {isAdmin &&
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="inline-flex w-full justify-center rounded-md bg-gold-600 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+          >
+            Add flight
+          </button>
+        }
+      </header>
+
 
           <main className="p-6">
             <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
@@ -220,6 +229,7 @@ const Flights = () => {
                           >
                             {flight.date_time.slice(11, 16).replace(/:/g, "")}
                           </td>
+                          {isAdmin &&
                           <button
                             type="button"
                             onClick={deleteFlight}
@@ -228,6 +238,7 @@ const Flights = () => {
                           >
                             Remove Flight
                           </button>
+                          }
                         </tr>
                       </>
                     );
