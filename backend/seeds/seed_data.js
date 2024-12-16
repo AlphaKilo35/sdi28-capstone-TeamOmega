@@ -28,7 +28,7 @@ function createDropzone() {
 function createUsers() {
   const users = [];
   const roles = ['user', 'leader', 'admin'];
-  const oOccupations = ['11A', '12A', '13A', '35A', '18A', '92A', '37A', '15A']; 
+  const oOccupations = ['11A', '12A', '13A', '35A', '18A', '92A', '37A', '15A'];
   const eOccupations = ['18Z', '38Z', '11Z', '92Z', '11B', '11C', '12B', '13B', '35F', '45A', '68W', '74D', '25U', '38R', '38S', '18B', '18C', '18F', '18D', '88M', '88N', '92R', '68C',  '37B']
   const ranks = ['PV1', 'PV2', 'PFC', 'SPC', 'CPL', 'SGT', 'SSG', 'SFC', 'MSG', 'SGM', '2LT', '1LT', 'CPT', 'MAJ', 'LTC', 'COL']
   const encryptPassword = (password) => {
@@ -53,7 +53,7 @@ function createUsers() {
       userMos = eOccupations[(Math.floor(Math.random() * 4)) + 5];
     }
     let userEts = faker.date.future(720);
-    
+
     users.push({
       username: userName,
       password: encryptPassword(userPassword),

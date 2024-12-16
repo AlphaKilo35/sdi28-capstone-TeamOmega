@@ -23,7 +23,7 @@ function ProfileNav() {
             <h1 className="text-3xl font-bold py-2">User Profile</h1>
             <p className="text-lg py-2">Update</p>
             <p className="text-base py-2">Admin Rights</p>
-           
+
           </div>
         </div>
       </div>

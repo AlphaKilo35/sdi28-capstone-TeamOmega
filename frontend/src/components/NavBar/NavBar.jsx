@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CircleUserRound } from "lucide-react";
 import "./nav-bar.css";
