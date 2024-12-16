@@ -92,7 +92,7 @@ router.post("/", (req, res) => {
 //update jump duty status in manifest table
 router.patch("/:id/jump-duty", (req, res) => {
   let manifestId = parseInt(req.params.id);
-  
+
   knex("manifest_tbl")
     .where("id", manifestId)
     .update("jump_duty", knex.raw('NOT jump_duty'))
