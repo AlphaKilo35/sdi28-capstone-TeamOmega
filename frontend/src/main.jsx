@@ -37,7 +37,11 @@ const router = createBrowserRouter([
         element: <Flights />
       },
       {
+<<<<<<< HEAD
         path: '/profile',
+=======
+        path: '/profiles',
+>>>>>>> c3571ee (added dropdown for logout and profile view)
         element: <Profile />
       },
       {
