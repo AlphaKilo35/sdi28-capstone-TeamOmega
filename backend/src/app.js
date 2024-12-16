@@ -5,11 +5,17 @@ const session = require("express-session");
 const passport = require("passport");
 const authRouter = require("./routes/auth.js");
 const userRouter = require('./routes/user_training')
+const localAuth = require('./routes/localAuth.js')
+
 
 const app = express();
 
 //Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -21,33 +27,46 @@ app.use(
       secure: false,
       httpOnly: true,
       sameSite: "lax",
-      maxAge: 36000,
+      maxAge: 360000,
     },
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.authenticate("session"));
+passport.serializeUser(function (user, cb) {
+  process.nextTick(function () {
+    cb(null, { id: user.id });
+  });
+});
+
+passport.deserializeUser(function (user, cb) {
+  process.nextTick(function () {
+    return cb(null, user);
+  });
+});
 
 //Routes
-app.use('/api/Individual-Training-Record', userRouter);
-app.use('/oauth2', authRouter);
 const departures = require('./routes/departures');
 const dropZones = require('./routes/drop_zones');
 const flights = require('./routes/flights')
 const manifests = require('./routes/manifests')
-app.use('/api/Individual-Training-Record', userRouter)
+const users = require('./routes/users')
+
 // Register Routes
 app.use('/departures', departures);
 app.use('/drop_zones', dropZones);
 app.use('/flights', flights);
 app.use('/manifests', manifests);
-
+app.use('/api/Individual-Training-Record', userRouter);
+app.use('/users', users);
+app.use(passport.initialize());
+app.use(passport.authenticate("session"));
+app.use('/oauth2', authRouter);
+app.use('/local', localAuth)
 
 //General | Root Route
 app.get("/", (req, res) => {
-  res.send("Express API Application is up and running")
-})
+  res.send("Express API Application is up and running");
+});
 
 //Flight Route
 //Create entry
@@ -78,8 +97,5 @@ app.delete('/flights/:id', (req, res) => {
     .del()
     .then(res.send('it workd'))
 })
-
-
-
 
 module.exports = app;

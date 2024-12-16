@@ -6,6 +6,7 @@ WORKDIR /backend
 
 COPY . /backend
 
+
 RUN npm install -g nodemon && npm install
   #assuming node.js / react
 

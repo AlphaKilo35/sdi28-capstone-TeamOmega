@@ -5,6 +5,7 @@ volumes:
   node_modules:
 
 services:
+
   frontend:
   # GUI
     build: frontend/
@@ -26,6 +27,7 @@ services:
       - node_modules:/frontend/node_modules
     networks:
       - appnetwork
+  # #     # 5173 is the default Node.js server, change if ports have been changed to something like 8080
   backend:
     # Backend Express Server
     build: backend/

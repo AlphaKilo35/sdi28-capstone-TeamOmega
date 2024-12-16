@@ -8,8 +8,8 @@ const knex = require('knex')(require('../../knexfile')[process.env.NODE_ENV || '
 router.get('/', async (req, res) => {
   try {
     const flights = await knex('flight_tbl as f')
-    .join('departure_tbl as d', 'f.departure_id', 'd.id')
-    .join('drop_zone_tbl as z', 'f.drop_zone_id', 'z.id')
+    .join('departure_tbl as d', 'f.departure_id', '=', 'd.id')
+    .join('drop_zone_tbl as z', 'f.drop_zone_id', '=', 'z.id')
     .select(
       'f.id as flight_id',
       'f.airframe',
@@ -18,9 +18,8 @@ router.get('/', async (req, res) => {
       'f.date_time',
       'f.number_pax',
       'f.number_passes',
-      'd.departure_name as departure_name',
-      'z.dropZone_name as drop_zone_name'
-
+      'd.departure_name AS departure_name',
+      'z.dropzone_name AS drop_zone_name'
     );
     res.status(200).json(flights);
   } catch (error) {
@@ -28,6 +27,15 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch flight details' });
   }
 });
+
+router.get('/dropzones', (req, res) => {
+  knex('drop_zone_tbl').select('*')
+    .then(data => res.send(data))
+})
+router.get('/departureAirfields', (req, res) => {
+  knex('departure_tbl').select('*')
+    .then(data => res.send(data))
+})
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
@@ -59,14 +67,10 @@ router.get('/:id', async (req, res) => {
 });
 
 //POST
-
-router.post('/flights/:id', (req, res) => {
-  let {id, airframe, number_pax, dropzone, departure_area, date, time} = req.body
-  knex('flight_tbl').returning('*').insert({id, airframe, number_pax, dropzone, departure_area, date, time})
-  .then(data => {
-    let flightId = data.map(flight => flight.id)
-    res.json(flightId)
-  })
+router.post('/', (req, res) => {
+  console.log(req.body)
+  knex('flight_tbl').returning('*').insert(req.body)
+  .then(data => res.json(data))
   .catch((err) => {
     console.error(err);
     res.status(404).send(err);
@@ -87,10 +91,10 @@ router.patch('/flights/:id', (req, res) => {
 })
 
 //DELETE
-
-router.delete('/flights/:id', (req, res) => {
+router.delete('/', (req, res) => {
   knex('flight_tbl')
-    .where('id', req.params.id)
+    .where('id', req.body.id)
+
     .del()
     .then(res.send('it workd'))
     .catch((err) => {
