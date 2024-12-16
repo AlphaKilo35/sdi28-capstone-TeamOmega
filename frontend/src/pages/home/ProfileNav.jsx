@@ -8,7 +8,7 @@ function ProfileNav() {
 
   const navigate = useNavigate();
   function handleProfileNavigate() {
-    navigate(`/profiles/${user.id}`);
+    navigate(`/profiles`);
   }
 
   return (
