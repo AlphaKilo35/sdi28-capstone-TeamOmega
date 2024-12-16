@@ -38,10 +38,10 @@ function Profile() {
             setUser(data[0]);
             setEmail(data[0].email);
             setRole(data[0].role);
-            setJm(data[0].jm)
-            // if (data[0].role === 'admin') {
-            //     setIsAdmin(true);
-            // }
+            setJm(data[0].jm);
+            if (data[0].role === 'admin') {
+                setIsAdmin(true);
+            }
         })
     }, [])
 
@@ -107,57 +107,60 @@ function Profile() {
     } else {   
         return (
             <UserContext.Provider value={user}>
-            <div className="min-h-screen bg-gray-900 text-gray-200 homepage">
-                <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
+            <div className="min-h-screen flex items-center justify-center bg-gray-900 bg-cover">
+            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-192">
+                <header className="bg-gray-900 text-gold-400 p-4 shadow-md">
                     <h1 className="text-3xl font-bold text-center">Profile of {user.name}</h1>
                 </header>
-                <div className="text-2xl font-bold text-center py-8">
-                    <h1>Username: </h1>
+                <div className="text-2xl text-white text-center py-8">
+                    <h1 className="font-bold">Username: </h1>
                     <span><h2>{user.username}</h2></span>
                 </div>
-                <div className="text-2xl font-bold text-center py-8">
-                    <h1>Email: </h1>
+                <div className="text-2xl text-white text-center py-8">
+                    <h1 className="font-bold">Email: </h1>
                     <span><h2>{email}</h2></span>
                     <button 
-                        className="inline-block px-4 py-2 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95" 
+                        className="inline-block px-4 py-2 m-2 bg-gold-400 text-black text-bold rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95" 
                         type="submit" 
                         onClick={toggleEmailPopup}
                     >Update Email Address
                     </button>
                     {emailPopup && (<EmailPopup onSetPopup={toggleEmailPopup} changeEmail={setEmail} originEmail={user.email} emailChanged={setEmailChange}/>)}
                 </div>
-                <div className="text-2xl font-bold text-center py-8">
-                    <h1>Role: </h1>
+                <div className="text-2xl text-white text-center py-8">
+                    <h1 className="font-bold">Role: </h1>
                     <span><h2>{Capitalize(role)}</h2></span>
                     <button 
-                        className="inline-block px-4 py-2 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95" 
+                        className="inline-block px-4 py-2 m-2 bg-gold-400 text-black text-bold rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95" 
                         type="submit" 
                         onClick={toggleRolePopup}
                     >Update Role
                     </button>
                     {rolePopup && (<RolePopup onSetPopup={toggleRolePopup} changeRole={setRole} originRole={user.role} adminStatus={isAdmin} roleChanged={setRoleChange}/>)}
                 </div>
-                <div className="text-2xl font-bold text-center py-8">
-                    <h1>Jumpmaster: </h1>
+                <div className="text-2xl text-white text-center py-8">
+                    <h1 className="font-bold">Jumpmaster: </h1>
                     <span><h2>{jm === true ? 'Yes' : 'No' }</h2></span>
                     <button 
-                        className="inline-block px-4 py-2 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95" 
+                        className="inline-block px-4 py-2 m-2 bg-gold-400 text-black text-bold rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95" 
                         type="submit" 
                         onClick={toggleJmPopup}
                     >Update JM Status
                     </button>
                     {jmPopup && (<JmPopup onSetPopup={toggleJmPopup} changeJm={setJm} adminStatus={isAdmin} jmChanged={setJmChange}/>)}
                 </div>
-                <div className="text-2xl font-bold text-center py-8">
+                <div className="text-3xl font-bold text-center py-8">
                     <button 
-                        className="inline-block px-8 py-4 m-2 bg-gray-700 text-white rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gray-800 hover:scale-105 focus:bg-gray-800 focus:scale-105 active:scale-95" 
+                        className="inline-block px-8 py-4 m-2 bg-gold-400 text-black text-bold rounded-lg cursor-pointer text-lg text-center transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95" 
                         type="submit"
                         onClick={handleSaveChanges}
                     >Save Changes
                     </button>
-                    {validatePopup && (<ValidatePopup onSetPopup={toggleValidatePopup} correctToken={setTokenCorrect} isCorrect={tokenCorrect}/>)}
-                    {savedChanges && (<div><h2>Changes Saved Successfully</h2></div>)}
                 </div>
+                    {validatePopup && (<ValidatePopup onSetPopup={toggleValidatePopup} correctToken={setTokenCorrect} isCorrect={tokenCorrect}/>)}
+                    {savedChanges && (<div className="text-xl text-green"><h2>Changes Saved Successfully</h2></div>)}
+                
+            </div>
             </div>
             </UserContext.Provider>
         )

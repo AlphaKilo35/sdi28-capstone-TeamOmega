@@ -14,7 +14,14 @@ function Home() {
   let userId = 1;
 
   let [user, setUser] = useState({});
+  let [currentUser] = useState({});
 
+  useEffect(() => {
+    fetch('http://localhost:3000/verify')
+    .then((res) => res.json())
+    .then((data) => console.log(data));
+  }, [])
+  
   useEffect(() => {
     fetch(`http://localhost:3000/users/${userId}`)
       .then((res) => res.json())

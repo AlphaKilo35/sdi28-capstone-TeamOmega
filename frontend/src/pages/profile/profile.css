@@ -10,3 +10,7 @@
     align-items: center;
     z-index: 100;
   }
+
+  .element {
+    background: none; /* Removes any background image */
+}
