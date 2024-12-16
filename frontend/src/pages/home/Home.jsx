@@ -5,7 +5,7 @@ import ProfileNav from "./ProfileNav.jsx";
 import ManifestNav from "./ManifestNav.jsx";
 import JumpLogNav from "./JumpLogNav.jsx";
 import FlightsNav from "./FlightsNav.jsx";
-import UnitTrainingNav from "./UnitTrainingNav.jsx";
+import TrainingRecordNav from "./TrainingRecordNav.jsx";
 import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext({});
@@ -55,17 +55,16 @@ function Home() {
     return (
       <>
         <UserContext.Provider value={user}>
-          <div className="min-h-screen bg-gray-900 text-gray-200 homepage">
+          <div className="relative min-h-screen bg-gray-800 z-10 bg-[url('/army-paratroopers_background_II.png')]">
+          <div className="absolute inset-0 min-h-screen bg-gray-900 text-gray-200 opacity-95"></div>
             <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
               <h1 className="text-3xl font-bold text-center">Welcome, {user?.name}</h1>
             </header>
           
             <main className="grid grid-cols-3 gap-6 p-6">
               <ProfileNav />
-              <JumpLogNav />
               <FlightsNav />
-              <ManifestNav />
-              <UnitTrainingNav />
+              <TrainingRecordNav />
             </main>
           </div>
         </UserContext.Provider>
