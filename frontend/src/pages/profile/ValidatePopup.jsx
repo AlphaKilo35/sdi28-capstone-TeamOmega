@@ -52,7 +52,7 @@ function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
                 <>
                     <div><h2 className="text-2xl text-green-400">Validation Successful!</h2></div>
                     <div>
-                        <img className="element" src="./GreenCheckmark.svg" alternate="Green Checkmark"></img>
+                        <Check className = {`  ${successfulValidation ? 'min-h-0 translate-y-0' : 'transform ease-out max-h-min translate-y-[-20px] duration-300'} bg-green-400 rounded-md mt-2 w-12 h-12 text-white `} />
                     </div>
                 </>
             )}
