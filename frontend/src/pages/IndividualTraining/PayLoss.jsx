@@ -27,6 +27,7 @@ const PayLoss = () => {
 
   useEffect( () => {
     if (!jumpData.loading) {
+      console.log(jumpData)
       setIsCurrent(checkCurrency(lastJump.date_time.split('T')[0]))
       setIsCurrent(false);
     }
