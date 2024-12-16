@@ -12,13 +12,13 @@ const BioComponent = () => {
   let userDataContext = useContext(userContext)
 
   useEffect(() => {
-    setUserData (userDataContext.dataObject) 
+    setUserData (userDataContext.dataObject)
   },[]);
 
   if (userDataContext.loading) {
     return <p>Loading...</p>;
   }
-console.log (userDataContext)
+//console.log (userDataContext)
   if (error) {
     return <p>Error: {error}</p>;
   }
@@ -29,20 +29,20 @@ console.log (userDataContext)
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Personal Information</h2>
           {/* User Data */}
           <div className="mb-4">
-            <strong className="text-gray-700">Name: </strong> 
+            <strong className="text-gray-700">Name: </strong>
             <span className="text-gray-900">{userDataContext.dataObject.name}</span>
           </div>
           <div className="mb-4">
-            <strong className="text-gray-700">Email: </strong> 
+            <strong className="text-gray-700">Email: </strong>
             <span className="text-gray-900">{userDataContext.dataObject.email}</span>
           </div>
           <div className="mb-4">
-            <strong className="text-gray-700">Role: </strong> 
+            <strong className="text-gray-700">Role: </strong>
             <span className="text-gray-900">{userDataContext.dataObject.role}</span>
           </div>
           <div className="mb-4">
-            <strong className="text-gray-700">Jump Master Qualified: </strong> 
-            <span className="text-gray-900">{userDataContext.dataObject.jm}</span>
+            <strong className="text-gray-700">Jump Master Qualified: </strong>
+            <span className="text-gray-900">{userDataContext.dataObject.jm.toString()}</span>
           </div>
         </div>
       );

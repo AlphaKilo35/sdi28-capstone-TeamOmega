@@ -14,7 +14,7 @@ export const trainingContext = createContext();
 
 function Individual_Training () {
 
-let userId = 20;
+let userId = 17;
 
 let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
 let jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`)
@@ -29,12 +29,14 @@ return (
         </userContext.Provider>
       </div>
       <div className=" bg-indigo-950 p-6 rounded-lg flex-grow">
-      <trainingContext.Provider value={jumpData}>
-        <Training_Status />
-      </trainingContext.Provider>
+        <trainingContext.Provider value={jumpData}>
+          <Training_Status />
+        </trainingContext.Provider>
       </div>
       <div className="pay-loss">
-        <Pay_Tracker />
+        <trainingContext.Provider value={jumpData}>
+          <Pay_Tracker />
+        </trainingContext.Provider>
       </div>
   </div>
   </div>

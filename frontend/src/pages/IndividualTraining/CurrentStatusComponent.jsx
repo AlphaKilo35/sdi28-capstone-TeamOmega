@@ -1,26 +1,16 @@
 import { useEffect, useState, useContext } from 'react';
 import useFetchData from '../../hooks/useFetchData.jsx';
 import {trainingContext} from './IndividualTrainingDashboard.jsx'
+
 const Training_Status = () => {
-
-  //const [pageLoad, setPageLoad] = useState(true);
-  const [userId, setUserId] = useState(11) //setUserId(a context, or from the seesion cookie)
-
   let headers = ["status","date_time","airframe","type_load","type_tod","departure_name", "drop_zone_name"]
-
-  //needs refactored to be a useContext from the IndividualTrainingData Page
-  //let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
-  //let jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`)
   let jumpData = useContext(trainingContext)
-  console.log(jumpData)
 
   // useEffect( () => {
   //   console.log(jumpData.dataObject)
   // }, [jumpData.loading]);
 
-
   let renderUserData = () => {
-    //if (!userData|| userData.length === 0 ) return <p>No User Data Found</p>
     let tableHeaders = Object.keys(jumpData.dataObject[0]).filter(key => headers.includes(key));
 
     let formatTableHeader = (key) => {
@@ -30,6 +20,13 @@ const Training_Status = () => {
         .replace('type ', '')
         .replace('tod', "Day/Night")
         .replace(/\b\w/g, char => char.toUpperCase())
+    }
+
+    let formatData = (header, value) => {
+      if (header === 'date_time') { return value.split('T')[0];}
+      return value
+        .replace(/\b\w/g, char => char.toUpperCase())
+
     }
 
     let completedTraining = jumpData.dataObject
@@ -51,19 +48,25 @@ const Training_Status = () => {
             {completedTraining.map( (row, index) => (
               <tr key={index}>
                 {tableHeaders.map( (header) => (
-                  <td key={header} className='p-2 border'>{row[header]}</td>
+                  <td key={header} className='p-2 border'>{formatData(header,row[header])}</td>
                 ))}
               </tr>
             ))}
           </tbody>
+          </table>
+
           <h4 className='font-semibold'>Scheduled</h4>
+          <table className="min-w-full border-collapse">
           <thead>
+            <tr className="bg-gray-200">
+              { tableHeaders.map( (header) => ( <th key={header} className=' border-t bg-gold-400 p-2 text-left border'>{formatTableHeader(header)}</th> )) }
+            </tr>
           </thead>
           <tbody className="scheduled-training-table-body">
             {scheduledTraining.map( (row, index) => (
               <tr key={index}>
                 {tableHeaders.map( (header) => (
-                  <td key={header} className='p-2 border'>{row[header]}</td>
+                  <td key={header} className='p-2 border'>{formatData(header,row[header])}</td>
                 ))}
               </tr>
             ))}
