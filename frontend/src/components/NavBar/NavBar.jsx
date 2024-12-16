@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CircleUserRound } from "lucide-react";
 import "./nav-bar.css";
 
 function NavBarComponent() {
   const [user, setUser] = useState("");
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/local/verify", {
@@ -16,7 +18,7 @@ function NavBarComponent() {
           fetch(`http://localhost:3000/users/${data.id}`)
             .then((res) => res.json())
             .then((data) => {
-              setUser(data[0].name);
+              setUser(data[0]?.name);
             })
             .catch((err) => {
               console.error("Error getting current user", err);
@@ -28,6 +30,11 @@ function NavBarComponent() {
       });
   });
 
+  function handleNavigate(link) {
+    console.log(link)
+    navigate(`/${link}`);
+  }
+
   return (
     <>
       <nav className="h-20 flex items-end bg-slate-900 text-white">
@@ -38,14 +45,19 @@ function NavBarComponent() {
 
         <div className="absolute ml-20 flex justify-between w-full">
           <ul className="space-x-4 flex mb-2">
-            <li className="ml-4">
-              <Link to="/home">Home</Link>
+            <li className="ml-4 cursor-pointer">
+              <h3 onClick={() => handleNavigate('home')}>Home</h3>
             </li>
-            <li className="">
-              <Link to="/flights">Flights</Link>
+            <li className="ml-4 cursor-pointer">
+              <h3 onClick={() => handleNavigate(`profiles/${user.id}`)}>Profile</h3>
+            </li>
+            <li className="ml-4 cursor-pointer">
+              <h3 onClick={() => handleNavigate('flights')}>Flights</h3>
+            </li>
+            <li className="ml-4 cursor-pointer">
+              <h3 onClick={() => handleNavigate('manifest')}>Manifest</h3>
             </li>
           </ul>
-
           <div className=" absolute right-28 flex ">
             <CircleUserRound />
             <p className="ml-2">{user}</p>

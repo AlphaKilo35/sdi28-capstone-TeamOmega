@@ -36,7 +36,7 @@ function createDropzone() {
 
 function createUsers() {
   const users = [];
-  const roles = ['member', 'leader', 'admin']
+  const roles = ['user', 'leader', 'admin']
   for (var u = 0; u < 40; u++) {
     let fullName = faker.person.fullName();
     let userName = fullName.replace(/ /g, "").toLowerCase();

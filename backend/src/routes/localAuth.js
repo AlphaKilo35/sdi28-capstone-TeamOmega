@@ -57,13 +57,13 @@ router.post("/signup", (req, res) => {
     try {
       if (!admin) {
         const user = await knex("users_tbl")
-          .insert({ name: fullName, email: email, password: hash, role: "User" })
+          .insert({ name: fullName, email: email, password: hash, role: "user" })
           .returning("*");
         console.log(user);
         res.status(200).json({ success: true, code: 0 });
       } else if (admin && authCode === process.env.ADMIN_AUTH_STRING) {
         const user = await knex("users_tbl")
-          .insert({ name: fullName, email: email, password: hash, role: "Admin" })
+          .insert({ name: fullName, email: email, password: hash, role: "admin" })
           .returning("*");
         console.log(user);
         res.status(200).json({ success: true, code: 0 });

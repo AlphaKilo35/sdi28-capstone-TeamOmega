@@ -8,8 +8,7 @@ function ProfileNav() {
 
   const navigate = useNavigate();
   function handleProfileNavigate() {
-    let truncName = user.username.replace(/ /g, "");
-    navigate(`/profiles/${truncName}`, { state: { userId: user.id } });
+    navigate(`/profiles/${user.id}`);
   }
 
   return (
