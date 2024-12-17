@@ -74,11 +74,7 @@ function NavBarComponent() {
                 <h3 onClick={() => handleNavigate("flights")}>Flights</h3>
               </li>
               <li className="ml-4 cursor-pointer">
-                <h3
-                  onClick={() =>
-                    handleNavigate(`Individual-Training-Record/${user.id}`)
-                  }
-                >
+                <h3 onClick={() => handleNavigate(`Individual-Training-Record/${user.id}`)}>
                   Training Record
                 </h3>
               </li>
