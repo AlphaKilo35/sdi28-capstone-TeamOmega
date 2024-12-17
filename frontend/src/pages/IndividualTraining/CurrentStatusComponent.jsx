@@ -11,7 +11,11 @@ const Training_Status = () => {
   // }, [jumpData.loading]);
 
   let renderUserData = () => {
-    let tableHeaders = Object.keys(jumpData.dataObject[0]).filter(key => headers.includes(key));
+    try{
+      var tableHeaders = Object.keys(jumpData.dataObject[0]).filter(key => headers.includes(key));
+    } catch {
+      var tableHeaders = headers;
+    }
 
     let formatTableHeader = (key) => {
       return key

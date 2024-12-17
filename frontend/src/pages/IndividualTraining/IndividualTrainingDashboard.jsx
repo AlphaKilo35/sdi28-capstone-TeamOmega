@@ -1,4 +1,5 @@
-import { useState, useEffect, createContext } from 'react';
+import {useState, useEffect, createContext} from 'react';
+import { useParams } from 'react-router-dom';
 import BioComponent from './BioComponent.jsx';
 import Training_Status from './CurrentStatusComponent.jsx';
 import Pay_Tracker from './PayLoss.jsx';
@@ -10,26 +11,12 @@ import FiltersComponent from './FiltersComponent';
 export const userContext = createContext();
 export const trainingContext = createContext();
 
-function Individual_Training() {
-  let userId = 22;
+function Individual_Training () {
+var {id} = useParams();
+//id = 1;
 
-  // Fetch user data and jump data
-  let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
-  let jumpData = useFetchData(`http://localhost:3000/manifests/${userId}`);
-
-  // State to manage filter values
-  const [filters, setFilters] = useState({
-    date: '',
-    time: '',
-    platform: '',
-  });
-
-  // Handle filter changes
-  const handleFilterChange = (newFilters) => {
-    setFilters(newFilters);
-    console.log('Updated Filters:', newFilters);
-  };
-
+let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${id}`);
+let jumpData = useFetchData(`http://localhost:3000/manifests/user/${id}`)
 return (
   <div className="min-h-screen bg-gray-900 text-gray-200">
       <header className="flex flex-row bg-gray-800 text-gold-400 p-4 shadow-md justify-center flex-wrap:wrap">
