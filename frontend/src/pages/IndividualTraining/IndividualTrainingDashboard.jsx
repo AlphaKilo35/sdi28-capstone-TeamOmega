@@ -21,10 +21,14 @@ function Individual_Training() {
   let jumpData = useFetchData(`http://localhost:3000/manifests/user/${userId}`);
 
   return (
-    <div className=" border-2 border-gold-400 bg-gray-900  min-h-screen flex flex-col pb-16">
-      <h2 className="text-center text-3xl text-gold-400 font-bold">
+    <div className="min-h-screen bg-gray-900 text-gray-200">
+      <header className="flex flex-row bg-gray-800 text-gold-400 p-4 shadow-md justify-center flex-wrap:wrap">
+      <h1 className="text-3xl font-bold text-center">
         Individual Training Dashboard
-      </h2>
+      </h1>
+      </header>
+
+      <main className="p-6 text-gray-800">
       <div className="flex flex-col md:flex-row gap-6 flex-grow">
         <div className="border-2 border-gold-400 bg-gray-500 w-full sm:w-full md:w-1/3 bg-white p-6 shadow-lg rounded-lg max-h-[653px] min-w-[330px] overflow-auto">
           <userContext.Provider value={userData}>
@@ -42,6 +46,7 @@ function Individual_Training() {
           </trainingContext.Provider>
         </div>
       </div>
+      </main>
     </div>
   );
 }
