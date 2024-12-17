@@ -12,7 +12,7 @@ function ProfileNav() {
   }
 
   return (
-    <div className="group h-80 w-80 [perspective:1000px]">
+    <div className="group h-80 w-80 aspect-square">
       <div className="relative h-full w-full rounded-xl z-10 shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
         <div className="absolute">
           <img className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40" src="/Soldier.jpg" alt="Silhoutte of a Soldier" />
