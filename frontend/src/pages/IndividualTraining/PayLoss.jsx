@@ -3,34 +3,49 @@ import { Link } from 'react-router-dom';
 import {trainingContext} from './IndividualTrainingDashboard.jsx'
 
 let checkCurrency = (date) => {
+
   let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
   let currentQuarter = Math.floor(currentMonth / 3) + 1;
-  //console.log(Math.floor(new Date(date).getMonth() / 3));
-  if ( Math.floor(new Date(date).getMonth() / 3) + 1 === currentQuarter || Math.floor(new Date(date).getMonth() / 3) + 1 === currentQuarter -1 )  {
+  let checkedQuarter = Math.floor(new Date(date).getMonth() / 3) + 1;
+  let checkedYear = new Date(date).getFullYear();
+  console.log (currentMonth, currentYear, currentQuarter, checkedQuarter, checkedYear)
+  if ( (checkedQuarter === currentQuarter || checkedQuarter === currentQuarter -1) &&
+        ( checkedYear === currentYear || checkedYear === currentYear - 1) ) {
     return true;
   };
   return false;
 }
 
-const PayLoss = () => {
+const Pay_Tracker = () => {
   const [isCurrent, setIsCurrent] = useState(true);
   const [jumpsNeeded, setJumpsNeeded] = useState(3); // Replace with real data
   const [daysUntilPayLoss, setDaysUntilPayLoss] = useState(5); // Replace with real data
 
   let jumpData = useContext(trainingContext);
 
-  if (Array.isArray(jumpData.dataObject)) {
-    var lastJump = jumpData.dataObject.reduce((latest, current) => {
-      return new Date(current.date_time) > new Date(latest.date_time) ? current : latest;
-    });
-  }
+  // if (!jumpData.loading && !(jumpData.dataObject === null || jumpData.dataObject === undefined) ) {
+  //   //Object.keys(jumpData.dataObject).length === 0 ) {
+  //   //Array.isArray(jumpData.dataObject)) {
+  //     var lastJump = jumpData.dataObject.filter(item => item.status === 'complete').reduce((latest, current) => {
+  //       return new Date(current.date_time) > new Date(latest.date_time) ? current : latest;
+  //     });
+  // } else {
+  //   var lastJump = {date_time: ''};
+  //   lastJump.date_time = new Date('1990-01-01').toISOString()
+  // }
 
   useEffect( () => {
-    if (!jumpData.loading) {
-      console.log(jumpData)
+    if (!jumpData.loading && jumpData.dataObject.filter(item => item.status === 'complete').length > 0) {
+      console.log(jumpData.dataObject)
+      var lastJump = jumpData.dataObject.filter(item => item.status === 'complete').reduce((latest, current) => {
+            return new Date(current.date_time) > new Date(latest.date_time) ? current : latest;
+      });
       setIsCurrent(checkCurrency(lastJump.date_time.split('T')[0]))
+    } else {
       setIsCurrent(false);
     }
+
   }, [jumpData]);
 
   return (
@@ -77,4 +92,4 @@ const PayLoss = () => {
   );
 };
 
-export default PayLoss;
+export default Pay_Tracker;

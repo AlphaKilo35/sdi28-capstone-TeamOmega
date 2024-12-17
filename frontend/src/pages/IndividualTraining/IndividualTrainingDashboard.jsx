@@ -1,4 +1,5 @@
-import { useState, useEffect, createContext } from 'react';
+import {useState, useEffect, createContext} from 'react';
+import { useParams } from 'react-router-dom';
 import BioComponent from './BioComponent.jsx';
 import Training_Status from './CurrentStatusComponent.jsx';
 import Pay_Tracker from './PayLoss.jsx';
