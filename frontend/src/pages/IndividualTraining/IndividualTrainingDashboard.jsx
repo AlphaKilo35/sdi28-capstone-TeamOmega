@@ -1,4 +1,5 @@
 import {useState, useEffect, createContext} from 'react';
+import { useParams } from 'react-router-dom';
 import BioComponent from './BioComponent.jsx';
 import Training_Status from './CurrentStatusComponent.jsx';
 import Pay_Tracker from './PayLoss.jsx';
@@ -13,12 +14,11 @@ export const userContext = createContext();
 export const trainingContext = createContext();
 
 function Individual_Training () {
+var {id} = useParams();
+//id = 1;
 
-let userId = 17;
-
-let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${userId}`);
-let jumpData = useFetchData(`http://localhost:3000/manifests/user/${userId}`)
-
+let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${id}`);
+let jumpData = useFetchData(`http://localhost:3000/manifests/user/${id}`)
 return (
   <div className=" border-2 border-gold-400 bg-indigo-950 min-h-screen flex flex-col pb-16">
       <h2 className='text-center text-2xl text-gold-600 font-semibold mb-4'>Individual Training Dashboard</h2>
