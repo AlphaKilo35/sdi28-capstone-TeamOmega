@@ -37,25 +37,23 @@ return (
         Individual Training Dashboard
       </h1>
       </header>
-      <main className="p-6 text-gray-800"></main>
+            {/* Main Content */}
+      <main className="p-6 text-gray-800">
         <div className="flex flex-col md:flex-row gap-6 flex-grow">
-        <userContext.Provider value={userData}>
-          <BioComponent />
-        </userContext.Provider>
-      </div>
-      <div className=" bg-gray-800 p-6 rounded-lg flex-grow">
-        <trainingContext.Provider value={jumpData}>
-          <Training_Status />
-        </trainingContext.Provider>
-      </div>
-      <div className="pay-loss">
-        <trainingContext.Provider value={jumpData}>
-          <Pay_Tracker />
-        </trainingContext.Provider>
-      </div>
-  </div>
-  </main
-  </div>
+          <userContext.Provider value={userData}>
+            <BioComponent />
+          </userContext.Provider>
+        </div>
+
+        {/* Training Status and Pay Tracker */}
+        <div className="bg-gray-800 p-6 rounded-lg flex-grow">
+          <trainingContext.Provider value={jumpData}>
+            <Training_Status />
+            <Pay_Tracker />
+          </trainingContext.Provider>
+        </div>
+      </main>
+    </div>
 
 )
 
