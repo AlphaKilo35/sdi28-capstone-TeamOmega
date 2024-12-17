@@ -235,7 +235,7 @@ function Profile() {
             </div>
             <div className=" font-bold text-right mt-40">
               <button
-                className="inline-block px-4 py-2 mt-40 bg-gold-400 text-black text-bold rounded-lg cursor-pointer  transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95"
+                className="inline-block px-4 py-2 mt-60 bg-gold-400 text-black text-bold rounded-lg cursor-pointer  transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95"
                 type="submit"
                 onClick={handleSaveChanges}
               >
