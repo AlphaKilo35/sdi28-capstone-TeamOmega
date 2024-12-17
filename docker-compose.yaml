@@ -22,7 +22,7 @@ services:
   #     - appnetwork
 
 
-  # # #     # 5173 is the default Node.js server, change if ports have been changed to something like 8080
+  # # # #     # 5173 is the default Node.js server, change if ports have been changed to something like 8080
 
   # backend:
   #   # Backend Express Server
