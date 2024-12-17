@@ -2,45 +2,46 @@
 
 volumes:
   postgres_volume:
-  node_modules:
+  node_modules:  # To avoid overwriting node_modules inside the container
 
 services:
 
-  # frontend:
-  # # GUI
-  #   build: frontend/
-  #   container_name: 'frontend'
-  #   depends_on:
-  #       - database
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - VITE_PORT=${VITE_PORT}
-  #   ports:
-  #     - '5173:5173'
-  #   networks:
-  #     - appnetwork
+  frontend:
+    build: frontend/
+    container_name: 'frontend'
+    depends_on:
+      - database
+    env_file:
+      - .env
+    environment:
+      - VITE_PORT=${VITE_PORT}
+    ports:
+      - '5173:5173' # Default Vite port
+    volumes:
+      - ./frontend:/usr/src/app  # Mount local frontend folder
+      - node_modules:/usr/src/app/node_modules  # Keep node_modules intact
+    networks:
+      - appnetwork
 
+  backend:
+    build: backend/
+    container_name: 'backend'
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - EXPRESS_PORT=${EXPRESS_PORT}
+    ports:
+      - '3000:3000' # Default Express.js port
+    volumes:
+      - ./backend:/usr/src/app  # Mount local backend folder
+      - node_modules:/usr/src/app/node_modules  # Avoid node_modules overwrite
+    command: npm run dev  # Run the backend in development mode
+    networks:
+      - appnetwork
 
-  # # #     # 5173 is the default Node.js server, change if ports have been changed to something like 8080
-
-  # backend:
-  #   # Backend Express Server
-  #   build: backend/
-  #   container_name: 'backend'
-  #   depends_on:
-  #     database:
-  #       condition: service_healthy
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - EXPRESS_PORT=${EXPRESS_PORT}
-  #   ports:
-  #     - '3000:3000'
-  #   networks:
-  #     - appnetwork
-
-      # 3000 is default Express.js port, again - change if application has something different
   database:
     image: postgres
     container_name: database
@@ -50,14 +51,12 @@ services:
       - POSTGRES_USER=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB_NAME}
-      #- PGUSER=postgres #For Health Check
-      # Any environment variables from within the .env file (this file is in the .gitignore, must be made locally with variables matching)
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
       - postgres_volume:/var/lib/postgresql/data
-    # networks:
-    #   - appnetwork
+    networks:
+      - appnetwork
 
     healthcheck:
       test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USERNAME} -d ${POSTGRES_DB_NAME}'" ]
@@ -65,6 +64,6 @@ services:
       timeout: 3s
       retries: 3
 
-# networks:
-#   appnetwork:
-#     driver: bridge
+networks:
+  appnetwork:
+    driver: bridge
