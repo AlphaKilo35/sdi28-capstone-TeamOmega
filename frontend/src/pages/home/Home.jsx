@@ -61,7 +61,7 @@ function Home() {
           </header>
           <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')]">
             <div className="absolute inset-0 min-h-screen w-full bg-gray-900 text-gray-200 opacity-95"></div>
-            <main className="z-10 flex gap-60 mt-20 flex-wrap justify-center">
+            <main className="flex gap-60 mt-20 flex-wrap justify-center">
               <ProfileNav />
               <FlightsNav />
               <TrainingRecordNav />
