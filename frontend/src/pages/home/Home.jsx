@@ -14,7 +14,6 @@ function Home() {
   //NEED TO LASH THIS UP WITH LOG-IN COOKIES
   //ADMIN_AUTH_STRING = "Secret Password"
 
-
   let [user, setUser] = useState({});
   let [currentUserId, setCurrentUserId] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -28,7 +27,7 @@ function Home() {
       .then((res) => res.json())
       .then((data) => {
         setCurrentUserId(data?.id);
-        console.log('Current userId on homepage load:', data.id)
+        console.log("Current userId on homepage load:", data.id);
         if (!data) navigate("/login");
       })
       .catch((err) => {
@@ -42,7 +41,7 @@ function Home() {
       .then((res) => res.json())
       .then((data) => {
         setUser(data[0]);
-        console.log('User object on homepage load:', data[0])
+        console.log("User object on homepage load:", data[0]);
         if (data[0]) {
           setLoading(false);
         }
@@ -56,17 +55,18 @@ function Home() {
       <UserContext.Provider value={user}>
         <div className="flex flex-col">
           <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
-            <h1 className="text-3xl font-bold text-center">Welcome, {user?.name}</h1>
+            <h1 className="text-3xl font-bold text-center">
+              Welcome, {user?.name}
+            </h1>
           </header>
           <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')]">
-            <div className="absolute inset-0 min-h-screen bg-gray-900 text-gray-200 opacity-95"></div>
-            <main className="z-10 grid grid-cols-3 gap-6 p-6">
+            <div className="absolute inset-0 min-h-screen w-full bg-gray-900 text-gray-200 opacity-95"></div>
+            <main className="z-10 flex gap-60 mt-20 flex-wrap justify-center">
               <ProfileNav />
               <FlightsNav />
               <TrainingRecordNav />
             </main>
           </div>
-
         </div>
       </UserContext.Provider>
     );

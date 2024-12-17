@@ -12,7 +12,8 @@ function ProfileNav() {
   }
 
   return (
-    <div className="group h-80 w-80 [perspective:1000px]">
+    <div className="group h-80 w-80 aspect-square"
+    onClick={handleProfileNavigate}>
       <div className="relative h-full w-full rounded-xl z-10 shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
         <div className="absolute">
           <img className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40" src="/Soldier.jpg" alt="Silhoutte of a Soldier" />
@@ -22,7 +23,7 @@ function ProfileNav() {
             <h1 className="text-3xl font-bold py-2">User Profile</h1>
             <p className="text-lg py-2">Update</p>
             <p className="text-base py-2">Admin Rights</p>
-            <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900" onClick={handleProfileNavigate}>View</button>
+           
           </div>
         </div>
       </div>
