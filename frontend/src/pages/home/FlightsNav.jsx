@@ -21,7 +21,7 @@ function FlightsNav() {
             <h1 className="text-3xl font-bold py-2">Flights</h1>
             <p className="text-lg py-2">Available</p>
             <p className="text-base py-2">Manifest</p>
-            <button className="mt-2 rounded-md text-3xl bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900" onClick={handleFlightsNavigate}>View</button>
+            <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-2xl hover:bg-neutral-900" onClick={handleFlightsNavigate}>View</button>
           </div>
         </div>
       </div>

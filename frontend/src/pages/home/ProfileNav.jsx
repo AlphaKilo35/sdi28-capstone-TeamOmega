@@ -22,7 +22,7 @@ function ProfileNav() {
             <h1 className="text-3xl font-bold py-2">User Profile</h1>
             <p className="text-lg py-2">Update</p>
             <p className="text-base py-2">Admin Rights</p>
-            <button className="mt-2 rounded-md text-3xl bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900" onClick={handleProfileNavigate}>View</button>
+            <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-2xl hover:bg-neutral-900" onClick={handleProfileNavigate}>View</button>
           </div>
         </div>
       </div>
