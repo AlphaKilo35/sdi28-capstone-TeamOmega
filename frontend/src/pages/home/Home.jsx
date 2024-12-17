@@ -53,22 +53,22 @@ function Home() {
     return <div>Loading...</div>;
   } else {
     return (
-      <>
-        <UserContext.Provider value={user}>
-          <div className="relative min-h-screen bg-gray-800 z-10 bg-[url('/army-paratroopers_background_II.png')]">
-          <div className="absolute inset-0 min-h-screen bg-gray-900 text-gray-200 opacity-95"></div>
-            <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
-              <h1 className="text-3xl font-bold text-center">Welcome, {user?.name}</h1>
-            </header>
-          
-            <main className="grid grid-cols-3 gap-6 p-6">
+      <UserContext.Provider value={user}>
+        <div className="flex flex-col">
+          <header className="bg-gray-800 text-gold-400 p-4 shadow-md">
+            <h1 className="text-3xl font-bold text-center">Welcome, {user?.name}</h1>
+          </header>
+          <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')]">
+            <div className="absolute inset-0 min-h-screen bg-gray-900 text-gray-200 opacity-95"></div>
+            <main className="z-10 grid grid-cols-3 gap-6 p-6">
               <ProfileNav />
               <FlightsNav />
               <TrainingRecordNav />
             </main>
           </div>
-        </UserContext.Provider>
-      </>
+       
+        </div>
+      </UserContext.Provider>
     );
   }
 }

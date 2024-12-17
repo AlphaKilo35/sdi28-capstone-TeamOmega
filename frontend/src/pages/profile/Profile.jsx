@@ -177,7 +177,7 @@ function Profile() {
                     </button>
                 </div>
                     {validatePopup && (<ValidatePopup onSetPopup={toggleValidatePopup} correctToken={setTokenCorrect} isCorrect={tokenCorrect}/>)}
-                    {savedChanges && (<div className="text-xl text-green-400"><h2>Changes Saved Successfully</h2></div>)}
+                    {savedChanges && (<div className="text-xl text-green-400 text-center"><h2>Changes Saved Successfully</h2></div>)}
                 
             </div>
             </div>

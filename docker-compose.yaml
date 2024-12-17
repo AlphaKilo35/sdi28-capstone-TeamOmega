@@ -11,13 +11,20 @@ services:
     build: frontend/
     container_name: 'frontend'
     depends_on:
-        - database
+      - backend
+      - database
     env_file:
       - .env
     environment:
       - VITE_PORT=${VITE_PORT}
     ports:
-      - '5173:5173'
+      - ${VITE_PORT}:5173
+      # 5173 is the default Node.js server, change if ports have been changed to something like 8080
+    volumes:
+      - type: bind
+        source: ./frontend/src
+        target: /frontend/src
+      - node_modules:/frontend/node_modules
     networks:
       - appnetwork
 
