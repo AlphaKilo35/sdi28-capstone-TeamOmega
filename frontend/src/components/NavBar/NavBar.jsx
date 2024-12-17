@@ -93,10 +93,10 @@ function NavBarComponent() {
                   {user}
                 </button>
                 <div
-                  className={`z-20 left-3 top-8 transform transition-all duration-300 ease-out absolute rounded-md p-2 text-sm border border-gold-400 bg-black ${
+                  className={`z-20 relative flex flex-col items-center  transform transition-all duration-300 ease-out mt-1 rounded-md p-2 text-sm border border-gold-400 bg-black ${
                     dropdownSelect
                       ? "opacity-100 translate-y-0"
-                      : "opacity-0 invisable translate-y-[-20px] pointer-events-none"
+                      : "opacity-0  translate-y-[-20px] pointer-events-none"
                   }`}
                 >
                   <div

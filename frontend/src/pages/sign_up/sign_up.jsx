@@ -33,8 +33,10 @@ const SignUp = () => {
       return;
     }
 
-    if(!passwordChecker()){
-      return
+    if (!passwordChecker()) {
+      setPassword("");
+      setConfirmPassword("");
+      return;
     }
 
     try {
@@ -71,8 +73,8 @@ const SignUp = () => {
 
   const passwordChecker = () => {
     if (password.length < 8) {
-      setInvalidPassword(true)
-      return false
+      setInvalidPassword(true);
+      return false;
     }
 
     let capitals = false;
@@ -90,18 +92,24 @@ const SignUp = () => {
     }
     if (capitals && numbers && symbols) {
       setInvalidPassword(false);
-      return true
+      return true;
     } else {
       setInvalidPassword(true);
-      return false
+      return false;
     }
   };
 
   return (
     <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
       // <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
-      {/* <div className="min-h-screen flex items-center justify-center bg-gray-800 bg-cover"> */}
-      <div className="relative z-10 bg-gray-900 p-8 rounded-lg shadow-lg w-96 ">
+
+      <div className="absolute top-32">
+        <div className="text-gold-600 text-2xl font-bold">
+          Airborne Readiness Management and Operations Record
+        </div>
+        <div className="text-gold-600 text-center font-bold">(ARMOR)</div>
+      </div>
+      <div className="relative z-10 bg-gray-900 p-8 rounded-lg shadow-lg mt-10 w-96 ">
         {!signupSuccess ? (
           <>
             <h1 className="text-2xl font-bold text-center text-white mb-8">
@@ -159,12 +167,17 @@ const SignUp = () => {
                   ></input>
                 </div>
               </div>
-              {!passwordMatch || invalidPassword && (
-                <div className="text-red-400 text-right">
-                  <p className="text-xs">{!passwordMatch ? 'Password does not match.' : 'Invalid password'}</p>
-                  <p className="text-xs">Please try again.</p>
-                </div>
-              )}
+              {!passwordMatch ||
+                (invalidPassword && (
+                  <div className="text-red-400 text-right">
+                    <p className="text-xs">
+                      {!passwordMatch
+                        ? "Password does not match."
+                        : "Invalid password"}
+                    </p>
+                    <p className="text-xs">Please try again.</p>
+                  </div>
+                ))}
               <div>
                 <h3 className="text-sm text-gray-400">Select your role</h3>
                 <select
