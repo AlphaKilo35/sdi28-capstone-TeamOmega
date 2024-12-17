@@ -217,7 +217,7 @@ function Profile() {
                 <button
                   className="inline-block px-2 py-1 mt-2 bg-gold-400 text-black text-bold rounded-lg cursor-pointer text-center transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95"
                   type="submit"
-                  onClick={toggleRolePopup}
+                  onClick={toggleJmPopup}
                 >
                   Update JM
                 </button>
@@ -250,7 +250,7 @@ function Profile() {
               />
             )}
             {savedChanges && (
-              <div className="text-xl text-green-400">
+              <div className="text-xl text-green-400 text-center mt-10">
                 <h2>Changes Saved Successfully</h2>
               </div>
             )}
