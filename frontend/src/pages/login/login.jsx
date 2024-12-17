@@ -57,81 +57,81 @@ const LogIn = () => {
 
   return (
     <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
-    <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
+      <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
 
-    <div className="relative bg-gray-900 p-8 rounded-lg shadow-lg w-96">
-      <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
-      <div className="text-center">
+      <div className="relative bg-gray-900 p-8 rounded-lg shadow-lg w-96">
+        <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
+        <div className="text-center">
 
-        <button className = "w-full h-full text-white hover:text-gold-400"
-        onClick={handleDevLogin}>Dev Login</button>
-        </div>
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <label className="block text-sm text-gray-400">Email</label>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Type your email"
-                className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-              />
-            </div>
-            {!badUserResponse?.user && (
-              <div className="text-right">
-                <p className="text-sm text-red-400">User not found</p>
-              </div>
-            )}
+          <button className = "w-full h-full text-white hover:text-gold-400"
+          onClick={handleDevLogin}>Dev Login</button>
           </div>
-          <div className="space-y-2">
-            <label className="block text-sm text-gray-400">Password</label>
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="Type your password"
-                className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-              ></input>
-            </div>
-            {!badUserResponse?.passwordMatch && (
-              <div className="text-right">
-                <p className="text-sm text-red-400">Incorrect Password</p>
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="block text-sm text-gray-400">Email</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Type your email"
+                  className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                />
               </div>
-            )}
-            <div className="text-right">
-              <a
-                href="#"
-                className="text-sm text-gray-400 hover:text-gold-400"
+              {!badUserResponse?.user && (
+                <div className="text-right">
+                  <p className="text-sm text-red-400">User not found</p>
+                </div>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm text-gray-400">Password</label>
+              <div className="relative">
+                <input
+                  type="password"
+                  placeholder="Type your password"
+                  className="w-full pl-2 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                ></input>
+              </div>
+              {!badUserResponse?.passwordMatch && (
+                <div className="text-right">
+                  <p className="text-sm text-red-400">Incorrect Password</p>
+                </div>
+              )}
+              <div className="text-right">
+                <a
+                  href="#"
+                  className="text-sm text-gray-400 hover:text-gold-400"
+                >
+                  Forgot Password?
+                </a>
+              </div>
+              <button
+                className="w-full py-2 bg-gold-600 bg-cover text-black font-bold rounded-md hover:opacity-90 transition-opacity"
+                onClick={handleLogin}
               >
-                Forgot Password?
-              </a>
-            </div>
-            <button
-              className="w-full py-2 bg-gold-600 bg-cover text-black font-bold rounded-md hover:opacity-90 transition-opacity"
-              onClick={handleLogin}
-            >
-              LOGIN
-            </button>
-            <div className="flex flex-col items-center pt-3 text-sm text-white">
-              <p>Login with</p>
-              <div className="  rounded-full w-24 text-center bg-[url('/googlepng.png')] h-10 bg-cover ">
-                <button
-                  onClick={handleGoogleLogin}
-                  className="h-full w-full"
-                ></button>
-              </div>
-            </div>
-            <div className="text-center text-sm text-gray-200 pt-4">
-              <p>Or Sign Up Below</p>
-              <button className="mt-2 font-medium text-gray-400 hover:text-gold-400">
-                <Link to="/signup">Sign Up</Link>
+                LOGIN
               </button>
+              <div className="flex flex-col items-center pt-3 text-sm text-white">
+                <p>Login with</p>
+                <div className="  rounded-full w-24 text-center bg-[url('/googlepng.png')] h-10 bg-cover ">
+                  <button
+                    onClick={handleGoogleLogin}
+                    className="h-full w-full"
+                  ></button>
+                </div>
+              </div>
+              <div className="text-center text-sm text-gray-200 pt-4">
+                <p>Or Sign Up Below</p>
+                <button className="mt-2 font-medium text-gray-400 hover:text-gold-400">
+                  <Link to="/signup">Sign Up</Link>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };

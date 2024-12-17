@@ -59,7 +59,7 @@ function NavBarComponent() {
   return (
     !isLoading && (
       <>
-        <nav className="h-20 flex items-end bg-slate-900 text-white">
+        <nav className="h-20 z-20 flex items-end bg-slate-900 text-white">
           <img
             src="/ARMOR.PNG"
             className="h-20 w-20 rounded-sm absolute top-0"
@@ -101,7 +101,7 @@ function NavBarComponent() {
                 >
                   <div
                     className="p-1 h-full cursor-pointer"
-                    onClick={handleProfileView}
+                    onClick={() => navigate(`/profile`)}
                   >
                     Profile
                   </div>
