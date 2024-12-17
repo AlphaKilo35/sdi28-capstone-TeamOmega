@@ -11,7 +11,8 @@ function FlightsNav() {
     navigate(`/flights`);
   }
   return (
-    <div className="group h-80 w-80 [perspective:1000px]">
+    <div className="group h-80 w-80  aspect-square"
+    onClick={handleFlightsNavigate}>
       <div className="relative h-full w-full rounded-xl z-10 shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
         <div className="absolute">
           <img className="h-80 w-80 rounded-xl object-cover shadow-xl shadow-black/40" src="/Chinook.jpg" alt="Silhoutte of a Helicopter" />
@@ -21,7 +22,7 @@ function FlightsNav() {
             <h1 className="text-3xl font-bold py-2">Flights</h1>
             <p className="text-lg py-2">Available</p>
             <p className="text-base py-2">Manifest</p>
-            <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900" onClick={handleFlightsNavigate}>View</button>
+          
           </div>
         </div>
       </div>

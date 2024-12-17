@@ -10,9 +10,10 @@ function TrainingRecordNav() {
   function handleTrainingRecordNavigate() {
     navigate(`/Individual-Training-Record/${user.id}`);
   }
-  
+
   return (
-    <div className="group h-80 w-80 [perspective:1000px]">
+    <div className="group h-80 w-80 aspect-square"
+    onClick={handleTrainingRecordNavigate}>
       <div className="relative h-full w-full rounded-xl z-10 shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
         <div className="absolute">
           <img className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40" src="/Training.jpg" alt="Silhoutte of a Paratrooper" />
@@ -22,7 +23,6 @@ function TrainingRecordNav() {
             <h1 className="text-3xl font-bold py-2">Training Record</h1>
             <p className="text-lg py-2">Jump Log</p>
             <p className="text-base py-2">Current Jump Status</p>
-            <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900" onClick={handleTrainingRecordNavigate}>View</button>
           </div>
         </div>
       </div>
