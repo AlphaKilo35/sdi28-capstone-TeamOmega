@@ -59,7 +59,7 @@ function NavBarComponent() {
   return (
     !isLoading && (
       <>
-        <nav className="h-20 z-20 flex items-end bg-slate-900 text-white">
+        <nav className="h-20 z-1000 flex items-end bg-slate-900 text-white">
           <img
             src="/ARMOR.PNG"
             className="h-20 w-20 rounded-sm absolute top-0"
@@ -93,7 +93,7 @@ function NavBarComponent() {
                   {user}
                 </button>
                 <div
-                  className={`left-3 top-8 transform transition-all duration-300 ease-out absolute rounded-md p-2 text-sm border border-gold-400 bg-black ${
+                  className={`left-3 top-8 z-20 transform transition-all duration-300 ease-out absolute rounded-md p-2 text-sm border border-gold-400 bg-black ${
                     dropdownSelect
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 invisable translate-y-[-20px] pointer-events-none"
