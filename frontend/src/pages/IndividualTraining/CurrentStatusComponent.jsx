@@ -39,38 +39,56 @@ const Training_Status = () => {
         <h4 className="text-xl text-center font-semibold text-gray-800 mb-4">Training Table</h4>
         <h4 className='font-semibold'>Completed Training</h4>
         <table className="min-w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-200">
-              { tableHeaders.map( (header) => ( <th key={header} className=' border-t bg-gold-400 p-2 text-left border'>{formatTableHeader(header)}</th> )) }
-            </tr>
-          </thead>
-          <tbody className="completed-training-table-body">
-            {completedTraining.map( (row, index) => (
-              <tr key={index}>
-                {tableHeaders.map( (header) => (
-                  <td key={header} className='p-2 border'>{formatData(header,row[header])}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
+        <thead>
+      <tr className="bg-gray-200 rounded-lg">
+        {tableHeaders.map((header) => (
+          <th
+            key={header}
+            className="border-t bg-gold-600 p-2 text-left border"
+          >
+            {formatTableHeader(header)}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody className="completed-training-table-body">
+      {completedTraining.map((row, index) => (
+        <tr key={index}>
+          {tableHeaders.map((header) => (
+            <td key={header} className="p-2 border">
+              {formatData(header, row[header])}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
           </table>
 
           <h4 className='font-semibold'>Scheduled</h4>
           <table className="min-w-full border-collapse">
           <thead>
-            <tr className="bg-gray-200">
-              { tableHeaders.map( (header) => ( <th key={header} className=' border-t bg-gold-400 p-2 text-left border'>{formatTableHeader(header)}</th> )) }
-            </tr>
-          </thead>
-          <tbody className="scheduled-training-table-body">
-            {scheduledTraining.map( (row, index) => (
-              <tr key={index}>
-                {tableHeaders.map( (header) => (
-                  <td key={header} className='p-2 border'>{formatData(header,row[header])}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
+      <tr className="bg-gray-200 rounded-lg">
+        {tableHeaders.map((header) => (
+          <th
+            key={header}
+            className="border-t bg-gold-600 p-2 text-left border"
+          >
+            {formatTableHeader(header)}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody className="scheduled-training-table-body">
+      {scheduledTraining.map((row, index) => (
+        <tr key={index}>
+          {tableHeaders.map((header) => (
+            <td key={header} className="p-2 border">
+              {formatData(header, row[header])}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
         </table>
       </div>
       </div>

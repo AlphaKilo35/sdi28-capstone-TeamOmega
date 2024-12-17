@@ -21,8 +21,8 @@ function Individual_Training() {
   let jumpData = useFetchData(`http://localhost:3000/manifests/user/${userId}`);
 
   return (
-    <div className=" border-2 border-gold-400 bg-indigo-950 min-h-screen flex flex-col pb-16">
-      <h2 className="text-center text-2xl text-gold-600 font-semibold mb-4">
+    <div className=" border-2 border-gold-400 bg-gray-900  min-h-screen flex flex-col pb-16">
+      <h2 className="text-center text-3xl text-gold-400 font-bold">
         Individual Training Dashboard
       </h2>
       <div className="flex flex-col md:flex-row gap-6 flex-grow">
@@ -31,7 +31,7 @@ function Individual_Training() {
             <BioComponent />
           </userContext.Provider>
         </div>
-        <div className=" bg-indigo-950 p-6 rounded-lg flex-grow">
+        <div className=" bg-gray-800 p-6 rounded-lg flex-grow">
           <trainingContext.Provider value={jumpData}>
             <Training_Status />
           </trainingContext.Provider>

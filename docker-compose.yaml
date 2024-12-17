@@ -20,6 +20,7 @@ services:
     volumes:
       - ./frontend:/usr/src/app  # Mount local frontend folder
       - node_modules:/usr/src/app/node_modules  # Keep node_modules intact
+    command: npm run dev
     networks:
       - appnetwork
 
