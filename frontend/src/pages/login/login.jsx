@@ -46,25 +46,41 @@ const LogIn = () => {
   };
 
   const handleDevLogin = () => {
-    fetch('http://localhost:3000/local/dev', {
-      credentials: 'include'
+    fetch("http://localhost:3000/local/dev", {
+      credentials: "include",
     })
-    .then((res)=>res.json())
-    .then((data)=>{
-      if(data) navigate('/')
-    })
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) navigate("/");
+      });
+  };
 
   return (
     <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
-    <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
+      <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
+      <div className = "absolute top-32">
 
-    <div className="relative bg-gray-900 p-8 rounded-lg shadow-lg w-96">
-      <h1 className="text-2xl font-bold text-center text-white mb-8">Login</h1>
-      <div className="text-center">
+      <div className = "text-gold-600 text-2xl font-bold">
+          Airborne Readiness Management and Operations Record
+        </div>
+        <div className = "text-gold-600 text-center font-bold">
+          (ARMOR)
+        </div>
+      </div>
 
-        <button className = "w-full h-full text-white hover:text-gold-400"
-        onClick={handleDevLogin}>Dev Login</button>
+      <div className="relative bg-gray-900 p-8 rounded-lg shadow-lg w-96">
+
+
+        <h1 className="text-2xl font-bold text-center text-white mb-8">
+          Login
+        </h1>
+        <div className="text-center">
+          <button
+            className="w-full h-full text-white hover:text-gold-400"
+            onClick={handleDevLogin}
+          >
+            Dev Login
+          </button>
         </div>
         <div className="space-y-6">
           <div className="space-y-2">
@@ -101,10 +117,7 @@ const LogIn = () => {
               </div>
             )}
             <div className="text-right">
-              <a
-                href="#"
-                className="text-sm text-gray-400 hover:text-gold-400"
-              >
+              <a href="#" className="text-sm text-gray-400 hover:text-gold-400">
                 Forgot Password?
               </a>
             </div>

@@ -62,6 +62,7 @@ exports.up = function(knex) {
     table.foreign('flight_id').references('flight_tbl.id').onDelete("CASCADE");
     table.string('status');
     table.integer('lift');
+    table.boolean('jump_duty');
   })
 
 };

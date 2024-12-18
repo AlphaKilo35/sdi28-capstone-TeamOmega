@@ -4,7 +4,7 @@ import Countdown from "react-countdown";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
-  const [fullName, setFullName] = useState("")
+  const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +12,7 @@ const SignUp = () => {
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [blankField, setBlankField] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [invalidPassword, setInvalidPassword] = useState(false);
   const [adminSelected, setAdminSelected] = useState(false);
   const [authCode, setAuthCode] = useState("");
   const [incorrectAuthString, setIncorrectAuthString] = useState(false);
@@ -32,21 +33,33 @@ const SignUp = () => {
       return;
     }
 
+    if (!passwordChecker()) {
+      setPassword("");
+      setConfirmPassword("");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:3000/local/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ fullName: fullName, email: email, password: password, admin: adminSelected, authCode: authCode }),
+        body: JSON.stringify({
+          fullName: fullName,
+          email: email,
+          password: password,
+          admin: adminSelected,
+          authCode: authCode,
+        }),
       });
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       if (data.code === 1) {
         setIncorrectAuthString(true);
-        setPasswordMatch(true)
-        setBlankField(false)
+        setPasswordMatch(true);
+        setBlankField(false);
       }
       data.success ? setSignupSuccess(true) : setSignupSuccess(false);
       // if (!data.ok) {
@@ -57,18 +70,53 @@ const SignUp = () => {
     }
   };
   // console.log(adminSelected)
-  return (
-  <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
-    // <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
 
-    {/* <div className="min-h-screen flex items-center justify-center bg-gray-800 bg-cover"> */}
-      
-      <div className="relative z-10 bg-gray-900 p-8 rounded-lg shadow-lg w-96 ">
+  const passwordChecker = () => {
+    if (password.length < 8) {
+      setInvalidPassword(true);
+      return false;
+    }
+
+    let capitals = false;
+    let numbers = false;
+    let symbols = false;
+
+    for (let i = 0; i < password.length; i++) {
+      if (password[i] >= "A" && password[i] <= "Z") {
+        capitals = true;
+      } else if (password[i] >= "0" && password[i] <= "9") {
+        numbers = true;
+      } else if (/[^a-zA-Z0-9]/.test(password[i])) {
+        symbols = true;
+      }
+    }
+    if (capitals && numbers && symbols) {
+      setInvalidPassword(false);
+      return true;
+    } else {
+      setInvalidPassword(true);
+      return false;
+    }
+  };
+
+  return (
+    <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
+      // <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
+
+      <div className="absolute top-32">
+        <div className="text-gold-600 text-2xl font-bold">
+          Airborne Readiness Management and Operations Record
+        </div>
+        <div className="text-gold-600 text-center font-bold">(ARMOR)</div>
+      </div>
+      <div className="relative z-10 bg-gray-900 p-8 rounded-lg shadow-lg mt-10 w-96 ">
         {!signupSuccess ? (
           <>
-            <h1 className="text-2xl font-bold text-center text-white mb-8">Sign up</h1>
+            <h1 className="text-2xl font-bold text-center text-white mb-8">
+              Sign up
+            </h1>
             <div className="space-y-3">
-            <label className="text-sm block text-gray-400">Full Name</label>
+              <label className="text-sm block text-gray-400">Full Name</label>
               <div className="relative">
                 <input
                   type="text"
@@ -119,12 +167,17 @@ const SignUp = () => {
                   ></input>
                 </div>
               </div>
-              {!passwordMatch && (
-                <div className="text-red-400 text-right">
-                  <p className="text-xs">Password does not match.</p>
-                  <p className="text-xs">Please try again.</p>
-                </div>
-              )}
+              {!passwordMatch ||
+                (invalidPassword && (
+                  <div className="text-red-400 text-right">
+                    <p className="text-xs">
+                      {!passwordMatch
+                        ? "Password does not match."
+                        : "Invalid password"}
+                    </p>
+                    <p className="text-xs">Please try again.</p>
+                  </div>
+                ))}
               <div>
                 <h3 className="text-sm text-gray-400">Select your role</h3>
                 <select
@@ -160,9 +213,10 @@ const SignUp = () => {
                 </div>
               )}
               <div className="space-y-4">
-                <button className="w-full py-2 border border-black font-bold rounded-md bg-gold-600 bg-cover text-black hover:opacity-90"
+                <button
+                  className="w-full py-2 border border-black font-bold rounded-md bg-gold-600 bg-cover text-black hover:opacity-90"
                   onClick={handleSignUp}
-                  >
+                >
                   SIGN UP
                 </button>
               </div>
@@ -179,8 +233,10 @@ const SignUp = () => {
           </>
         ) : (
           <div>
-            <h1 className="text-2xl font-bold text-center text-white mb-8">Success!</h1>
-            <h3 className = "text-white">
+            <h1 className="text-2xl font-bold text-center text-white mb-8">
+              Success!
+            </h1>
+            <h3 className="text-white">
               You will be redirected to the login page in...
               <Countdown
                 date={Date.now() + 5000}

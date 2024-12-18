@@ -11,23 +11,19 @@ services:
     build: frontend/
     container_name: 'frontend'
     depends_on:
-      - backend
-      - database
+        - database
     env_file:
       - .env
     environment:
       - VITE_PORT=${VITE_PORT}
     ports:
-      - ${VITE_PORT}:5173
-      # 5173 is the default Node.js server, change if ports have been changed to something like 8080
-    volumes:
-      - type: bind
-        source: ./frontend/src
-        target: /frontend/src
-      - node_modules:/frontend/node_modules
+      - '5173:5173'
     networks:
       - appnetwork
-  # #     # 5173 is the default Node.js server, change if ports have been changed to something like 8080
+
+
+  # # #     # 5173 is the default Node.js server, change if ports have been changed to something like 8080
+
   backend:
     # Backend Express Server
     build: backend/
@@ -40,14 +36,11 @@ services:
     environment:
       - EXPRESS_PORT=${EXPRESS_PORT}
     ports:
-      - ${EXPRESS_PORT}:3000
-      # 3000 is default Express.js port, again - change if application has something different
-    volumes:
-      - type: bind
-        source: ./backend
-        target: /backend
+      - '3000:3000'
     networks:
       - appnetwork
+
+      # 3000 is default Express.js port, again - change if application has something different
   database:
     image: postgres
     container_name: database
@@ -63,13 +56,15 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - postgres_volume:/var/lib/postgresql/data
+    networks:
+      - appnetwork
+
     healthcheck:
       test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USERNAME} -d ${POSTGRES_DB_NAME}'" ]
       interval: 1s
       timeout: 3s
       retries: 3
-    networks:
-      - appnetwork
+
 networks:
   appnetwork:
     driver: bridge
