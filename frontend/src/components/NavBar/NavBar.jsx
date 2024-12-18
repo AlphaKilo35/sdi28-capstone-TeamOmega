@@ -19,7 +19,7 @@ function NavBarComponent() {
           fetch(`http://localhost:3000/users/${data.id}`)
             .then((res) => res.json())
             .then((data) => {
-              setUser(data[0]?.name);
+              setUser(data[0]);
               setIsLoading(false);
             })
             .catch((err) => {
@@ -86,7 +86,7 @@ function NavBarComponent() {
                   className="ml-2 z-10 cursor-pointer"
                   onClick={() => setDropdownSelect(!dropdownSelect)}
                 >
-                  {user}
+                  {user?.name}
                 </button>
                 <div
                   className={`z-20 relative flex flex-col items-center  transform transition-all duration-300 ease-out mt-1 rounded-md p-2 text-sm border border-gold-400 bg-black ${
