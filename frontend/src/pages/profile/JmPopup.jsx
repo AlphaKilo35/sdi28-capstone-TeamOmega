@@ -5,7 +5,7 @@ import "./profile.css";
 function JmPopup({ onSetPopup, changeJm, originJm, adminStatus, jmChanged }) {
   const user = useContext(UserContext);
 
-  let [selectedValue, setSelectedValue] = useState("");
+    let [ selectedValue, setSelectedValue ] = useState(false);
 
   function handleJmUpdate() {
     if (adminStatus && selectedValue !== originJm) {
