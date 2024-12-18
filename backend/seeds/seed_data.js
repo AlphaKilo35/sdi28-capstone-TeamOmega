@@ -133,7 +133,8 @@ function createManifests() {
       user_id: userId,
       flight_id: flightId,
       status: currentStatus,
-      lift: liftNumber
+      lift: liftNumber,
+      jump_duty: false
     })
   }
   return manifests;
