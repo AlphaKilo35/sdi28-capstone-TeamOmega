@@ -17,7 +17,7 @@ export default function StatusSelector({manifestStatus, updateStatus, userData})
       disabled={!isAdmin}
       className="px-2 py-1 border rounded text-gray-900 "
     >
-      <option value="scheduled">Scheduled</option>
+      <option value="schedule">Scheduled</option>
       <option value="scratched">Scratched</option>
       <option value="complete">Complete</option>
     </select>

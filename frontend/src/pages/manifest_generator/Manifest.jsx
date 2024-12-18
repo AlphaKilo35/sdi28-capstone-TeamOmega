@@ -60,7 +60,7 @@ export default function Manifest() {
         body: JSON.stringify({
           user_id: jumper.id,
           flight_id: flightId,
-          status: "scheduled",
+          status: "schedule",
           lift: 1,
           jump_duty: false,
         }),
