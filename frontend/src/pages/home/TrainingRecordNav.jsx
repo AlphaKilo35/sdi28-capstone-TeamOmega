@@ -12,6 +12,8 @@ function TrainingRecordNav() {
   }
 
   return (
+    <div className = "pt-4 pl-10 text-white transition-colors hover:text-gold-400 pr-10 pb-2  ">
+      <h1 className = " text-2xl  font-bold text-center mb-2 relative">Training Record</h1>
     <div className="group h-80 w-80 aspect-square"
     onClick={handleTrainingRecordNavigate}>
       <div className="relative h-full w-full rounded-xl z-10 shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
@@ -24,6 +26,7 @@ function TrainingRecordNav() {
             <p className="text-lg py-2">Jump Log</p>
             <p className="text-base py-2">Current Jump Status</p>
           </div>
+        </div>
         </div>
       </div>
     </div>

@@ -6,14 +6,14 @@ function RolePopup ({onSetPopup, changeRole, originRole, adminStatus, roleChange
 
     const user = useContext(UserContext);
 
-    let [ selectedValue, setSelectedValue ] = useState('');
+    let [ selectedValue, setSelectedValue ] = useState('user');
     
     function handleRoleUpdate() {
         console.log(adminStatus);
         if (adminStatus && selectedValue !== originRole) {
             if (selectedValue === 'user') {
-                console.log('Role updated to member')
-                changeRole('member');
+                console.log('Role updated to user')
+                changeRole('user');
                 roleChanged(true);
                 onSetPopup();
             } else if (selectedValue === 'leader') {
@@ -39,7 +39,7 @@ function RolePopup ({onSetPopup, changeRole, originRole, adminStatus, roleChange
                             </div>
                             <div>
                                 <select name="role" id="role" className="w-full pl-2 pr-4 py-2 text-black border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-400" onChange={(e) => setSelectedValue(e.target.value)}>
-                                    <option value="user">Member</option>
+                                    <option value="user">User</option>
                                     <option value="leader">Leader</option>
                                     <option value="admin">Admin</option>
                                 </select>

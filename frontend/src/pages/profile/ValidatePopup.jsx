@@ -51,9 +51,9 @@ function ValidatePopup ({onSetPopup, correctToken, isCorrect}) {
             {successfulValidation && (
                 <>
                     <div><h2 className="text-2xl text-white">Validation Successful!</h2></div>
-                    {/* <div>
-                        <img className="element" src="https://image.similarpng.com/very-thumbnail/2021/05/Checkmark-green-tick-isolated-on-transparent-background-PNG.png" alternate="Green Checkmark"></img>
-                    </div> */}
+                    <div>
+                        <img src="/GreenCheckmark.svg" alternate="Green Checkmark"></img>
+                    </div>
                 </>
             )}
             <div>

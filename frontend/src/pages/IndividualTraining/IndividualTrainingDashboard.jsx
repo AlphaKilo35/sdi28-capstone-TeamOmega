@@ -28,7 +28,7 @@ return (
       </header>
       <main className="p-6 text-gray-800">
       <div className="flex flex-col md:flex-row gap-6 flex-grow">
-        <div className='border-2 border-gold-400 bg-gray-500 w-full sm:w-full md:w-1/3 bg-white p-6 shadow-lg rounded-lg max-h-[653px] min-w-[330px] overflow-auto'>
+        <div className='border-2 border-gold-400 bg-gray-500 w-full sm:w-full md:w-1/3 bg-gray-500 p-6 shadow-lg rounded-lg max-h-[653px] min-w-[330px] overflow-auto'>
         <userContext.Provider value={userData}>
           <BioComponent />
         </userContext.Provider>

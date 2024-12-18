@@ -100,10 +100,10 @@ const SignUp = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
+    <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex  flex-col items-center justify-center">
       // <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
 
-      <div className="absolute top-32">
+      <div className="relative mb-20">
         <div className="text-gold-600 text-2xl font-bold">
           Airborne Readiness Management and Operations Record
         </div>
