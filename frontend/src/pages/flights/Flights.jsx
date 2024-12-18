@@ -289,23 +289,23 @@ const Flights = () =>{
                         Add Flight
                       </DialogTitle>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 mb-2">
                           Fill out the following info to add a flight
                         </p>
                         <input
                           type="text"
-                          className="form-input rounded-full px-4 py-3"
+                          className="form-input rounded-full px-4 py-3 mb-2 mr-2"
                           placeholder="Airframe"
                           onChange={newAirframeEntry}
                         />
                         <input
                           type="text"
-                          className="form-input rounded-full px-4 py-3"
+                          className="form-input rounded-full px-4 py-3 mb-2"
                           placeholder="Number of Jumpers"
                           onChange={newNumberOFJumpersEntry}
                         />
                         <select
-                          className="form-input rounded-full px-4 py-3"
+                          className="form-input rounded-full px-4 py-3 mb-2"
                           placeholder="Dropzone"
                           onChange={newDropzoneEntry}
                         >
@@ -319,7 +319,7 @@ const Flights = () =>{
                           })}
                         </select>
                         <select
-                          className="form-input rounded-full px-4 py-3"
+                          className="form-input rounded-full px-4 py-3 mb-2"
                           placeholder="Departure Airfield"
                           onChange={newDepartureAirfieldEntry}
                         >
