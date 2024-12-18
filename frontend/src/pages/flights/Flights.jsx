@@ -48,10 +48,11 @@ const Flights = () =>{
     setFlightToDelete(event.target.value);
   };
 
-  const changeDateOrder = () => {
-    setSortedData(!sortedData)
-    setRenderFlights(!renderFlights)
+  useEffect(()=>{
+    if(flightList){
+
   }
+  }, [flightList])
 
   useEffect(() => {
     fetch("http://localhost:3000/local/verify", {
@@ -99,6 +100,9 @@ const Flights = () =>{
       })))
     }
 
+      .then((data) => setFlightList(data.sort((a,b) =>{
+        return new Date (b.date_time) - new Date(a.date_time)
+      })))
   }, [renderFlights])
 
 
