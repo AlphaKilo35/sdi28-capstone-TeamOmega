@@ -12,6 +12,7 @@ import useUserData from "../../hooks/useUserData";
 
 const Flights = () =>{
   const navigate = useNavigate()
+  const [renderFlights, setRenderFlights] = useState(true)
   const [flightToDelete, setFlightToDelete] = useState(undefined)
   const [departureAirfieldList, setDepartureAirfieldList] = useState(undefined)
   const [dropzoneList, setDropzoneList] = useState(undefined)
@@ -34,11 +35,9 @@ const Flights = () =>{
   };
   const newDropzoneEntry = () => {
     setNewDropzone(event.target.value);
-    console.log(newDropzone);
   };
   const newDepartureAirfieldEntry = () => {
     setNewDepartureAirfield(event.target.value);
-    console.log(newDepartureAirfield);
   };
   const newFLightDateEntry = () => {
     setNewDateTime(new Date(event.target.value).toISOString());
@@ -47,6 +46,12 @@ const Flights = () =>{
   const deleteFlight = () => {
     setFlightToDelete(event.target.value);
   };
+
+  useEffect(()=>{
+    if(flightList){
+
+  }
+  }, [flightList])
 
   useEffect(() => {
     fetch("http://localhost:3000/local/verify", {
@@ -74,7 +79,7 @@ const Flights = () =>{
         },
         body: JSON.stringify({ id: flightToDelete }),
       }).then(() => {
-        setFlightToDelete(undefined);
+        setRenderFlights(!renderFlights)
       });
     }
   }, [flightToDelete]);
@@ -83,8 +88,10 @@ const Flights = () =>{
     fetch("http://localhost:3000/flights")
       .then((res) => res.json())
 
-      .then((data) => setFlightList(data))
-  }, [flightToDelete])
+      .then((data) => setFlightList(data.sort((a,b) =>{
+        return new Date (b.date_time) - new Date(a.date_time)
+      })))
+  }, [renderFlights])
 
 
   useEffect(() => {
@@ -114,7 +121,10 @@ const Flights = () =>{
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newFlight),
-    }).then(() => setOpen(false));
+    }).then(() => setOpen(false))
+    .then(()=>{
+      setRenderFlights(!renderFlights)
+    })
   };
 
   const toManifest = (event) => {
@@ -178,6 +188,7 @@ const Flights = () =>{
                       <>
                         <tr
                           className="border-t border-gold-400 hover:bg-gray-800"
+                          key = 'flight {flight.flight_id}'
                           id={flight.flight_id}
                         >
                           <td
