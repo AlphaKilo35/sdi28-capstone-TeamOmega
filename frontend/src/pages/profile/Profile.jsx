@@ -250,7 +250,7 @@ function Profile() {
               />
             )}
             {savedChanges && (
-              <div className="text-xl text-green-400">
+              <div className="text-xl text-green-400 mt-10 text-center">
                 <h2>Changes Saved Successfully</h2>
               </div>
             )}
