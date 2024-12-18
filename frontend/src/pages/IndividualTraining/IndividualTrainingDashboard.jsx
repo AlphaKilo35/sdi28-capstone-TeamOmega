@@ -20,15 +20,20 @@ var {id} = useParams();
 let userData = useFetchData(`http://localhost:3000/api/Individual-Training-Record/${id}`);
 let jumpData = useFetchData(`http://localhost:3000/manifests/user/${id}`)
 return (
-  <div className=" border-2 border-gold-400 bg-indigo-950 min-h-screen flex flex-col pb-16">
-      <h2 className='text-center text-2xl text-gold-600 font-semibold mb-4'>Individual Training Dashboard</h2>
+  <div className="min-h-screen bg-gray-900 text-gray-200">
+      <header className="flex flex-row bg-gray-800 text-gold-400 p-4 shadow-md justify-center flex-wrap:wrap">
+      <h1 className="text-3xl font-bold text-center">
+        Individual Training Dashboard
+      </h1>
+      </header>
+      <main className="p-6 text-gray-800">
       <div className="flex flex-col md:flex-row gap-6 flex-grow">
         <div className='border-2 border-gold-400 bg-gray-500 w-full sm:w-full md:w-1/3 bg-white p-6 shadow-lg rounded-lg max-h-[653px] min-w-[330px] overflow-auto'>
         <userContext.Provider value={userData}>
           <BioComponent />
         </userContext.Provider>
       </div>
-      <div className=" bg-indigo-950 p-6 rounded-lg flex-grow">
+      <div className=" bg-gray-800 p-6 rounded-lg flex-grow">
         <trainingContext.Provider value={jumpData}>
           <Training_Status />
         </trainingContext.Provider>
@@ -39,6 +44,7 @@ return (
         </trainingContext.Provider>
       </div>
   </div>
+  </main>
   </div>
 
 )
