@@ -131,23 +131,23 @@ function Profile() {
             <div>
               <CircleUserRound className="h-32 w-32 text-white " />
               <h1 className="text-white text-lg font-bold text-center">
-                {user.name}
+                {user.name ? user.name : 'Joe Snuffy'}
               </h1>
             </div>
 
             <div className="text-white w-full space-y-4 mt-10">
               <div className="bg-gray-500 rounded-md p-4 w-full">
-                <h3>MOS: 88M </h3>
+                <h3>MOS: {user.mos ? user.mos : '11B'} </h3>
               </div>
               <div className="bg-gray-700 rounded-md p-4 w-full">
-                <h3>Rank: SSG </h3>
+                <h3>Rank: {user.rank ? user.rank : 'PFC'} </h3>
               </div>
               <div className="bg-gray-500 rounded-md p-4 w-full">
-                <h3>UIC: WACGD0 </h3>
+                <h3>UIC: {user.uic ? user.uic : 'WACGD0'} </h3>
               </div>
               <div className="bg-gray-700 rounded-md p-4 w-full">
                 <h3>
-                  ETS: <span className="text-sm">JAN-04-2028</span>{" "}
+                  ETS: <span className="text-sm">{user.ets ? user.ets.slice(9) : '2025-04-20'}</span>{" "}
                 </h3>
               </div>
             </div>
@@ -233,9 +233,9 @@ function Profile() {
               )}
 
             </div>
-            <div className=" font-bold text-right mt-40">
+            <div className=" font-bold text-center mt-20">
               <button
-                className="inline-block px-4 py-2 mt-60 bg-gold-400 text-black text-bold rounded-lg cursor-pointer  transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95"
+                className="inline-block px-4 py-2 mt-20 bg-gold-400 text-black text-bold rounded-lg cursor-pointer  transition-transform transform hover:bg-gold-500 hover:scale-105 focus:bg-gold-500 focus:scale-105 active:scale-95"
                 type="submit"
                 onClick={handleSaveChanges}
               >

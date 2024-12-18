@@ -27,36 +27,44 @@ function createDropzone() {
 
 function createUsers() {
   const users = [];
-  const roles = ['user', 'leader', 'admin']
+  const roles = ['user', 'leader', 'admin'];
+  const oOccupations = ['11A', '12A', '13A', '35A', '18A', '92A', '37A', '15A']; 
+  const eOccupations = ['18Z', '38Z', '11Z', '92Z', '11B', '11C', '12B', '13B', '35F', '45A', '68W', '74D', '25U', '38R', '38S', '18B', '18C', '18F', '18D', '88M', '88N', '92R', '68C',  '37B']
+  const ranks = ['PV1', 'PV2', 'PFC', 'SPC', 'CPL', 'SGT', 'SSG', 'SFC', 'MSG', 'SGM', '2LT', '1LT', 'CPT', 'MAJ', 'LTC', 'COL']
+  const encryptPassword = (password) => {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
+  }
   for (var u = 0; u < 40; u++) {
     let fullName = faker.person.fullName();
     let userName = fullName.replace(/ /g, "").toLowerCase();
     let emailAddress = `${userName}@military.mil`;
     let roleType = roles[Math.floor(Math.random() * 3)];
     let jmBool = Math.random() < .5;
-    let userPassword = faker.internet.password()
-    // let newSalt = bcrypt.genSalt(saltRounds, (err, salt) => {
-    //   if (err) {
-    //     throw new Error;
-    //   }
-    //   return salt
-    // })
-    // async function hashPassword(userPassword, newSalt) {
-    //   const hashedPassword = await bcrypt.hash(userPassword, newSalt, (err, hash) => {
-    //     if (err) {
-    //     throw new Error;
-    //     }
-    //     return hash
-    //   })
-    //   return hashedPassword;
-    // }
+    let userPassword = faker.internet.password();
+    let userRank = [ranks[Math.floor(Math.random() * 16)]];
+    let userMos;
+    if (userRank === ('2LT' || '1LT' || 'CPT' || 'MAJ' || 'LTC' || 'COL')) {
+      userMos = oOccupations[Math.floor(Math.random() * 8)];
+    } else if ( userRank === ('SFC' || 'MSG' || 'SMG')) {
+      userMos = eOccupations[Math.floor(Math.random() * 4)];
+    } else {
+      userMos = eOccupations[(Math.floor(Math.random() * 4)) + 5];
+    }
+    let userEts = faker.date.future(720);
+    
     users.push({
       username: userName,
-      password: userPassword,
+      password: encryptPassword(userPassword),
       name: fullName,
       email: emailAddress,
       role: roleType,
-      jm: jmBool
+      jm: jmBool,
+      mos: userMos,
+      rank: userRank,
+      uic: 'WACGD0',
+      ets: userEts
     })
   }
   return users;
