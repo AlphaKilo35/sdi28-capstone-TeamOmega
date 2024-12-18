@@ -25,26 +25,31 @@ const BioComponent = () => {
 
     return (
       // bio-component
-        <div className="flex flex-col p-6 w-full sm:w-1/3 md:w-1/4 rounded-lg">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Personal Information</h2>
+      <main className="w-full h-full p-6 max-h-full min-w-[330px] overflow-auto">
+
+
+
+          <h3 className="text-2xl font-bold text-gold-400 mb-6">Personal Information</h3>
           {/* User Data */}
           <div className="mb-4">
             <strong className="text-gray-700">Name: </strong>
-            <span className="text-gray-900">{userDataContext.dataObject.name}</span>
+            <span className="text-gray-800">{userDataContext.dataObject.name}</span>
           </div>
           <div className="mb-4">
             <strong className="text-gray-700">Email: </strong>
-            <span className="text-gray-900">{userDataContext.dataObject.email}</span>
+            <span className="text-gray-800">{userDataContext.dataObject.email}</span>
           </div>
           <div className="mb-4">
             <strong className="text-gray-700">Role: </strong>
-            <span className="text-gray-900">{userDataContext.dataObject.role}</span>
+            <span className="text-gray-800">{userDataContext.dataObject.role}</span>
           </div>
           <div className="mb-4">
             <strong className="text-gray-700">Jump Master Qualified: </strong>
-            <span className="text-gray-900">{userDataContext.dataObject.jm.toString()}</span>
+            <span className="text-gray-800">{userDataContext.dataObject.jm.toString()}</span>
           </div>
-        </div>
+
+
+        </main>
       );
     };
 
