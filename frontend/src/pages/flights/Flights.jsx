@@ -26,6 +26,7 @@ const Flights = () =>{
   const [userId, setUserId] = useState(null);
   const userData = useUserData(userId);
   const isAdmin = userData && userData.role.toLowerCase() === 'admin'
+  const [sortedData, setSortedData] = useState(false)
 
   const newAirframeEntry = () => {
     setNewAirframe(event.target.value);
@@ -35,11 +36,9 @@ const Flights = () =>{
   };
   const newDropzoneEntry = () => {
     setNewDropzone(event.target.value);
-    console.log(newDropzone);
   };
   const newDepartureAirfieldEntry = () => {
     setNewDepartureAirfield(event.target.value);
-    console.log(newDepartureAirfield);
   };
   const newFLightDateEntry = () => {
     setNewDateTime(new Date(event.target.value).toISOString());
@@ -48,6 +47,11 @@ const Flights = () =>{
   const deleteFlight = () => {
     setFlightToDelete(event.target.value);
   };
+
+  const changeDateOrder = () => {
+    setSortedData(!sortedData)
+    setRenderFlights(!renderFlights)
+  }
 
   useEffect(() => {
     fetch("http://localhost:3000/local/verify", {
@@ -64,8 +68,6 @@ const Flights = () =>{
       });
   }, []);
 
-
-
   useEffect(() => {
     if (flightToDelete) {
       fetch("http://localhost:3000/flights", {
@@ -81,10 +83,22 @@ const Flights = () =>{
   }, [flightToDelete]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/flights")
+    if(sortedData === true){
+      fetch("http://localhost:3000/flights")
       .then((res) => res.json())
+      .then((data) =>
+        setFlightList(data.sort((a,b) =>{
+        return new Date (b.date_time) - new Date(a.date_time)
+      })))
+    } if(sortedData === false){
+      fetch("http://localhost:3000/flights")
+      .then((res) => res.json())
+      .then((data) =>
+        setFlightList(data.sort((a,b) =>{
+        return new Date (a.date_time) - new Date(b.date_time)
+      })))
+    }
 
-      .then((data) => setFlightList(data))
   }, [renderFlights])
 
 
@@ -171,7 +185,7 @@ const Flights = () =>{
                     <th className="py-3 px-6">Number of Jumpers</th>
                     <th className="py-3 px-6">Dropzone</th>
                     <th className="py-3 px-6">Departure Airfield</th>
-                    <th className="py-3 px-6">Date</th>
+                    <th className="py-3 px-6 cursor-pointer" onClick = {changeDateOrder}>Date &#x25b4;&#x25be;</th>
                     <th className="py-3 px-6">Time</th>
                     <th className="py-3 px-6"></th>
                   </tr>
