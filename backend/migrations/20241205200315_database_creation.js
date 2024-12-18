@@ -38,7 +38,11 @@ exports.up = function(knex) {
     table.string('email').unique({indexName: 'email_unique'});
     table.string('role');
     table.boolean('jm');
-    table.boolean('previousLogin').defaultTo(false)
+    table.boolean('previousLogin').defaultTo(false);
+    table.string('mos');
+    table.string('rank');
+    table.string('uic');
+    table.timestamp('ets')
   })
 
   .createTable("external_credentials", (table) => {
