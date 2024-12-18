@@ -35,11 +35,9 @@ const Flights = () =>{
   };
   const newDropzoneEntry = () => {
     setNewDropzone(event.target.value);
-    console.log(newDropzone);
   };
   const newDepartureAirfieldEntry = () => {
     setNewDepartureAirfield(event.target.value);
-    console.log(newDepartureAirfield);
   };
   const newFLightDateEntry = () => {
     setNewDateTime(new Date(event.target.value).toISOString());
@@ -48,6 +46,12 @@ const Flights = () =>{
   const deleteFlight = () => {
     setFlightToDelete(event.target.value);
   };
+
+  useEffect(()=>{
+    if(flightList){
+
+  }
+  }, [flightList])
 
   useEffect(() => {
     fetch("http://localhost:3000/local/verify", {
@@ -84,7 +88,9 @@ const Flights = () =>{
     fetch("http://localhost:3000/flights")
       .then((res) => res.json())
 
-      .then((data) => setFlightList(data))
+      .then((data) => setFlightList(data.sort((a,b) =>{
+        return new Date (b.date_time) - new Date(a.date_time)
+      })))
   }, [renderFlights])
 
 
