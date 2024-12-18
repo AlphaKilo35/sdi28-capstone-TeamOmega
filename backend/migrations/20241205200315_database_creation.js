@@ -38,7 +38,11 @@ exports.up = function(knex) {
     table.string('email').unique({indexName: 'email_unique'});
     table.string('role');
     table.boolean('jm');
-    table.boolean('previousLogin').defaultTo(false)
+    table.boolean('previousLogin').defaultTo(false);
+    table.string('mos');
+    table.string('rank');
+    table.string('uic');
+    table.timestamp('ets')
   })
 
   .createTable("external_credentials", (table) => {
@@ -62,6 +66,7 @@ exports.up = function(knex) {
     table.foreign('flight_id').references('flight_tbl.id').onDelete("CASCADE");
     table.string('status');
     table.integer('lift');
+    table.boolean('jump_duty');
   })
 
 };
