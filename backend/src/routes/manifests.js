@@ -9,10 +9,14 @@ router.get("/flight/:flight_id/users", (req, res) => {
     .join("users_tbl", "manifest_tbl.user_id", "users_tbl.id")
     .where("manifest_tbl.flight_id", flight_id)
     .select(
-      "users_tbl.*",
+      "users_tbl.name",
+      "users_tbl.email",
+      "users_tbl.id as user_id",
+      "users_tbl.jm",
       "manifest_tbl.status",
       "manifest_tbl.id as manifest_id",
-      "manifest_tbl.lift"
+      "manifest_tbl.lift",
+      "manifest_tbl.jump_duty",
     )
     .then((usersOnFlight) => {
       res.status(200).json(usersOnFlight);
@@ -71,10 +75,10 @@ router.get("/:id", (req, res) => {
 //POST
 
 router.post("/", (req, res) => {
-  const { user_id, flight_id, status, lift } = req.body;
+  const { user_id, flight_id, status, lift, jump_duty } = req.body;
 
   knex("manifest_tbl")
-    .insert({ user_id, flight_id, status, lift })
+    .insert({ user_id, flight_id, status, lift, jump_duty })
     .returning("*")
     .then(([{ id: manifest_id, ...rest }]) => {
       res.status(201).json({ manifest_id, ...rest });
@@ -85,19 +89,20 @@ router.post("/", (req, res) => {
 });
 //UPDATE
 
-router.patch("/:id", async (req, res) => {
+//update jump duty status in manifest table
+router.patch("/:id/jump-duty", (req, res) => {
   let manifestId = parseInt(req.params.id);
-  const { status } = req.body;
+  
   knex("manifest_tbl")
     .where("id", manifestId)
-    .update("status", status)
+    .update("jump_duty", knex.raw('NOT jump_duty'))
     .returning("*")
-    .then((data) => {
-      res.json(data);
+    .then(updatedRecord => {
+      res.json(updatedRecord[0]);
     })
-    .catch((err) => {
-      console.log("Error updating manifest status", err);
-      res.status(400).json({ err: "Failed to update manifest status" });
+    .catch(err => {
+      console.log("Error updating jump duty status", err);
+      res.status(400).json({ err: "Failed to update jump duty status" });
     });
 });
 

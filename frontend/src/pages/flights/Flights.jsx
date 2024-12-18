@@ -98,7 +98,6 @@ const Flights = () =>{
         return new Date (a.date_time) - new Date(b.date_time)
       })))
     }
-
   }, [renderFlights])
 
 

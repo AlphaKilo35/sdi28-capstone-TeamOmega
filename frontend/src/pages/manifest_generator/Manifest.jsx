@@ -12,13 +12,12 @@ export default function Manifest() {
   const [isAddingJumper, setIsAddingJumper] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const [userId, setUserId] = useState(null); 
+  const [userId, setUserId] = useState(null);
   const userData = useUserData(userId);
 
-  if(userData){
-    console.log(userData)
-  }
-
+  // if(userData){
+  //   console.log(userData)
+  // }
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,8 +39,8 @@ export default function Manifest() {
       .then((data) => {
         console.log(data);
         if (!data) navigate("/login");
-        setUserId(data.id) 
-        setLoading(false)
+        setUserId(data.id);
+        setLoading(false);
       })
       .catch((err) => {
         console.error("Auth verification failed", err);
@@ -63,6 +62,7 @@ export default function Manifest() {
           flight_id: flightId,
           status: "scheduled",
           lift: 1,
+          jump_duty: false,
         }),
       });
 
@@ -95,7 +95,6 @@ export default function Manifest() {
         (jumper) => jumper.manifest_id !== jumperToRemove.manifest_id
       )
     );
-
     fetch(`http://localhost:3000/manifests/${jumperToRemove.manifest_id}`, {
       method: "DELETE",
     })
@@ -117,6 +116,35 @@ export default function Manifest() {
       .catch((error) => console.log("Error updating status:", error));
   };
 
+  //updates jump_duty status (default is false until clicked)
+  const toggleJumpDuty = (clickedJumper) => {
+    fetch(
+      `http://localhost:3000/manifests/${clickedJumper.manifest_id}/jump-duty`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((response) => response.json())
+      .then((updatedData) => {
+        setManifestJumpers((currentJumpers) =>
+          currentJumpers.map((jumper) => {
+            if (jumper.manifest_id === clickedJumper.manifest_id) {
+              const updatedJumper = {
+                ...jumper,
+                jump_duty: updatedData.jump_duty,
+              };
+              return updatedJumper;
+            }
+            return jumper;
+          })
+        );
+      })
+      .catch((error) => {
+        console.log("Error updating jump duty status:", error);
+      });
+  };
+  console.log("manifestJumpers:", manifestJumpers);
   return (
     !loading && (
       <div className="p-4 min-h-screen bg-gray-900 text-gray-200">
@@ -131,7 +159,7 @@ export default function Manifest() {
             manifestJumpers={manifestJumpers}
             search={search}
             setSearch={setSearch}
-            userData= {userData}
+            userData={userData}
           />
           <ManifestList
             manifestJumpers={manifestJumpers}
@@ -140,6 +168,7 @@ export default function Manifest() {
             updateStatus={updateStatus}
             totalSeats={totalSeats}
             userData={userData}
+            toggleJumpDuty={toggleJumpDuty}
           />
         </div>
       </div>

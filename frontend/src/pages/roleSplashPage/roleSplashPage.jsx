@@ -29,8 +29,11 @@ const SplashPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 flex justify-center items-center ">
-      <div className="font-serif min-h-max w-96 bg-gray-900 rounded-md p-2">
+    <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex items-center justify-center">
+      <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
+      <div className = "absolute top-32"></div>
+
+      <div className="relative z-10 bg-gray-900 p-8 rounded-lg shadow-lg mt-10 w-96 ">
         <div className="space-y-4">
           <div className="">
             <h1 className="text-center text-white text-2xl">Welcome!</h1>
