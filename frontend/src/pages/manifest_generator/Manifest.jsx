@@ -71,7 +71,7 @@ export default function Manifest() {
       const jumperWithManifestId = {
         ...jumper,
         manifest_id: parseInt(data.manifest_id),
-        status: "scheduled",
+        status: "schedule",
         lift: 1,
       };
 
