@@ -45,7 +45,9 @@ passport.use(
 
 const router = express.Router();
 
-router.get("/login/google", passport.authenticate("google"));
+router.get("/login/google", passport.authenticate("google", {
+  prompt: "select_account"
+}));
 router.get("/redirect/google", (req, res, next) => {
   passport.authenticate(
     "google",
