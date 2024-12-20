@@ -19,7 +19,6 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
-    e.preventDefault();
     if (password !== confirmPassword) {
       setBlankField(false);
       setPasswordMatch(false);
@@ -35,6 +34,8 @@ const SignUp = () => {
 
     if (!passwordChecker()) {
       setPassword("");
+      setBlankField(false);
+      setPasswordMatch(true);
       setConfirmPassword("");
       return;
     }
@@ -102,7 +103,6 @@ const SignUp = () => {
   return (
     <div className="relative min-h-screen bg-gray-800 bg-[url('/army-paratroopers_background_II.png')] flex  flex-col items-center justify-center">
       // <div className="absolute inset-0 bg-gray-800 opacity-95"></div>
-
       <div className="relative mb-20">
         <div className="text-gold-600 text-2xl font-bold">
           Airborne Readiness Management and Operations Record
@@ -167,17 +167,18 @@ const SignUp = () => {
                   ></input>
                 </div>
               </div>
-              {!passwordMatch ||
-                (invalidPassword && (
-                  <div className="text-red-400 text-right">
-                    <p className="text-xs">
-                      {!passwordMatch
-                        ? "Password does not match."
-                        : "Invalid password"}
-                    </p>
-                    <p className="text-xs">Please try again.</p>
-                  </div>
-                ))}
+              {!passwordMatch && (
+                <div className="text-red-400 text-right">
+                  <p className="text-xs">Password does not match.</p>
+                  <p className="text-xs">Please try again.</p>
+                </div>
+              )}
+              {invalidPassword && passwordMatch && (
+                <div className="text-red-400 text-right">
+                  <p className = "text-xs">Invalid Password.</p>
+                  <p className="text-xs">Please try again.</p>
+                </div>
+              )}
               <div>
                 <h3 className="text-sm text-gray-400">Select your role</h3>
                 <select
