@@ -74,14 +74,7 @@ const LogIn = () => {
         <h1 className="text-2xl font-bold text-center text-white mb-8">
           Login
         </h1>
-        <div className="text-center">
-          <button
-            className="w-full h-full text-white hover:text-gold-400"
-            onClick={handleDevLogin}
-          >
-            Dev Login
-          </button>
-        </div>
+  
         <div className="space-y-6">
           <div className="space-y-2">
             <label className="block text-sm text-gray-400">Email</label>
